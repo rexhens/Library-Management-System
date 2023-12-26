@@ -2,7 +2,7 @@ package Models;
 
 public class Manager extends User{
     public Manager(String username, String password) {
-        super(username, password);
+        super(username, password,Roles.Manager);
     }
 
     public Manager(String name, String surname, String username, Roles userRole, String password, double salary, String phoneNum) {

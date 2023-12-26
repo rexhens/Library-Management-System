@@ -2,23 +2,32 @@ package Views;
 
 import Controllers.LogInController;
 import Models.*;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LogInView {
     public Scene showScene(Stage stage)
     {
+        BorderPane border = new BorderPane();
+        border.setMinSize(500,300);
+
+        StackPane stackText = new StackPane();
+        Text text = new Text("Welcome");
+        text.setFont(new Font(30));
+        stackText.getChildren().add(text);
+        stackText.setPadding(new Insets(20));
+        border.setTop(stackText);
+
+
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
@@ -36,8 +45,9 @@ public class LogInView {
         gridPane.add(passwordField,1,1);
 
         Label systemLabel = new Label("System");
-        TextField systemField = new TextField();
+        TextArea systemField = new TextArea();
         systemField.setEditable(false);
+        systemField.setWrapText(true);
         gridPane.add(systemLabel,0,2);
         gridPane.add(systemField,1,2);
 
@@ -48,7 +58,7 @@ public class LogInView {
 
         submitButton.setOnAction(e -> {
             LogInController controller = new LogInController();
-            UserResult user = controller.OnLogInBtnClick(usernameTxtField.getText(), passwordField.getText());
+            StandardViewResponse<User> user = controller.OnLogInBtnClick(usernameTxtField.getText(), passwordField.getText());
             if (user.getUser() == null) {
                 if(user.getErrorMessage().equals("Wrong Password!"))
                 {
@@ -82,7 +92,7 @@ public class LogInView {
         passwordField.setOnKeyPressed(e ->{
             if(e.getCode() == KeyCode.ENTER) {
                 LogInController controller = new LogInController();
-                UserResult user = controller.OnLogInBtnClick(usernameTxtField.getText(), passwordField.getText());
+                StandardViewResponse<User> user = controller.OnLogInBtnClick(usernameTxtField.getText(), passwordField.getText());
                 if (user.getUser() == null) {
                     if(user.getErrorMessage().equals("Wrong Password!"))
                     {
@@ -120,9 +130,9 @@ public class LogInView {
                 }
             }
         });
+    border.setCenter(gridPane);
 
-
-        return new Scene(gridPane,400,300);
+        return new Scene(border,400,300);
     }
 
 }

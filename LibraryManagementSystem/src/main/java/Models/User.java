@@ -11,9 +11,10 @@ public abstract class User {
     private double salary;
     private String phoneNum;
 
-    public User(String username, String password){
+    public User(String username, String password,Roles role){
         this.username = username;
         this.password = password;
+        this.userRole = role;
         id++;
     }
 

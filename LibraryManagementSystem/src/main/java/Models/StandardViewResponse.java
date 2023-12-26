@@ -1,15 +1,15 @@
 package Models;
 
-public class UserResult {
-    private final User user;
+public class StandardViewResponse<T> {
+    private final T user;
     private final String errorMessage;
 
-    public UserResult(User user, String errorMessage) {
+    public StandardViewResponse(T user, String errorMessage) {
         this.user = user;
         this.errorMessage = errorMessage;
     }
 
-    public User getUser() {
+    public T getUser() {
         return user;
     }
 
