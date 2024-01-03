@@ -1,6 +1,8 @@
 package Models;
 
-public abstract class User {
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
     private static int noUsers;
     private int id;
     private String name;
@@ -11,6 +13,9 @@ public abstract class User {
     private double salary;
     private String phoneNum;
 
+    public User(){
+
+    }
     public User(String username, String password,Roles role){
         this.username = username;
         this.password = password;
@@ -86,4 +91,5 @@ public abstract class User {
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
+    public int getId(){ return this.id;}
 }

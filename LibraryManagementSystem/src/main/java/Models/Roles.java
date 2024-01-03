@@ -1,6 +1,8 @@
 package Models;
 
-public enum Roles {
+import java.io.Serializable;
+
+public enum Roles implements Serializable {
     Librarian,
     Manager,
     Admin

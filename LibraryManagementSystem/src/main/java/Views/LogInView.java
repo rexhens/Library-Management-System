@@ -15,13 +15,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LogInView {
-    public Scene showScene(Stage stage)
+    public Scene showLogInScene(Stage stage)
     {
         BorderPane border = new BorderPane();
-        border.setMinSize(500,300);
+        border.setMinSize(700,500);
 
         StackPane stackText = new StackPane();
-        Text text = new Text("Welcome");
+        Text text = new Text("Log In");
         text.setFont(new Font(30));
         stackText.getChildren().add(text);
         stackText.setPadding(new Insets(20));
@@ -45,9 +45,8 @@ public class LogInView {
         gridPane.add(passwordField,1,1);
 
         Label systemLabel = new Label("System");
-        TextArea systemField = new TextArea();
+        TextField systemField = new TextField();
         systemField.setEditable(false);
-        systemField.setWrapText(true);
         gridPane.add(systemLabel,0,2);
         gridPane.add(systemField,1,2);
 
@@ -81,10 +80,10 @@ public class LogInView {
             }
             else {
                 if (user.getUser() instanceof Admin) {
-                    stage.setScene(new Scene(new GridPane(), 100, 100));
-                } else if (user.getUser() instanceof Manager) {
-
-                } else if (user.getUser() instanceof Librarian) {
+                    AdminHomePage adminHomePage = new AdminHomePage();
+                    stage.setScene(adminHomePage.showAdminHomePage(stage));
+                }
+                else if (user.getUser() instanceof Librarian) {
 
                 }
             }
@@ -115,7 +114,8 @@ public class LogInView {
                 } else {
                     if(user.getUser() instanceof Admin)
                     {
-                        stage.setScene(new Scene(new GridPane(), 100, 100));
+                        AdminHomePage adminHomePage = new AdminHomePage();
+                        stage.setScene(adminHomePage.showAdminHomePage(stage));
                     }
                     else if(user.getUser() instanceof Manager)
                     {
@@ -132,7 +132,7 @@ public class LogInView {
         });
     border.setCenter(gridPane);
 
-        return new Scene(border,400,300);
+        return new Scene(border,700,500);
     }
 
 }
