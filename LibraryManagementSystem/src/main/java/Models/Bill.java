@@ -1,11 +1,13 @@
 package Models;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Bill implements Serializable{
-    //pls generate serialveruid
+    @Serial
+    private static final long serialVersionUID = 8217843344216313688L;
     private Date createdDate;
     private int soldBy;
     private ArrayList<Book> books;
