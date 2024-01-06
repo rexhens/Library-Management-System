@@ -53,6 +53,7 @@ public class AdminHomePage extends Application {
             stage.setScene(manageLibrariansView(stage));
         });
         manageManagerBtn.setOnAction(e ->{
+            @SuppressWarnings("unused")
             AddUserView addUserView = new AddUserView();
         });
 

@@ -1,16 +1,12 @@
 package Controllers;
 
-import Models.Admin;
 import Models.Gender;
 import Models.Librarian;
 import Models.User;
-import javafx.scene.control.Button;
 import Models.StandardViewResponse;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class LibrarianController {
     public StandardViewResponse<User> editLibrarian(String name, String surname, String username,
@@ -279,7 +275,6 @@ public class LibrarianController {
 
     public void deleteLibrarianByUsername(String username)
     {
-        int index = 0;
         for(int i = 0; i < FileController.users.size();i++)
         {
             if(FileController.users.get(i).getUsername().equals(username)) {

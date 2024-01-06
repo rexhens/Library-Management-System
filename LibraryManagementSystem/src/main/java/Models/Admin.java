@@ -2,7 +2,6 @@ package Models;
 
 import java.io.Serial;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class Admin extends User {
     @Serial
