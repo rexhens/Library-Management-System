@@ -111,6 +111,14 @@ public abstract class User implements Serializable {
         this.salary = salary;
     }
 
+    public int getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(int accessLevel) {
+        this.accessLevel = accessLevel;
+    }
+
     public String getPhoneNum() {
         return phoneNum;
     }

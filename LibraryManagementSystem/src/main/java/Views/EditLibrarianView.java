@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.LibrarianController;
+import Models.Gender;
 import Models.Librarian;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -57,29 +59,104 @@ public class EditLibrarianView {
         gridPane.add(phoneNumLabel,0,4);
         gridPane.add(phoneNumField,1,4);
 
+        Label BirthDateLabel = new Label("Birth Date");
+        DatePicker dateP = new DatePicker(librarian.getBirthDate());
+        dateP.setEditable(false);
+        gridPane.add(BirthDateLabel,0,5);
+        gridPane.add(dateP,1,5);
+
+        Label genderLabel = new Label("Gender");
+        ToggleGroup toggleGroup = new ToggleGroup();
+        RadioButton Male = new RadioButton("Male");
+        RadioButton Female = new RadioButton("Female");
+        RadioButton Other = new RadioButton("Other");
+        Male.setToggleGroup(toggleGroup);
+        Female.setToggleGroup(toggleGroup);
+        Other.setToggleGroup(toggleGroup);
+        HBox b1 = new HBox(10);
+        b1.getChildren().addAll(Male, Female, Other );
+        gridPane.add(genderLabel,0,6);
+        gridPane.add(b1, 1, 6);
+        switch (librarian.getGender()) {
+            case Male:
+                Male.setSelected(true);
+                break;
+            case Female:
+                Female.setSelected(true);
+                break;
+            case Other:
+                Other.setSelected(true);
+                break;
+        }
+
+        ToggleGroup tgA = new ToggleGroup();
+        Label accessL = new Label("Access Level");
+        RadioButton level1 = new RadioButton("Sell books");
+        RadioButton level2 = new RadioButton("Add Stock/Authors/Categories");
+        RadioButton level3 = new RadioButton("Both");
+        level1.setToggleGroup(tgA);
+        level2.setToggleGroup(tgA);
+        level3.setToggleGroup(tgA);
+
+        gridPane.add(accessL, 0, 7);
+
+        HBox b2 = new HBox(10);
+        b2.getChildren().addAll(level1, level2, level3);
+        gridPane.add(b2, 1, 7);
+
+        switch (librarian.getAccessLevel()) {
+            case 1:
+                level1.setSelected(true);
+                break;
+            case 2:
+                level2.setSelected(true);
+                break;
+            default:
+                level3.setSelected(true);
+                break;
+        }
         Label salaryLabel = new Label("Salary");
         TextField salaryField = new TextField(Double.toString(librarian.getSalary()));
-        gridPane.add(salaryLabel,0,5);
-        gridPane.add(salaryField,1,5);
+        gridPane.add(salaryLabel,0,8);
+        gridPane.add(salaryField,1,8);
 
         Label systemLabel = new Label("System");
         TextArea systemArea = new TextArea();
         systemArea.setEditable(false);
         systemArea.setWrapText(true);
-        gridPane.add(systemLabel,0,6);
-        gridPane.add(systemArea,1,6);
+        gridPane.add(systemLabel,0,9);
+        gridPane.add(systemArea,1,9);
 
         Button editButton = new Button("Edit");
-        gridPane.add(editButton, 2,8) ;
+        gridPane.add(editButton, 2,10) ;
         editButton.setOnAction(e ->{
             LibrarianController controller = new LibrarianController();
+            Gender gender;
+            if(Male.isSelected())
+                gender = Gender.Male;
+            else if(Female.isSelected())
+                gender = Gender.Female;
+            else
+                gender = Gender.Other;
+
+            int accessLevel;
+            if (level1.isSelected()) {
+                accessLevel = 1;
+            } else if (level2.isSelected()) {
+                accessLevel = 2;
+            } else {
+                accessLevel = 3;
+            }
             var edited = controller.editLibrarian(nameField.getText(),surnameTxtField.getText(),
                     usernameTxtField.getText(),salaryField.getText(),phoneNumField.getText(),
-                    librarian.getId());
+                    librarian.getId(),gender,accessLevel,dateP.getValue());
             if(edited.getErrorMessage().isEmpty() || edited.getErrorMessage() == null)
             {
+                Alert error = new Alert(Alert.AlertType.INFORMATION);
+                error.setHeaderText("Librarian was successfully edited!");
+                error.showAndWait();
                 AdminHomePage adminHomePage = new AdminHomePage();
-                stage.setScene(adminHomePage.showAdminHomePage(stage));
+                stage.setScene(adminHomePage.manageLibrariansView(stage));
             } else{
                 systemArea.setText(edited.getErrorMessage());
             }
@@ -90,7 +167,7 @@ public class EditLibrarianView {
             AdminHomePage adminHomePage = new AdminHomePage();
             stage.setScene(adminHomePage.manageLibrariansView(stage));
         });
-        gridPane.add(backBtn,3,8);
+        gridPane.add(backBtn,3,10);
 
         borderPane.setCenter(gridPane);
         return new Scene(borderPane,700,500);

@@ -136,6 +136,9 @@ public class AddUserView {
                     CheckpasswordField.getText());
             if(added.getUser() != null)
             {
+                Alert error = new Alert(Alert.AlertType.INFORMATION);
+                error.setHeaderText("Librarian was successfully added!");
+                error.showAndWait();
                 AdminHomePage adminHomePage = new AdminHomePage();
                 stage.setScene(adminHomePage.manageLibrariansView(stage));
             }else{

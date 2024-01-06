@@ -8,6 +8,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -35,7 +36,7 @@ public class AdminHomePage extends Application {
         Button manageLibrarianBtn = new Button("Manage Librarians");
         Button manageManagerBtn = new Button("Manage Manager");
         Button statisticBtn = new Button("Statistics");
-        Button bttBack = new Button("Back");
+        Button logOutbtn = new Button("Log Out");
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -44,7 +45,7 @@ public class AdminHomePage extends Application {
         grid.add(manageLibrarianBtn, 0, 0);
         grid.add(manageManagerBtn, 1, 0);
         grid.add(statisticBtn, 2, 0);
-        grid.add(bttBack, 3, 0);
+        grid.add(logOutbtn, 3, 0);
         border.setCenter(grid);
 
         manageLibrarianBtn.setOnAction(e -> {
@@ -55,6 +56,13 @@ public class AdminHomePage extends Application {
             AddUserView addUserView = new AddUserView();
         });
 
+        logOutbtn.setOnAction(e -> {
+            Alert error = new Alert(Alert.AlertType.INFORMATION);
+            error.setHeaderText("You have been logged out!");
+            error.showAndWait();
+            LogInView logInView = new LogInView();
+            stage.setScene(logInView.showLogInScene(stage));
+        });
         return new Scene(border,700,500);
     }
 

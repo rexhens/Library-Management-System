@@ -12,7 +12,8 @@ import java.util.Locale;
 
 public class LibrarianController {
     public StandardViewResponse<Librarian> editLibrarian(String name, String surname, String username,
-                                                        String salary, String phoneNum,int id)
+                                                        String salary, String phoneNum,int id,Gender gender,int accessLevel
+                                                        ,LocalDate localDate)
     {
         double salaryDouble;
         Librarian librarian = findLibrarianById(id);
@@ -59,15 +60,19 @@ public class LibrarianController {
                 surname = Character.toUpperCase(surname.charAt(0)) + surname.substring(1);
             }
 
-            if(phoneNum.length() != 10)
+            if(!phoneNum.matches("^\\+355 6[0-9] [0-9]{3} [0-9]{4}$"))
             {
-                return new StandardViewResponse<>(librarian,"Phone number must be exactly 10 characters!");
-            }else if(!phoneNum.matches("\\d+"))
-            {
-                return new StandardViewResponse<>(librarian,"Phone number cannot contain characters!");
+                return new StandardViewResponse<>(librarian,"Phone number must be of specified format +355 6X XXX XXXX!");
             }else if(!isUniqueUsername(username) && !findLibrarianById(id).getUsername().equals(username))
             {
                 return new StandardViewResponse<>(librarian,"There already exists a user with this username");
+            }
+            LocalDate localDateCompare = LocalDate.now();
+            if (localDate.isAfter(localDateCompare)) {
+                return new StandardViewResponse<>(librarian,"BirthDate cannot be after actual date!");
+            }else if(localDate.isBefore(localDate.minusYears(100)))
+            {
+                return new StandardViewResponse<>(librarian,"You cannot be this old!");
             }
             salaryDouble = Double.parseDouble(salary);
 
@@ -76,6 +81,9 @@ public class LibrarianController {
             librarian.setUsername(username);
             librarian.setPhoneNum(phoneNum);
             librarian.setSalary(salaryDouble);
+            librarian.setBirthDate(localDate);
+            librarian.setGender(gender);
+            librarian.setAccessLevel(accessLevel);
 
             System.out.println("Librarian was successfully edited");
         }catch(NumberFormatException n){

@@ -117,11 +117,7 @@ public class LogInView {
                         AdminHomePage adminHomePage = new AdminHomePage();
                         stage.setScene(adminHomePage.showAdminHomePage(stage));
                     }
-                    else if(user.getUser() instanceof Manager)
-                    {
-
-                    }
-                    else if(user.getUser() instanceof Librarian)
+                    else
                     {
 
                     }
