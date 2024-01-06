@@ -125,8 +125,7 @@ public class LogInView {
                     {
 
                     }
-                    // Perform actions for a successful login
-                    // For example, show a new scene or perform other operations.
+
                 }
             }
         });

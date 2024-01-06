@@ -1,15 +1,21 @@
 package Controllers;
 
 import Models.Admin;
+import Models.Gender;
 import Models.Librarian;
 import Models.StandardViewResponse;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class LibrarianController {
     public StandardViewResponse<Librarian> editLibrarian(String name, String surname, String username,
                                                         String salary, String phoneNum,int id)
     {
         double salaryDouble;
-        Librarian librarian = Admin.findLibrarianById(id);
+        Librarian librarian = findLibrarianById(id);
         try {
 
             if(name.isEmpty() || surname.isEmpty() || username.isEmpty()
@@ -21,10 +27,21 @@ public class LibrarianController {
 
             if(name.length() < 3 || name.length() > 20)
             {
-                return new StandardViewResponse<>(librarian,"Name cannot have this length!");
+                return new StandardViewResponse<>(librarian,"Name can't have this length!");
             }else if(name.matches(".*\\d+.*")){
                 return new StandardViewResponse<>(librarian,"Name can't contain numbers!");
             }
+            for(char ch : name.toCharArray())
+            {
+                if(isSpecialChar(ch)){
+                    return new StandardViewResponse<>(librarian,"Name can't contain special characters!");
+                }
+            }
+            if (!Character.isUpperCase(name.charAt(0))) {
+                // Convert the first letter to uppercase
+                name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+            }
+
 
             if(surname.length() < 3 || surname.length() > 20)
             {
@@ -32,13 +49,23 @@ public class LibrarianController {
             }else if(surname.matches(".*\\d+.*")){
                 return new StandardViewResponse<>(librarian,"Surname can't contain numbers!");
             }
+            for(char ch : surname.toCharArray())
+            {
+                if(isSpecialChar(ch)){
+                    return new StandardViewResponse<>(librarian,"Surname can't contain special characters!");
+                }
+            }if (!Character.isUpperCase(surname.charAt(0))) {
+                // Convert the first letter to uppercase
+                surname = Character.toUpperCase(surname.charAt(0)) + surname.substring(1);
+            }
+
             if(phoneNum.length() != 10)
             {
                 return new StandardViewResponse<>(librarian,"Phone number must be exactly 10 characters!");
             }else if(!phoneNum.matches("\\d+"))
             {
                 return new StandardViewResponse<>(librarian,"Phone number cannot contain characters!");
-            }else if(!isUniqueUsername(username) && !Admin.findLibrarianById(id).getUsername().equals(username))
+            }else if(!isUniqueUsername(username) && !findLibrarianById(id).getUsername().equals(username))
             {
                 return new StandardViewResponse<>(librarian,"There already exists a user with this username");
             }
@@ -64,7 +91,8 @@ public class LibrarianController {
     }
 
     public StandardViewResponse<Librarian> addLibrarian(String name, String surname, String username,
-                                                        String password, String salary, String phoneNum)
+                                                        String password, String salary, String phoneNum, LocalDate localDate,
+                                                        Gender gender,int accessLevel,String checkPassword)
     {
         double salaryDouble;
         Librarian librarian = null;
@@ -83,6 +111,17 @@ public class LibrarianController {
             }else if(name.matches(".*\\d+.*")){
                 return new StandardViewResponse<>(librarian,"Name can't contain numbers!");
             }
+            for(char ch : name.toCharArray())
+            {
+                if(isSpecialChar(ch)){
+                    return new StandardViewResponse<>(librarian,"Name can't contain special characters!");
+                }
+            }
+            if (!Character.isUpperCase(name.charAt(0))) {
+                // Convert the first letter to uppercase
+                name = Character.toUpperCase(name.charAt(0)) + name.substring(1);
+            }
+
 
             if(surname.length() < 3 || surname.length() > 20)
             {
@@ -90,24 +129,44 @@ public class LibrarianController {
             }else if(surname.matches(".*\\d+.*")){
                 return new StandardViewResponse<>(librarian,"Surname can't contain numbers!");
             }
+            for(char ch : surname.toCharArray())
+            {
+                if(isSpecialChar(ch)){
+                    return new StandardViewResponse<>(librarian,"Surname can't contain special characters!");
+                }
+            }
+            if (!Character.isUpperCase(surname.charAt(0))) {
+                // Convert the first letter to uppercase
+                surname = Character.toUpperCase(surname.charAt(0)) + surname.substring(1);
+            }
+
+
             if(!isValidPassword(password).isEmpty())
             {
                 return new StandardViewResponse<>(librarian,isValidPassword(password));
             }
-            if(phoneNum.length() != 10)
+            if(!phoneNum.matches("^\\+355 6[0-9] [0-9]{3} [0-9]{4}$"))
             {
-                return new StandardViewResponse<>(librarian,"Phone number must be exactly 10 characters!");
-            }else if(!phoneNum.matches("\\d+"))
-            {
-                return new StandardViewResponse<>(librarian,"Phone number cannot contain characters!");
+                return new StandardViewResponse<>(librarian,"Phone number must be of specified format +355 6X XXX XXXX!");
             }else if(!isUniqueUsername(username))
             {
                 return new StandardViewResponse<>(librarian,"There already exists a user with this username");
             }
+            if(!checkPassword.equals(password))
+            {
+            return new StandardViewResponse<>(librarian,"The password must match with verify password!");
+            }
             salaryDouble = Double.parseDouble(salary);
+            LocalDate localDateCompare = LocalDate.now();
+            if (localDate.isAfter(localDateCompare)) {
+                return new StandardViewResponse<>(librarian,"BirthDate cannot be after actual date!");
+            }else if(localDate.isBefore(localDate.minusYears(100)))
+            {
+                return new StandardViewResponse<>(librarian,"You cannot be this old!");
+            }
             librarian = new Librarian(name, surname, username,
-                    password, salaryDouble, phoneNum);
-            Admin.addLibrarian(librarian);
+                    password, salaryDouble, phoneNum,gender,localDate,accessLevel);
+            addLibrarian(librarian);
             System.out.println("Librarian was successfully added");
         }catch(NumberFormatException n){
             System.out.println(n.getMessage());
@@ -176,7 +235,7 @@ public class LibrarianController {
 
     static boolean isUniqueUsername(String username)
     {
-        var libararians = Admin.getLibrarians();
+        var libararians = FileController.librarians;
         for(Librarian librarian : libararians)
         {
             if(librarian.getUsername().equals(username))
@@ -185,6 +244,37 @@ public class LibrarianController {
             }
         }
         return true;
+    }
+    public Librarian findLibrarianById(int id)
+    {
+        for(Librarian librarian : FileController.librarians)
+        {
+            if(librarian.getId() == id)
+                return librarian;
+        }
+        return null;
+    }
+
+    public void  addLibrarian(Librarian librarian)
+    {
+        FileController.librarians.add(librarian);
+    }
+    public Librarian findLibrarian(int index){return FileController.librarians.get(index);}
+
+    public void deleteLibrarianByUsername(String username)
+    {
+        int index = 0;
+        for(int i = 0; i < FileController.librarians.size();i++)
+        {
+            if(FileController.librarians.get(i).getUsername().equals(username)) {
+                deleteLibrarianById(i);
+                return;
+            }
+        }
+    }
+    public  void deleteLibrarianById(int id)
+    {
+        FileController.librarians.remove(id);
     }
 
 }

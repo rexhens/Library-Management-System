@@ -1,8 +1,12 @@
 package Models;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public abstract class User implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 2489625482462756647L;
     private static int noUsers;
     private int id;
     private String name;
@@ -12,11 +16,31 @@ public abstract class User implements Serializable {
     private String password;
     private double salary;
     private String phoneNum;
+    private LocalDate birthDate;
+    private int accessLevel;
+    private Gender gender;
 
     public User(){
 
     }
-    public User(String username, String password,Roles role){
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public User(String username, String password, Roles role){
         this.username = username;
         this.password = password;
         this.userRole = role;
@@ -25,7 +49,7 @@ public abstract class User implements Serializable {
 
     public User(String name, String surname, String username,
                 Roles userRole, String password, double salary,
-                String phoneNum) {
+                String phoneNum,LocalDate date, Gender gender,int accessLevel) {
         this.id = ++noUsers;
         this.name = name;
         this.surname = surname;
@@ -34,6 +58,9 @@ public abstract class User implements Serializable {
         this.password = password;
         this.salary = salary;
         this.phoneNum = phoneNum;
+        this.birthDate = date;
+        this.gender = gender;
+        this.accessLevel = accessLevel;
     }
 
     public String getName() {

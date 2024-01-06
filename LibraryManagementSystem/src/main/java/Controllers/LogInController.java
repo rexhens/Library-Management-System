@@ -1,9 +1,11 @@
 package Controllers;
 
 import Models.Admin;
+import Models.Librarian;
 import Models.User;
 import Models.StandardViewResponse;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class LogInController {
@@ -21,6 +23,8 @@ public class LogInController {
 
         }
         users.add(new Admin("admin","admin"));
+        users.addAll(FileController.librarians);
+        users.addAll(FileController.managers);
         for(User user : users)
         {
             if(user.getUsername().equals(username))

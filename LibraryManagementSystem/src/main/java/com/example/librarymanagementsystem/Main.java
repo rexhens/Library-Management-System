@@ -7,6 +7,7 @@ import Models.User;
 import Views.AddUserView;
 import Views.LogInView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -18,9 +19,14 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
         FileController fileController = new FileController();
-        Admin.setLibrarians(fileController.readFromFile("users.dat"));
+        FileController.librarians =(ArrayList<Librarian>) fileController.readFromFile("users.dat");
         LogInView lg = new LogInView();
         Scene scene = lg.showLogInScene(stage);
+        stage.setOnCloseRequest(e->
+        {
+            fileController.writeToFile(FileController.librarians,"users.dat");
+            Platform.exit();
+        });
         stage.setTitle("Library Management System");
         stage.setScene(scene);
         stage.show();

@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.FileController;
+import Controllers.LibrarianController;
 import Models.Admin;
 import Models.Librarian;
 import javafx.application.Application;
@@ -15,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -58,7 +60,7 @@ public class AdminHomePage extends Application {
 
     public Scene manageLibrariansView(Stage stage)
     {
-        ArrayList<Librarian> librarians = Admin.getLibrarians();
+        ArrayList<Librarian> librarians = FileController.librarians;
         ArrayList<Button> librarianNameBtn = new ArrayList<>();
 
         for(Librarian librarian : librarians)
@@ -86,7 +88,8 @@ public class AdminHomePage extends Application {
         }
         for(int i = 0; i < librarianNameBtn.size();i++)
         {
-            Librarian librarian = Admin.findLibrarian(i);
+            LibrarianController librarianController = new LibrarianController();
+            Librarian librarian = librarianController.findLibrarian(i);
             librarianNameBtn.get(i).setOnAction(e ->
             {
                 EditLibrarianView librarianDetails = new EditLibrarianView();
@@ -114,19 +117,19 @@ public class AdminHomePage extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FileController fileController = new FileController();
-
-        ArrayList<Librarian> setLibrarians = new ArrayList<>();
-          setLibrarians.add(new Librarian("name1","surname1","username1","password",100,"23423424"));
-          setLibrarians.add(new Librarian("name2","surname2","username2","password",100,"23423424"));
-         setLibrarians.add(new Librarian("name3","surname3","username3","password",100,"23423424"));
-            Admin.setLibrarians(setLibrarians);
-            fileController.writeToFile(Admin.getLibrarians(),"users.dat");
-        Admin.setLibrarians(fileController.readFromFile("users.dat"));
-        Scene scene = manageLibrariansView(stage);
-        stage.setTitle("Library Management System");
-        stage.setScene(scene);
-        stage.show();
+//        FileController fileController = new FileController();
+//
+//        ArrayList<Librarian> setLibrarians = new ArrayList<>();
+//          setLibrarians.add(new Librarian("name1","surname1","username1","password",100,"23423424"));
+//          setLibrarians.add(new Librarian("name2","surname2","username2","password",100,"23423424"));
+//         setLibrarians.add(new Librarian("name3","surname3","username3","password",100,"23423424"));
+//            Admin.setLibrarians(setLibrarians);
+//            fileController.writeToFile(FileController.librarians,"users.dat");
+//        Admin.setLibrarians(fileController.readFromFile("users.dat"));
+//        Scene scene = manageLibrariansView(stage);
+//        stage.setTitle("Library Management System");
+//        stage.setScene(scene);
+//        stage.show();
     }
 
     public static void main(String[] args) {

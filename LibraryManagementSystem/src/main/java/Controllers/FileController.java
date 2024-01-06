@@ -2,6 +2,7 @@ package Controllers;
 
 import Models.Admin;
 import Models.Librarian;
+import Models.Manager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -11,13 +12,23 @@ import java.util.ArrayList;
 import static javafx.application.Application.launch;
 
 public class FileController<T> extends Application {
+    public static ArrayList<Librarian> librarians;
+    public static ArrayList<Manager> managers;
+    public FileController(){
+        if (managers == null) {
+            managers = new ArrayList<>();
+        }
+        if (librarians == null) {
+            librarians = new ArrayList<>();
+        }
+    }
     public void writeToFile(ArrayList<Librarian> objects, String fileName) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(fileName))) {
             for(Librarian object : objects)
             {
                 outputStream.writeObject(object);
             }
-            System.out.println("Librarians written successfully");
+            System.out.println("Librarians written successfully to file!");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
