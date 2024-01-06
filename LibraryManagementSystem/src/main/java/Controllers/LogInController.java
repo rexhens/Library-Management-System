@@ -9,7 +9,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class LogInController {
-    public static ArrayList<User> users = new ArrayList<>();
 
     public StandardViewResponse<User> OnLogInBtnClick(String username, String password)
     {
@@ -22,10 +21,8 @@ public class LogInController {
             return  new StandardViewResponse<User>(null,"Password cannot be null!");
 
         }
-        users.add(new Admin("admin","admin"));
-        users.addAll(FileController.librarians);
-        users.addAll(FileController.managers);
-        for(User user : users)
+
+        for(User user : FileController.users)
         {
             if(user.getUsername().equals(username))
             {

@@ -53,7 +53,6 @@ public class LogInView {
         Button submitButton = new Button("Log In");
     //  GridPane.setColumnSpan(submitButton, 2);
         gridPane.add(submitButton, 0, 3);
-        String errMsg = "";
 
         submitButton.setOnAction(e -> {
             LogInController controller = new LogInController();

@@ -3,6 +3,8 @@ package Controllers;
 import Models.Admin;
 import Models.Gender;
 import Models.Librarian;
+import Models.User;
+import javafx.scene.control.Button;
 import Models.StandardViewResponse;
 
 import java.time.LocalDate;
@@ -11,7 +13,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class LibrarianController {
-    public StandardViewResponse<Librarian> editLibrarian(String name, String surname, String username,
+    public StandardViewResponse<User> editLibrarian(String name, String surname, String username,
                                                         String salary, String phoneNum,int id,Gender gender,int accessLevel
                                                         ,LocalDate localDate)
     {
@@ -98,12 +100,12 @@ public class LibrarianController {
         return new StandardViewResponse<>(librarian,"");
     }
 
-    public StandardViewResponse<Librarian> addLibrarian(String name, String surname, String username,
+    public StandardViewResponse<User> addLibrarian(String name, String surname, String username,
                                                         String password, String salary, String phoneNum, LocalDate localDate,
                                                         Gender gender,int accessLevel,String checkPassword)
     {
         double salaryDouble;
-        Librarian librarian = null;
+        User librarian = null;
         try {
 
             if(name.isEmpty() || surname.isEmpty() || username.isEmpty() || password.isEmpty()
@@ -237,14 +239,13 @@ public class LibrarianController {
 
     static boolean isSpecialChar(char ch) {
         // Define your set of special characters
-        String specialChars = "!@#$%^&*()";
+        String specialChars = "!@#$%^&*()._";
         return specialChars.contains(String.valueOf(ch));
     }
 
     static boolean isUniqueUsername(String username)
     {
-        var libararians = FileController.librarians;
-        for(Librarian librarian : libararians)
+        for(User librarian : FileController.users)
         {
             if(librarian.getUsername().equals(username))
             {
@@ -255,34 +256,41 @@ public class LibrarianController {
     }
     public Librarian findLibrarianById(int id)
     {
-        for(Librarian librarian : FileController.librarians)
+        for(User librarian : FileController.users)
         {
             if(librarian.getId() == id)
-                return librarian;
+                return (Librarian)librarian;
         }
         return null;
     }
 
-    public void  addLibrarian(Librarian librarian)
+    public void  addLibrarian(User librarian)
     {
-        FileController.librarians.add(librarian);
+        FileController.users.add(librarian);
     }
-    public Librarian findLibrarian(int index){return FileController.librarians.get(index);}
+    public Librarian findLibrarian(int index){
+        ArrayList<Librarian> librarians = new ArrayList<>();
+        for (User librarian : FileController.users) {
+            if(librarian instanceof Librarian){
+                librarians.add((Librarian)librarian);
+            } 
+        }
+        return librarians.get(index);}
 
     public void deleteLibrarianByUsername(String username)
     {
         int index = 0;
-        for(int i = 0; i < FileController.librarians.size();i++)
+        for(int i = 0; i < FileController.users.size();i++)
         {
-            if(FileController.librarians.get(i).getUsername().equals(username)) {
+            if(FileController.users.get(i).getUsername().equals(username)) {
                 deleteLibrarianById(i);
                 return;
             }
         }
     }
-    public  void deleteLibrarianById(int id)
+    public void deleteLibrarianById(int id)
     {
-        FileController.librarians.remove(id);
+        FileController.users.remove(id);
     }
 
 }

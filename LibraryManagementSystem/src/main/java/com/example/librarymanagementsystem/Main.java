@@ -1,30 +1,28 @@
 package com.example.librarymanagementsystem;
 
 import Controllers.FileController;
-import Models.Admin;
-import Models.Librarian;
-import Models.User;
-import Views.AddUserView;
 import Views.LogInView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
+        @SuppressWarnings("unused")
         FileController fileController = new FileController();
-        FileController.librarians =(ArrayList<Librarian>) fileController.readFromFile("users.dat");
         LogInView lg = new LogInView();
         Scene scene = lg.showLogInScene(stage);
         stage.setOnCloseRequest(e->
         {
-            fileController.writeToFile(FileController.librarians,"users.dat");
+            FileController.writeUsers();
+            FileController.writeAuthors();
+            FileController.writeBooks();
+            FileController.writeCategories();
+            FileController.writeTransactions();
             Platform.exit();
         });
         stage.setTitle("Library Management System");

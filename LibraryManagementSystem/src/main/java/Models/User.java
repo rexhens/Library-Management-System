@@ -8,6 +8,7 @@ public abstract class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 2489625482462756647L;
     private static int noUsers;
+
     private int id;
     private String name;
     private String surname;
@@ -44,7 +45,7 @@ public abstract class User implements Serializable {
         this.username = username;
         this.password = password;
         this.userRole = role;
-        id++;
+        this.id=++noUsers;
     }
 
     public User(String name, String surname, String username,
@@ -127,4 +128,22 @@ public abstract class User implements Serializable {
         this.phoneNum = phoneNum;
     }
     public int getId(){ return this.id;}
+        public static int getNoUsers() {
+        return noUsers;
+    }
+
+    public static void setNoUsers(int noUsers) {
+        User.noUsers = noUsers;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Name: " + getName() +
+                "\nUsername: " + getUsername() +
+                "\nPassword: " + getPassword() +
+                "\nRole: " + getUserRole() +
+                "\nSalary: " + getSalary() +
+                "\nPhone Number: " + getPhoneNum();
+    }
 }

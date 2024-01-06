@@ -1,15 +1,12 @@
 package Models;
 
 import java.io.Serial;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Admin extends User {
     @Serial
     private static final long serialVersionUID = -6732666656741093238L;
-    private static ArrayList<Librarian> librarians;
-    private static ArrayList<Manager> managers;
 
     public Admin(String username, String password) {
         super(username, password,Roles.Admin);
@@ -20,6 +17,5 @@ public class Admin extends User {
         super(name, surname, username, userRole, password, salary, phoneNum,date,gender,accessLevel);
 
     }
-
 
 }

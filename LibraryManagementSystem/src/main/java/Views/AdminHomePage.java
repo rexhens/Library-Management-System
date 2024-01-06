@@ -2,8 +2,8 @@ package Views;
 
 import Controllers.FileController;
 import Controllers.LibrarianController;
-import Models.Admin;
 import Models.Librarian;
+import Models.User;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,7 +18,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -68,11 +67,14 @@ public class AdminHomePage extends Application {
     }
 
     public Scene manageLibrariansView(Stage stage) {
-        ArrayList<Librarian> librarians = FileController.librarians;
+        ArrayList<Librarian> librarians = new ArrayList<>();
         ArrayList<Button> librarianNameBtn = new ArrayList<>();
 
-        for (Librarian librarian : librarians) {
-            librarianNameBtn.add(new Button(librarian.getName()));
+        for (User librarian : FileController.users) {
+            if(librarian instanceof Librarian){
+                librarians.add((Librarian)librarian);
+                librarianNameBtn.add(new Button(librarian.getName()));
+            } 
         }
 
         Button backBtn = new Button("Back");
