@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -66,15 +67,18 @@ public class AdminHomePage extends Application {
         return new Scene(border,700,500);
     }
 
-    public Scene manageLibrariansView(Stage stage)
-    {
+    public Scene manageLibrariansView(Stage stage) {
         ArrayList<Librarian> librarians = FileController.librarians;
         ArrayList<Button> librarianNameBtn = new ArrayList<>();
 
-        for(Librarian librarian : librarians)
-        {
+        for (Librarian librarian : librarians) {
             librarianNameBtn.add(new Button(librarian.getName()));
         }
+
+        Button backBtn = new Button("Back");
+        Button addNewLibrarianBtn = new Button("Add new Librarian");
+        librarianNameBtn.add(backBtn);
+        librarianNameBtn.add(addNewLibrarianBtn);
 
         BorderPane border = new BorderPane();
 
@@ -90,37 +94,36 @@ public class AdminHomePage extends Application {
         gridPane.setHgap(5);
         gridPane.setVgap(5);
 
-        for(int i = 0; i < librarianNameBtn.size();i++)
-        {
-         gridPane.add(librarianNameBtn.get(i),i,0);
-        }
-        for(int i = 0; i < librarianNameBtn.size();i++)
-        {
-            LibrarianController librarianController = new LibrarianController();
-            Librarian librarian = librarianController.findLibrarian(i);
-            librarianNameBtn.get(i).setOnAction(e ->
-            {
-                EditLibrarianView librarianDetails = new EditLibrarianView();
-                stage.setScene(librarianDetails.editLibrarian(stage,librarian));
+        int row = 0;
+        HBox currentHBox = new HBox();
+
+        for (int i = 0; i < librarianNameBtn.size(); i++) {
+            int finalI = i; // Capture the correct value of i
+            currentHBox.getChildren().add(librarianNameBtn.get(i));
+
+            if ((i + 1) % 5 == 0 || i == librarianNameBtn.size() - 1) {
+                gridPane.add(currentHBox, 0, row++);
+                currentHBox = new HBox();
+            }
+
+            librarianNameBtn.get(i).setOnAction(e -> {
+                if (finalI < librarians.size()) {
+                    LibrarianController librarianController = new LibrarianController();
+                    Librarian librarian = librarianController.findLibrarian(finalI);
+                    EditLibrarianView librarianDetails = new EditLibrarianView();
+                    stage.setScene(librarianDetails.editLibrarian(stage, librarian));
+                } else if (finalI == librarianNameBtn.size() - 2) { // Back button
+                    AdminHomePage adminHomePage = new AdminHomePage();
+                    stage.setScene(adminHomePage.showAdminHomePage(stage));
+                } else if (finalI == librarianNameBtn.size() - 1) { // Add new Librarian button
+                    AddUserView addUserView = new AddUserView();
+                    stage.setScene(addUserView.addLibrarian(stage));
+                }
             });
         }
-        Button backBtn = new Button("Back");
-        gridPane.add(backBtn,librarians.size()+1,0);
-        Button addNewLibrarianBtn = new Button("Add new Librarian");
-        addNewLibrarianBtn.setOnAction(e->
-        {
-            AddUserView addUserView = new AddUserView();
-            stage.setScene(addUserView.addLibrarian(stage));
-        });
-        backBtn.setOnAction(e->{
-            AdminHomePage adminHomePage = new AdminHomePage();
-            stage.setScene(adminHomePage.showAdminHomePage(stage));
-        });
 
-        gridPane.add(addNewLibrarianBtn,librarians.size(),0);
         border.setCenter(gridPane);
-
-        return new Scene(border,700,500);
+        return new Scene(border, 700, 500);
     }
 
     @Override
