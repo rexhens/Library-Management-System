@@ -95,7 +95,7 @@ public class AdminHomePage extends Application {
         gridPane.setVgap(5);
 
         int row = 0;
-        HBox currentHBox = new HBox();
+        HBox currentHBox = new HBox(10);
 
         for (int i = 0; i < librarianNameBtn.size(); i++) {
             int finalI = i; // Capture the correct value of i
@@ -103,7 +103,7 @@ public class AdminHomePage extends Application {
 
             if ((i + 1) % 5 == 0 || i == librarianNameBtn.size() - 1) {
                 gridPane.add(currentHBox, 0, row++);
-                currentHBox = new HBox();
+                currentHBox = new HBox(10);
             }
 
             librarianNameBtn.get(i).setOnAction(e -> {
