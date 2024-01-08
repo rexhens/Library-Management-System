@@ -28,7 +28,7 @@ public class EmployeeHomePage {
 
     public Scene showView(Stage stage) {
         BorderPane bp = new BorderPane();
-        Text text = new Text("Home Page");
+        Text text = new Text("Homepage");
         StackPane pane1 = new StackPane();
         text.setFont(new Font(30));
         pane1.getChildren().add(text);
