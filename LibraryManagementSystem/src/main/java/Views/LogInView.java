@@ -82,8 +82,9 @@ public class LogInView {
                     AdminHomePage adminHomePage = new AdminHomePage();
                     stage.setScene(adminHomePage.showAdminHomePage(stage));
                 }
-                else if (user.getUser() instanceof Librarian) {
-
+                else {
+                    EmployeeHomePage employeeHomePage = new EmployeeHomePage(user.getUser());
+                    stage.setScene(employeeHomePage.showView(stage));
                 }
             }
         });
@@ -118,7 +119,8 @@ public class LogInView {
                     }
                     else
                     {
-
+                        EmployeeHomePage employeeHomePage = new EmployeeHomePage(user.getUser());
+                        stage.setScene(employeeHomePage.showView(stage));
                     }
 
                 }
