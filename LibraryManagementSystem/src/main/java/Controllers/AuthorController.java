@@ -2,6 +2,8 @@ package Controllers;
 
 import Models.Author;
 import Models.Gender;
+import Models.Librarian;
+import Models.User;
 
 public class AuthorController {
 
@@ -20,13 +22,14 @@ public class AuthorController {
 		return true;
 	}
 
-	public Author findAuthor(String name, String surname,Gender gender) {
+	public Author findAuthor(int id) {
 		for(Author a:FileController.authors){
-        if(a.getName().equals(name)&&a.getSurname().equals(surname)&&a.getGender().equals(gender))
+        if(a.getID()==id)
 			return a;
 		}
 		return null;
 	}
+
 
     public boolean authorNameValidation(){
         return false;

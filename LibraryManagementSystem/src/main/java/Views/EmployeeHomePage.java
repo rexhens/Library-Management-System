@@ -47,6 +47,10 @@ public class EmployeeHomePage {
             stage.setScene(bv.showView(stage));
         });
         Button authorInfo = new Button("All Authors");
+        authorInfo.setOnAction(e->{
+            AuthorInfoView av= new AuthorInfoView(currentUser);
+            stage.setScene(av.showView(stage));
+        });
         Button categoryInfo = new Button("All Categories");
 
         EmployeeBt.add(bookInfo);
@@ -94,7 +98,7 @@ public class EmployeeHomePage {
                 error.setHeaderText("You are logging out!");
                 error.showAndWait();
                 LogInView li=new LogInView();
-                stage.setTitle("Log in");
+                stage.setTitle("Library Management System");
                 stage.setScene(li.showLogInScene(stage));
             }});
         int row=1;
