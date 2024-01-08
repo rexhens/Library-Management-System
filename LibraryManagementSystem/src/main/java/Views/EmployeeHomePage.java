@@ -42,6 +42,10 @@ public class EmployeeHomePage {
         ArrayList<Button> EmployeeBt = new ArrayList<>();
 
         Button bookInfo = new Button("Book Information");
+        bookInfo.setOnAction(e->{
+            BookInfoView bv = new BookInfoView(currentUser);
+            stage.setScene(bv.showView(stage));
+        });
         Button authorInfo = new Button("All Authors");
         Button categoryInfo = new Button("All Categories");
 
