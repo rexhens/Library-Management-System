@@ -43,7 +43,7 @@ public class EmployeeHomePage {
 
         Button bookInfo = new Button("Book Information");
         bookInfo.setOnAction(e->{
-            BookInfoView bv = new BookInfoView(currentUser);
+            BookView bv = new BookView(currentUser);
             stage.setScene(bv.showView(stage));
         });
         Button authorInfo = new Button("All Authors");
@@ -65,6 +65,10 @@ public class EmployeeHomePage {
 
         if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3){
             Button addNewBook = new Button ("Add New Book");
+            addNewBook.setOnAction(e->{
+            AddNewBookView nb= new AddNewBookView(currentUser);
+            stage.setScene(nb.showView(stage));
+        });
             Button modifyBook = new Button("Modify Book data");
             Button totalBookSold = new Button("Sold Book Copies");
             Button addStock = new Button("Add Stock");

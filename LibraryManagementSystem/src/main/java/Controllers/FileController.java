@@ -7,14 +7,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import Models.*;
 import Models.Admin;
 import Models.Author;
 import Models.Bill;
 import Models.Book;
 import Models.Category;
 import Models.User;
-import Models.Gender;
 
 public class FileController{
     public static ArrayList<User> users;
