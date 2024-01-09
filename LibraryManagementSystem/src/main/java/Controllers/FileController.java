@@ -8,6 +8,13 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import Models.*;
+import Models.Admin;
+import Models.Author;
+import Models.Bill;
+import Models.Book;
+import Models.Category;
+import Models.User;
+import Models.Gender;
 
 public class FileController{
     public static ArrayList<User> users;
@@ -25,7 +32,7 @@ public class FileController{
     private final static String CATEGORY_ADD = "categories.dat";
     private final static String BOOK_ADD = "books.dat";
     private final static String TRANSACTION_ADD = "transactions.dat";
-    private final static String AUTHOR_ADD= "authors.bin";
+    private final static String AUTHOR_ADD= "authors.dat";
     
     public FileController(){
 		try{

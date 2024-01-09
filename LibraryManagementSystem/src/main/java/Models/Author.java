@@ -5,11 +5,15 @@ import java.io.Serializable;
 public class Author implements Serializable{
     @Serial
     private static final long serialVersionUID = -3802481739164397635L;
+
+    private static int noAuthor;
+    private int ID;
     private String name;
     private String surname;
     private Gender gender;
 
     public Author (String name,String surname, Gender gender){
+        this.ID=++noAuthor;
         this.name=name;
         this.surname=surname;
         this.gender=gender;
@@ -32,6 +36,13 @@ public class Author implements Serializable{
     }
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
 }
