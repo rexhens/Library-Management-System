@@ -35,26 +35,32 @@ public class SoldBooksView {
         gridPane.setAlignment(Pos.CENTER);
 
         Label boughtTodayLabel = new Label("Books sold Today");
-        gridPane.add(boughtTodayLabel, 0, 0);
+        gridPane.add(boughtTodayLabel,0,0);
         ArrayList<Book> booksBoughtToday = FileController.books;
-        for (int i = 1; i < booksBoughtToday.size(); i++) {
-            gridPane.add(new Label(booksBoughtToday.get(--i).getBookTitle()), 0, i);
+        int j = 0;
+        for(int i = 0; i < booksBoughtToday.size();i++)
+        {
+            gridPane.add(new Label(booksBoughtToday.get(i).getBookTitle()),0,++j);
         }
 
 
         Label boughtThoisMonthLabel = new Label("Books sold This Month");
-        gridPane.add(boughtThoisMonthLabel, 1, 0);
-        ArrayList<Book> booksBoughtThisMonth = Book.booksBoughtThisMonth();
-        for (int i = 1; i < booksBoughtThisMonth.size(); i++) {
-            gridPane.add(new Label(booksBoughtToday.get(--i).getBookTitle()), 1, i);
+        gridPane.add(boughtThoisMonthLabel,1,0);
+        ArrayList<Book> booksBoughtThisMonth = FileController.books;
+        j =0;
+        for(int i = 0; i < booksBoughtThisMonth.size();i++)
+        {
+            gridPane.add(new Label(booksBoughtToday.get(i).getBookTitle()),1,++j);
         }
 
 
         Label boughtThisYearLabel = new Label("Books sold This Year");
-        gridPane.add(boughtThisYearLabel, 2, 0);
-        ArrayList<Book> booksBoughtThisYear = Book.booksBoughtToday();
-        for (int i = 1; i < booksBoughtThisYear.size(); i++) {
-            gridPane.add(new Label(booksBoughtThisYear.get(--i).getBookTitle() + booksBoughtThisYear.get(--i).getSellingPrice()), 2, i);
+        gridPane.add(boughtThisYearLabel,2,0);
+        ArrayList<Book> booksBoughtThisYear = FileController.books;
+        j=0;
+        for(int i = 0; i < booksBoughtThisYear.size();i++)
+        {
+            gridPane.add(new Label(booksBoughtThisYear.get(i).getBookTitle()),2,++j);
         }
 
         Button backBtn = new Button("Back");
