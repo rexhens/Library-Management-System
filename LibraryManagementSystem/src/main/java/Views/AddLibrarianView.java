@@ -14,7 +14,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class AddUserView {
+public class AddLibrarianView {
     public Scene addLibrarian(Stage stage)
     {
         BorderPane borderPane = new BorderPane();

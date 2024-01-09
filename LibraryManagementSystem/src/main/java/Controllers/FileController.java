@@ -7,12 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import Models.Admin;
-import Models.Author;
-import Models.Bill;
-import Models.Book;
-import Models.Category;
-import Models.User;
+import Models.*;
 
 public class FileController{
     public static ArrayList<User> users;
@@ -20,7 +15,6 @@ public class FileController{
     public static ArrayList<Book> books;
     public static ArrayList<Bill> transactions;
     public static ArrayList<Author> authors;
-
 	private static File authorsFile;
 	private static File transactionsFile;
 	private static File booksFile;

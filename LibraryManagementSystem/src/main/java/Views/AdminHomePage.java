@@ -2,8 +2,11 @@ package Views;
 
 import Controllers.FileController;
 import Controllers.LibrarianController;
+import Controllers.ManagerController;
 import Models.Librarian;
+import Models.Manager;
 import Models.User;
+import Views.Statistics.StatisticMainView;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -53,10 +56,12 @@ public class AdminHomePage extends Application {
             stage.setScene(manageLibrariansView(stage));
         });
         manageManagerBtn.setOnAction(e ->{
-            @SuppressWarnings("unused")
-            AddUserView addUserView = new AddUserView();
+           stage.setScene(manageManagersView(stage));
         });
-
+        statisticBtn.setOnAction(e->{
+            StatisticMainView statisticMainView = new StatisticMainView();
+            stage.setScene(statisticMainView.showStatisticsView(stage));
+        });
         logOutbtn.setOnAction(e -> {
             Alert error = new Alert(Alert.AlertType.INFORMATION);
             error.setHeaderText("You have been logged out!");
@@ -85,7 +90,7 @@ public class AdminHomePage extends Application {
 
         BorderPane border = new BorderPane();
 
-        Text text = new Text("Home Page");
+        Text text = new Text("Manage Librarians");
         StackPane stack = new StackPane();
         text.setFont(new Font(30));
         stack.getChildren().add(text);
@@ -113,14 +118,79 @@ public class AdminHomePage extends Application {
                 if (finalI < librarians.size()) {
                     LibrarianController librarianController = new LibrarianController();
                     Librarian librarian = librarianController.findLibrarian(finalI);
-                    EditLibrarianView librarianDetails = new EditLibrarianView();
-                    stage.setScene(librarianDetails.editLibrarian(stage, librarian));
+                    ManageLibrarianView librarianDetails = new ManageLibrarianView();
+                    stage.setScene(librarianDetails.showManageLibrarianView(librarian, stage));
                 } else if (finalI == librarianNameBtn.size() - 2) { // Back button
                     AdminHomePage adminHomePage = new AdminHomePage();
                     stage.setScene(adminHomePage.showAdminHomePage(stage));
                 } else if (finalI == librarianNameBtn.size() - 1) { // Add new Librarian button
-                    AddUserView addUserView = new AddUserView();
+                    AddLibrarianView addUserView = new AddLibrarianView();
                     stage.setScene(addUserView.addLibrarian(stage));
+                }
+            });
+        }
+
+        border.setCenter(gridPane);
+        return new Scene(border, 700, 500);
+    }
+
+
+    public Scene manageManagersView(Stage stage) {
+        ArrayList<Manager> managers = new ArrayList<>();
+        ArrayList<Button> managersNameBtn = new ArrayList<>();
+
+        for (User manager : FileController.users) {
+            if(manager instanceof Manager){
+                managers.add((Manager)manager);
+                managersNameBtn.add(new Button(manager.getName()));
+            }
+        }
+
+        Button backBtn = new Button("Back");
+        Button addNewLibrarianBtn = new Button("Add new Manager");
+        managersNameBtn.add(backBtn);
+        managersNameBtn.add(addNewLibrarianBtn);
+
+        BorderPane border = new BorderPane();
+
+        Text text = new Text("Manage Managers");
+        StackPane stack = new StackPane();
+        text.setFont(new Font(30));
+        stack.getChildren().add(text);
+        stack.setPadding(new Insets(20));
+        border.setTop(stack);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(5);
+        gridPane.setVgap(5);
+
+        int row = 0;
+        HBox currentHBox = new HBox(10);
+
+        for (int i = 0; i < managersNameBtn.size(); i++) {
+            int finalI = i; // Capture the correct value of i
+            currentHBox.getChildren().add(managersNameBtn.get(i));
+
+            if ((i + 1) % 5 == 0 || i == managersNameBtn.size() - 1) {
+                gridPane.add(currentHBox, 0, row++);
+                currentHBox = new HBox(10);
+            }
+
+            managersNameBtn.get(i).setOnAction(e -> {
+                if (finalI < managers.size()) {
+
+                    ManagerController managerController = new ManagerController();
+                    Manager manager = managerController.findManagerByIndex(finalI);
+                  ManageManagerView manageManagersView = new ManageManagerView();
+                    stage.setScene(manageManagersView.showManageManagerView(manager,stage));
+
+                } else if (finalI == managersNameBtn.size() - 2) { // Back button
+                    AdminHomePage adminHomePage = new AdminHomePage();
+                    stage.setScene(adminHomePage.showAdminHomePage(stage));
+                } else if (finalI == managersNameBtn.size() - 1) { // Add new Manager button
+                    AddManagerView addUserView = new AddManagerView();
+                    stage.setScene(addUserView.showAddManagerView(stage));
                 }
             });
         }

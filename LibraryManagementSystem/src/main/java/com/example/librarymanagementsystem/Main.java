@@ -1,6 +1,9 @@
 package com.example.librarymanagementsystem;
 
 import Controllers.FileController;
+import Models.Librarian;
+import Models.Manager;
+import Models.User;
 import Views.LogInView;
 import javafx.application.Application;
 import javafx.application.Platform;

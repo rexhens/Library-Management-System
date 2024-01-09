@@ -1,9 +1,6 @@
 package Controllers;
 
-import Models.Gender;
-import Models.Librarian;
-import Models.User;
-import Models.StandardViewResponse;
+import Models.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -283,9 +280,24 @@ public class LibrarianController {
             }
         }
     }
-    public void deleteLibrarianById(int id)
+    public boolean deleteLibrarianById(int id)
     {
-        FileController.users.remove(id);
+        var exists = findLibrarianById(id);
+        if(exists == null){
+            return false;
+        }
+            for(User librarian : FileController.users)
+            {
+                if(librarian instanceof Librarian)
+                {
+                    if(librarian.getId() == id)
+                    {
+                        FileController.users.remove(librarian);
+                        return true;
+                    }
+                }
+            }
+        return false;
     }
 
 }

@@ -1,6 +1,10 @@
 package Models;
+import Controllers.FileController;
+
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -100,6 +104,42 @@ public class Book implements Serializable{
     }
     public void setAuthor(Author author) {
         this.author = author;
+    }
+    public static ArrayList<Book> booksBoughtToday()
+    {
+        ArrayList<Book> result = new ArrayList<>();
+        var books = FileController.books;
+
+       for(Book book : books)
+        {
+            LocalDate purchasedLocalDate = book.getPurchasedDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if(purchasedLocalDate.equals(LocalDate.now()))
+            {
+                result.add(book);
+            }
+        }
+//        result.add(new Book("123456789", "Sample Book", new Author("John Doe", "john.doe@example.com",Gender.Male), new ArrayList<Category>(),
+            //  "Sample Supplier", 20, 25, 30, 50, "path/to/cover.jpg"));
+        return result;
+    }
+
+    public static ArrayList<Book> booksBoughtThisMonth()
+    {
+        ArrayList<Book> result = new ArrayList<>();
+        var books = FileController.books;
+
+        int currentMonth = LocalDate.now().getMonthValue();
+
+        for (Book book : books) {
+            LocalDate purchasedLocalDate = book.getPurchasedDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+            if (purchasedLocalDate.getMonthValue() == currentMonth) {
+                result.add(book);
+            }
+        }
+//        result.add(new Book("123456789", "Sample Book", new Author("John Doe", "john.doe@example.com",Gender.Male), new ArrayList<Category>(),
+//                "Sample Supplier", 20, 25, 30, 50, "path/to/cover.jpg"));
+        return result;
     }
     @Override
     public String toString() {
