@@ -17,7 +17,7 @@ public class Main extends Application {
         @SuppressWarnings("unused")
         FileController fileController = new FileController();
         LogInView lg = new LogInView();
-        StatisticMainView statisticMainView = new StatisticMainView();
+        //StatisticMainView statisticMainView = new StatisticMainView();
         Scene scene = lg.showLogInScene(stage);
 
         stage.setOnCloseRequest(e->
@@ -32,7 +32,8 @@ public class Main extends Application {
 
 
         stage.setTitle("Library Management System");
-        stage.setScene(statisticMainView.showStatisticsView(stage));
+        //stage.setScene(statisticMainView.showStatisticsView(stage));
+        stage.setScene(scene);
         stage.show();
     }
 

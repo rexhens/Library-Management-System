@@ -4,20 +4,18 @@ import java.util.ArrayList;
 
 import Controllers.BookController;
 import Controllers.FileController;
-import javafx.geometry.Insets;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
+
 
 public class BookCatalogPane {
-    public GridPane showPane() {
-        GridPane pane = new GridPane();
-        pane.setHgap(10);
-        pane.setVgap(10);
-        pane.setPadding(new Insets(10, 10, 10, 10));
+    public VBox showPane() {
+        VBox pane = new VBox(10);
         pane.setAlignment(Pos.CENTER);
 
         ArrayList<ImageView> bookCatalog = new ArrayList<>();
@@ -29,15 +27,29 @@ public class BookCatalogPane {
             bookCatalog.add(display);
         }
 
-        int row = 0;
         HBox currentHBox = new HBox(15);
         for (int i = 0; i < bookCatalog.size(); i++) {
             currentHBox.getChildren().add(bookCatalog.get(i));
             if ((i + 1) % 5 == 0 || i == bookCatalog.size() - 1) {
-                pane.add(currentHBox,0,row++);
+                pane.getChildren().add(currentHBox);
                 currentHBox = new HBox(15);
             }
         }
+
+        for (int i = 0; i < bookCatalog.size(); i++) {
+            ImageView imageView = bookCatalog.get(i);
+            int bookIndex = i;
+
+            imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    pane.getChildren().clear();
+                    BookDetailsPane bookDetails = new BookDetailsPane();
+                    pane.getChildren().add(bookDetails.showPane(FileController.books.get(bookIndex)));
+                }
+            });
+        }
+
         return pane;
     }
 }

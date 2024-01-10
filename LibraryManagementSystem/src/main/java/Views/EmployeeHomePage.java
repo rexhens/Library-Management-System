@@ -60,6 +60,10 @@ public class EmployeeHomePage {
 
         if(currentUser.getAccessLevel()==1||currentUser.getAccessLevel()==3) {
             Button billing = new Button("Print Bill");
+            billing.setOnAction(e->{
+                PrintBillView printBill= new PrintBillView(currentUser);
+                stage.setScene(printBill.showView(stage));
+            });
             EmployeeBt.add(billing);
         }
 
@@ -115,7 +119,7 @@ public class EmployeeHomePage {
             }
         }
         bp.setCenter(p);
-        Scene sc=new Scene(bp,600,550);
+        Scene sc=new Scene(bp,700,500);
         return sc;
     }
 }

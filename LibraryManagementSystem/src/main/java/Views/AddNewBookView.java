@@ -36,7 +36,7 @@ public class AddNewBookView {
 
     // pane.getSubmitBtn().setOnAction(this::onBookSubmit);
     // pane.getHomepageBtn().setOnAction(e->{});
-        Scene scene = new Scene(pane, 500, 500);
+        Scene scene = new Scene(pane, 700, 500);
         return scene;
     }
 
