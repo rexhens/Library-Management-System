@@ -1,12 +1,16 @@
 package Views.Statistics;
 
+import Controllers.StatisticsController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -40,23 +44,55 @@ public class IncomesAdminView {
         TextField totalIncomeYearly = new TextField();
         Text textIncomeYearly = new Text("Total Income in a Year");
 
+        Label inputIncomesLabel = new Label("Select a period");
+        inputIncomesLabel.setStyle("-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: grey;");
+        DatePicker dateStart = new DatePicker();
+        dateStart.setEditable(false);
+        DatePicker dateEnd = new DatePicker();
+        dateEnd.setEditable(false);
+        Button validateDates = new Button("Enter");
+        Button clearDates = new Button("Clear");
+
+        HBox hBox = new HBox();
+        hBox.setSpacing(20);
+        hBox.getChildren().addAll(inputIncomesLabel,dateStart,dateEnd,validateDates,clearDates);
+
+        Label generalStatisticLabel = new Label("General Statistics");
+        generalStatisticLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: grey;");
+
+        Label totalBooksSelectedTimeLabel = new Label("Total books during this period");
+        TextField totalBooksSelectedTimeField = new TextField();
+
+        Label totalPriceSelectedTimeLabel = new Label("Total earnings during this period");
+        TextField totalPriceSelectedTimeField = new TextField();
+
+        Label errorLabel = new Label();
+        errorLabel.setVisible(false);
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(5);
         grid.setVgap(5);
-        grid.add(textTotalBooksDay, 0, 0);
-        grid.add(totalBooksDay, 1, 0);
-        grid.add(textIncomeDay, 0, 1);
-        grid.add(totalIncomeDay,1,1);
-        grid.add(textTotalBooksMonth, 2, 0);
-        grid.add(totalBooksMonth,3,0);
-        grid.add(textIncomeMonth, 2, 1);
-        grid.add(totalIncomeMonth, 3, 1);
-        grid.add(textTotalBooksYearly, 4, 0);
-        grid.add(totalBooksYearly, 5, 0);
-        grid.add(textIncomeYearly, 4, 1);
-        grid.add(totalIncomeYearly, 5, 1);
+        grid.add(hBox, 0, 0, 6, 1);
+        grid.add(generalStatisticLabel,2,3,6,1);
+        grid.add(textTotalBooksDay, 0, 5);
+        grid.add(totalBooksDay, 1, 5);
+        grid.add(textIncomeDay, 0, 6);
+        grid.add(totalIncomeDay, 1, 6);
+        grid.add(textTotalBooksMonth, 2, 5);
+        grid.add(totalBooksMonth, 3, 5);
+        grid.add(textIncomeMonth, 2, 6);
+        grid.add(totalIncomeMonth, 3, 6);
+        grid.add(textTotalBooksYearly, 4, 5);
+        grid.add(totalBooksYearly, 5, 5);
+        grid.add(textIncomeYearly, 4, 6);
+        grid.add(totalIncomeYearly, 5, 6);
+        grid.add(errorLabel, 1, 3, 6, 1);
+        grid.add(totalBooksSelectedTimeLabel, 0, 5, 3, 1);
+        grid.add(totalBooksSelectedTimeField, 3, 5, 3, 1);
+        grid.add(totalPriceSelectedTimeLabel, 0, 6, 3, 1);
+        grid.add(totalPriceSelectedTimeField, 3, 6, 3, 1);
+
 
         border.setCenter(grid);
 
@@ -84,6 +120,68 @@ public class IncomesAdminView {
 
         stackBackButton.setPadding(new Insets(0, 0, 40, 0));
         border.setBottom(stackBackButton);
+
+        validateDates.setOnAction(e->
+        {
+            boolean shouldBeVisible = false;
+
+            textTotalBooksDay.setVisible(shouldBeVisible);
+            totalBooksDay.setVisible(shouldBeVisible);
+            textIncomeDay.setVisible(shouldBeVisible);
+            totalIncomeDay.setVisible(shouldBeVisible);
+            textTotalBooksMonth.setVisible(shouldBeVisible);
+            totalBooksMonth.setVisible(shouldBeVisible);
+            textIncomeMonth.setVisible(shouldBeVisible);
+            totalIncomeMonth.setVisible(shouldBeVisible);
+            textTotalBooksYearly.setVisible(shouldBeVisible);
+            totalBooksYearly.setVisible(shouldBeVisible);
+            textIncomeYearly.setVisible(shouldBeVisible);
+            totalIncomeYearly.setVisible(shouldBeVisible);
+            generalStatisticLabel.setVisible(shouldBeVisible);
+
+            StatisticsController statisticsController = new StatisticsController();
+            var result = statisticsController.numberOfBooksDuringPeriod(dateStart.getValue(), dateEnd.getValue());
+            if (result.getErrorMessage() != null) {
+                errorLabel.setText(result.getErrorMessage());
+                errorLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: red;");
+                errorLabel.setVisible(true);
+            }else {
+                totalBooksSelectedTimeField.setEditable(false);
+                totalBooksSelectedTimeField.setText(Integer.toString(result.getUser()));
+                totalPriceSelectedTimeField.setEditable(false);
+                totalPriceSelectedTimeField.setText(Double.toString(0));
+                totalBooksSelectedTimeField.setVisible(true);
+                totalBooksSelectedTimeLabel.setVisible(true);
+                totalPriceSelectedTimeField.setVisible(true);
+                totalPriceSelectedTimeLabel.setVisible(true);
+
+                errorLabel.setVisible(false);
+            }
+        });
+        clearDates.setOnAction(e->{
+            boolean shouldBeVisible = true;
+
+            textTotalBooksDay.setVisible(shouldBeVisible);
+            totalBooksDay.setVisible(shouldBeVisible);
+            textIncomeDay.setVisible(shouldBeVisible);
+            totalIncomeDay.setVisible(shouldBeVisible);
+            textTotalBooksMonth.setVisible(shouldBeVisible);
+            totalBooksMonth.setVisible(shouldBeVisible);
+            textIncomeMonth.setVisible(shouldBeVisible);
+            totalIncomeMonth.setVisible(shouldBeVisible);
+            textTotalBooksYearly.setVisible(shouldBeVisible);
+            totalBooksYearly.setVisible(shouldBeVisible);
+            textIncomeYearly.setVisible(shouldBeVisible);
+            totalIncomeYearly.setVisible(shouldBeVisible);
+            generalStatisticLabel.setVisible(shouldBeVisible);
+            totalBooksSelectedTimeLabel.setVisible(false);
+            totalBooksSelectedTimeField.setVisible(false);
+            totalPriceSelectedTimeLabel.setVisible(false);
+            totalPriceSelectedTimeField.setVisible(false);
+            errorLabel.setVisible(false);
+            dateStart.setValue(null);
+            dateEnd.setValue(null);
+        });
 
         return new Scene(border,700,500);
 

@@ -1,9 +1,7 @@
 package Views.Statistics;
 
-import Controllers.BooksController;
-import Controllers.FileController;
+import Controllers.BookController;
 import Models.Book;
-import Views.AdminHomePage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,7 +22,7 @@ public class BoughtBooksView {
     public Scene showBoughtBooksView(Stage stage){
         BorderPane borderPane = new BorderPane();
 
-        BooksController booksController = new BooksController();
+        BookController booksController = new BookController();
 
         Text text = new Text("Bought books");
         StackPane stack = new StackPane();
