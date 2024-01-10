@@ -38,10 +38,6 @@ public class AuthorInfoView {
 
         Button backBt = new Button("Back");
         authorNameBt.add(backBt);
-        /*backBt.setOnAction(e-> {
-            EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-            stage.setScene(employeeHomePage.showView(stage));
-        });*/
         if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3){
             Button addNewAuthorBtn = new Button("Add new Author");
             authorNameBt.add(addNewAuthorBtn);
@@ -87,6 +83,10 @@ public class AuthorInfoView {
                 }else if (finalI == authorNameBt.size() - 2) { // Back button
                     EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
                     stage.setScene(employeeHomePage.showView(stage));}
+                else if (finalI == authorNameBt.size() - 1) {
+                    AddAuthorView addAuthorView = new AddAuthorView(currentUser);
+                    stage.setScene(addAuthorView.addAuthor(stage));
+                }
             });
         }
 
