@@ -1,7 +1,9 @@
 package com.example.librarymanagementsystem;
 
+import Controllers.BooksController;
 import Controllers.FileController;
 import Views.LogInView;
+import Views.Statistics.StatisticMainView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -15,7 +17,9 @@ public class Main extends Application {
         @SuppressWarnings("unused")
         FileController fileController = new FileController();
         LogInView lg = new LogInView();
+        StatisticMainView statisticMainView = new StatisticMainView();
         Scene scene = lg.showLogInScene(stage);
+
         stage.setOnCloseRequest(e->
         {
             FileController.writeUsers();
@@ -25,8 +29,10 @@ public class Main extends Application {
             FileController.writeTransactions();
             Platform.exit();
         });
+
+
         stage.setTitle("Library Management System");
-        stage.setScene(scene);
+        stage.setScene(statisticMainView.showStatisticsView(stage));
         stage.show();
     }
 

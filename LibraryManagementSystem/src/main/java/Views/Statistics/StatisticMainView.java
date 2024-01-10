@@ -1,13 +1,9 @@
 package Views.Statistics;
 
-import Models.Admin;
-import Views.AddManagerView;
 import Views.AdminHomePage;
-import Views.LogInView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -55,6 +51,14 @@ public class StatisticMainView {
         soldBooksBtn.setOnAction(e->{
             SoldBooksView soldBooksView = new SoldBooksView();
             stage.setScene(soldBooksView.showSoldBooksView(stage));
+        });
+        incomeBtn.setOnAction(e->{
+            IncomesAdminView incomeView = new IncomesAdminView();
+            stage.setScene(incomeView.showAdministratorIncomePage(stage));
+        });
+        costBtn.setOnAction(e->{
+            CostsAdminView costsAdminView = new CostsAdminView();
+            stage.setScene(costsAdminView.showAdminCostPage(stage));
         });
 
 
