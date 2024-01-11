@@ -15,16 +15,16 @@ public class BookController {
         FileController.books.add(b);
     }
 
-    public boolean createBook(String ISBN, String title, Author author, ArrayList<Category> categories, String supplier,
-                              int purchasedPrice, int originalPrice,int sellingPrice,int stock, String address) {
+    public Book createBook(String ISBN, String title, Author author, ArrayList<Category> categories, String supplier,
+                              int purchasedPrice, int originalPrice,int sellingPrice, String address) {
         for(Book b:FileController.books){
             if(b.getISBN().equals(ISBN))
-                return false;
+                return null;
         }
-        Book book= new Book(ISBN, title, author, categories, supplier, purchasedPrice, originalPrice, sellingPrice, stock, address);
+        Book book= new Book(ISBN, title, author, categories, supplier, purchasedPrice, originalPrice, sellingPrice,address);
         addBook(book);
         FileController.writeBooks();
-        return true;
+        return book;
     }
 
     public Book findBook(String ISBN) {

@@ -25,7 +25,7 @@ public class Book implements Serializable{
 
 
     public Book( String ISBN, String bookTitle, Author author, ArrayList<Category> bookCategories, String supplier,
-                 int purchasedPrice, int originalPrice,int sellingPrice,int stock, String address){
+                 int purchasedPrice, int originalPrice,int sellingPrice, String address){
         this.bookTitle=bookTitle;
         this.ISBN=ISBN;
         this.author=author;
@@ -35,7 +35,6 @@ public class Book implements Serializable{
         this.purchasedPrice=purchasedPrice;
         this.originalPrice=originalPrice;
         this.sellingPrice=sellingPrice;
-        this.stock=stock;
         this.cover=address;
     }
 
@@ -91,7 +90,7 @@ public class Book implements Serializable{
         return stock;
     }
     public void setStock(int stock) {
-        this.stock = stock;
+        this.stock = 0;
     }
     public String getCover() {
         return cover;

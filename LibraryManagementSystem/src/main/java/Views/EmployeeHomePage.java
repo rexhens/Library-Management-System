@@ -70,17 +70,17 @@ public class EmployeeHomePage {
         if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3){
             Button addNewBook = new Button ("Add New Book");
             addNewBook.setOnAction(e->{
-            AddNewBookView nb= new AddNewBookView(currentUser);
-            stage.setScene(nb.showView(stage));
+            AddBookView addBookView= new AddBookView(currentUser);
+            stage.setScene(addBookView.addBook(stage));
         });
             Button modifyBook = new Button("Modify Book data");
             Button totalBookSold = new Button("Sold Book Copies");
             Button addStock = new Button("Add Stock");
             Button addAuthor = new Button("Add New Author");
-            /*addAuthor.setOnAction(e->{
-                AuthorFormView afv = new AuthorFormView(currentUser);
-                stage.setScene(afv.showView(stage));
-            });*/
+            addAuthor.setOnAction(e->{
+                AddAuthorView addAuthorView = new AddAuthorView(currentUser);
+                stage.setScene(addAuthorView.addAuthor(stage));
+            });
 
             Button addCategory = new Button("Add New Category");
 
