@@ -38,10 +38,7 @@ public class AuthorInfoView {
 
         Button backBt = new Button("Back");
         authorNameBt.add(backBt);
-        if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3){
-            Button addNewAuthorBtn = new Button("Add new Author");
-            authorNameBt.add(addNewAuthorBtn);
-        }
+
 
         BorderPane border = new BorderPane();
         Text text = new Text(" ");
@@ -80,13 +77,9 @@ public class AuthorInfoView {
                     Author author = authorController.findAuthor(finalI);
                     //EditLibrarianView librarianDetails = new EditLibrarianView();
                     //stage.setScene(librarianDetails.editLibrarian(stage, librarian));
-                }else if (finalI == authorNameBt.size() - 2) { // Back button
+                }else if (finalI == authorNameBt.size() - 1) { // Back button
                     EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
                     stage.setScene(employeeHomePage.showView(stage));}
-                else if (finalI == authorNameBt.size() - 1) {
-                    AddAuthorView addAuthorView = new AddAuthorView(currentUser);
-                    stage.setScene(addAuthorView.addAuthor(stage));
-                }
             });
         }
 
