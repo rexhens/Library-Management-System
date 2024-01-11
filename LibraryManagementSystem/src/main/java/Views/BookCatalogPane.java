@@ -19,7 +19,6 @@ public class BookCatalogPane {
         pane.setAlignment(Pos.CENTER);
 
         ArrayList<ImageView> bookCatalog = new ArrayList<>();
-        BookController bc = new BookController();
         for (int i = 0; i < FileController.books.size(); i++) {
             ImageView display = new ImageView(new Image(FileController.books.get(i).getCover()));
             display.setFitWidth(100);
@@ -28,11 +27,13 @@ public class BookCatalogPane {
         }
 
         HBox currentHBox = new HBox(15);
+        currentHBox.setAlignment(Pos.CENTER);
         for (int i = 0; i < bookCatalog.size(); i++) {
             currentHBox.getChildren().add(bookCatalog.get(i));
-            if ((i + 1) % 5 == 0 || i == bookCatalog.size() - 1) {
+            if ((i + 1) % 6 == 0 || i == bookCatalog.size() - 1) {
                 pane.getChildren().add(currentHBox);
                 currentHBox = new HBox(15);
+                currentHBox.setAlignment(Pos.CENTER);
             }
         }
 

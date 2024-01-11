@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.BookController;
 import Models.Book;
+import Models.InvalidIsbnFormatException;
 import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -68,12 +69,13 @@ public class BookView {
         pane.getChildren().addAll( bcp.showPane());
 
         searchF.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (bc.verifyISBN(newValue)||newValue.isEmpty()) {
+            try{
+                bc.verifyISBN(newValue);
                 searchF.setStyle("-fx-text-fill: black;");
                 searchMsg.setText(null);
-            } else {
+            }catch(InvalidIsbnFormatException e){
                 searchF.setStyle("-fx-text-fill: red;");
-                searchMsg.setText("Invalid ISBN13 format!");
+                searchMsg.setText(e.getMessage());
             }
         });
 

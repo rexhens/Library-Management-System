@@ -115,7 +115,6 @@ public class FileController{
 			categories = (ArrayList<Category>) ois.readObject();
 			fis.close();
 			ois.close();
-            printCategories();
             System.out.println("Categories read successfully.");
 		} catch (Exception e) {
 			System.out.println("Exception thrown: "+e.getMessage());
@@ -183,7 +182,6 @@ public class FileController{
 			transactions = (ArrayList<Bill>) ois.readObject();
 			fis.close();
 			ois.close();
-            printBills();
             System.out.println("Transactions read successfully.");
 		} catch (Exception e) {
 			System.out.println("Exception thrown: "+e.getMessage());
@@ -217,7 +215,6 @@ public class FileController{
 			authors = (ArrayList<Author>) ois.readObject();
 			fis.close();
 			ois.close();
-            printAuthors();
             System.out.println("Authors read successfully.");
 		} catch (Exception e) {
 			System.out.println("Exception thrown: "+e.getMessage());
