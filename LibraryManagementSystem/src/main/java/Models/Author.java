@@ -44,5 +44,8 @@ public class Author implements Serializable{
     public void setID(int ID) {
         this.ID = ID;
     }
+    public String toString(){
+        return name+" "+surname;
+    }
 
 }

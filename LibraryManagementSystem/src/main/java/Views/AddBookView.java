@@ -38,6 +38,7 @@ public class AddBookView {
         gp.setVgap(10);
         gp.setPadding(new Insets(10,10,10,10));
         gp.setAlignment(Pos.CENTER);
+
         Label isbn = new Label("ISBN");
         TextField isbn1 = new TextField();
         gp.add(isbn,0,0);
@@ -49,24 +50,24 @@ public class AddBookView {
         gp.add(booktitle,1,1);
 
 
-        Label a= new Label("Select an Author");
+        Label authorL= new Label("Select an Author");
         ArrayList<Author> authors = FileController.authors;
         ComboBox<Author> authorComboBox = new ComboBox<>();
         authorComboBox.getItems().addAll(authors);
-        gp.add(a,0,2);
+        gp.add(authorL,0,2);
         gp.add(authorComboBox,1,2);
 
-        Label c= new Label("Select the category");
-        gp.add(a,0,3);
+        Label categoryL= new Label("Select the category");
+        gp.add(categoryL, 0, 3);
         ArrayList<Category> categories = FileController.categories;
-        ArrayList<CheckBox> CategoryCheckboxes = new ArrayList<>();
+        ArrayList<CheckBox> categoryCheckboxes = new ArrayList<>();
         for(Category g : categories) {
-            CategoryCheckboxes.add(new CheckBox(g.toString()));
+            categoryCheckboxes.add(new CheckBox(g.toString()));
         }
         VBox pane = new VBox(10);
         pane.setPadding(new Insets(4));
-        pane.getChildren().addAll(CategoryCheckboxes);
-        gp.add(a,1,3);
+        pane.getChildren().addAll(categoryCheckboxes);
+        gp.add(pane,1,3);
 
         Label su = new Label("Suplier");
         TextField sut = new TextField();
@@ -102,7 +103,7 @@ public class AddBookView {
         Button registerButton = new Button("Register Book");
         registerButton.setOnAction(e -> {
             BookController controller = new BookController();
-            for (CheckBox checkBox : CategoryCheckboxes) {
+            for (CheckBox checkBox : categoryCheckboxes) {
                 if (checkBox.isSelected()) {
                     Category select = (Category) checkBox.getUserData();
                     selected.add(select);
@@ -153,6 +154,7 @@ public class AddBookView {
         b2.getChildren().addAll(registerButton,back);
         gp.add(b2,1,8);
         bp.setCenter(gp);
-        return new Scene(bp,700,500);
+        Scene sc =new Scene(bp,700,500);
+        return sc;
     }
 }
