@@ -2,8 +2,6 @@ package Controllers;
 
 import Models.Author;
 import Models.Gender;
-import Models.Librarian;
-import Models.User;
 
 public class AuthorController {
 

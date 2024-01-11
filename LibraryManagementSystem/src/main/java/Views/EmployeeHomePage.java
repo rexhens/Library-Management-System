@@ -52,7 +52,10 @@ public class EmployeeHomePage {
             stage.setScene(av.showView(stage));
         });
         Button categoryInfo = new Button("All Categories");
-
+        categoryInfo.setOnAction(e->{
+            CategoryInfoView categoryInfoView=new CategoryInfoView(currentUser);
+            stage.setScene(categoryInfoView.showcategory(stage));
+        });
         EmployeeBt.add(bookInfo);
         EmployeeBt.add(authorInfo);
         EmployeeBt.add(categoryInfo);
@@ -83,6 +86,10 @@ public class EmployeeHomePage {
             });
 
             Button addCategory = new Button("Add New Category");
+            addCategory.setOnAction(i->{
+                AddCategoryView addCategoryView=new AddCategoryView(currentUser);
+                stage.setScene(addCategoryView.addCategory(stage));
+            });
 
             EmployeeBt.add(addNewBook);
             EmployeeBt.add(modifyBook);
