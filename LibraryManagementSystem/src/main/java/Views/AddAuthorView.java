@@ -87,8 +87,8 @@ public class AddAuthorView {
         });
         Button back = new Button("Back");
         back.setOnAction(e ->{
-            AuthorInfoView authorInfoView =  new AuthorInfoView(currentUser);
-            stage.setScene(authorInfoView.showView(stage));
+            EmployeeHomePage employeeHomePage =  new EmployeeHomePage(currentUser);
+            stage.setScene(employeeHomePage.showView(stage));
         });
         HBox b2 = new HBox();
         b2.setSpacing(10);
