@@ -113,6 +113,7 @@ public class FileController{
 			FileInputStream fis = new FileInputStream(categoriesFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			categories = (ArrayList<Category>) ois.readObject();
+			Category.setNoCategory(categories.size());
 			fis.close();
 			ois.close();
             System.out.println("Categories read successfully.");
@@ -134,11 +135,11 @@ public class FileController{
 		}
 	}
 
-    public void printCategories() {
-		for (int i = 0; i < categories.size(); i++) {
-			System.out.println(categories.get(i));
-		}
-	}
+    // public void printCategories() {
+	// 	for (int i = 0; i < categories.size(); i++) {
+	// 		System.out.println(categories.get(i));
+	// 	}
+	// }
 
     @SuppressWarnings("unchecked")
 	private void readBooks() {
@@ -180,6 +181,7 @@ public class FileController{
 			FileInputStream fis = new FileInputStream(transactionsFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			transactions = (ArrayList<Bill>) ois.readObject();
+			Bill.setTotalBills(transactions.size());
 			fis.close();
 			ois.close();
             System.out.println("Transactions read successfully.");
@@ -201,11 +203,11 @@ public class FileController{
 		}
 	}
 
-    public void printBills() {
-		for (int i = 0; i < transactions.size(); i++) {
-			System.out.println(transactions.get(i));
-		}
-	}
+    // public void printBills() {
+	// 	for (int i = 0; i < transactions.size(); i++) {
+	// 		System.out.println(transactions.get(i));
+	// 	}
+	// }
 
     @SuppressWarnings("unchecked")
 	private void readAuthors() {
@@ -213,6 +215,7 @@ public class FileController{
 			FileInputStream fis = new FileInputStream(authorsFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			authors = (ArrayList<Author>) ois.readObject();
+			Author.setNoAuthor(authors.size());
 			fis.close();
 			ois.close();
             System.out.println("Authors read successfully.");
@@ -234,9 +237,9 @@ public class FileController{
 		}
 	}
 
-    public void printAuthors() {
-		for (int i = 0; i < authors.size(); i++) {
-			System.out.println(authors.get(i));
-		}
-	}
+    // public void printAuthors() {
+	// 	for (int i = 0; i < authors.size(); i++) {
+	// 		System.out.println(authors.get(i));
+	// 	}
+	// }
 }

@@ -14,9 +14,6 @@ public class CategoryController {
         }
         Category category=new Category (categoryname);
         addCategory(category);
-        for(Category c:FileController.categories){
-            System.out.println(c.getCategoryName());
-        }
         return category;
     }
     public Category findCategory(int id) {

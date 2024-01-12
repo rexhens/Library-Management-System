@@ -13,7 +13,7 @@ public class Author implements Serializable{
     private Gender gender;
 
     public Author (String name,String surname, Gender gender){
-        this.ID=++noAuthor;
+        this.ID=noAuthor++;
         this.name=name;
         this.surname=surname;
         this.gender=gender;
@@ -46,6 +46,10 @@ public class Author implements Serializable{
     }
     public String toString(){
         return name+" "+surname;
+    }
+
+    public static void setNoAuthor(int noAuthor) {
+        Author.noAuthor = noAuthor;
     }
 
 }

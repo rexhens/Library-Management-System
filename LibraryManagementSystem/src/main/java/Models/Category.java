@@ -7,13 +7,12 @@ public class Category implements Serializable{
     private static final long serialVersionUID = 8589318269664880015L;
     private static int noCategory;
     private String categoryName;
-
     private int ID;
 
 
 
     public Category(String categoryName){
-        this.ID=++noCategory;
+        this.ID=noCategory++;
         this.categoryName=categoryName;
     }
     public int getID() {
@@ -33,6 +32,9 @@ public class Category implements Serializable{
     @Override
     public String toString() {
         return categoryName;
+    }
+    public static void setNoCategory(int noCategory) {
+        Category.noCategory = noCategory;
     }
 
 }

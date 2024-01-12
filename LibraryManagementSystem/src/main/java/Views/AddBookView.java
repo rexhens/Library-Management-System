@@ -197,7 +197,7 @@ public class AddBookView {
                     } else {
                         for (int i=0; i<categoryCheckboxes.size();i++) {
                             if (categoryCheckboxes.get(i).isSelected()) {
-                                selected.add(cc.findCategory(i+1));
+                                selected.add(cc.findCategory(i));
                             }
                         }
         
