@@ -73,7 +73,7 @@ public class BookView {
                 bc.verifyISBN(newValue);
                 searchF.setStyle("-fx-text-fill: black;");
                 searchMsg.setText(null);
-            }catch(InvalidIsbnFormatException e){
+            }catch(Exception e){
                 searchF.setStyle("-fx-text-fill: red;");
                 searchMsg.setText(e.getMessage());
             }

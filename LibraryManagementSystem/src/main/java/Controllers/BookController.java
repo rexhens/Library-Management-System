@@ -5,10 +5,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-import Models.Author;
-import Models.BillsType;
-import Models.Book;
-import Models.Category;
+import Models.*;
 
 public class BookController {
 
@@ -16,16 +13,16 @@ public class BookController {
         FileController.books.add(b);
     }
 
-    public boolean createBook(String ISBN, String title, Author author, ArrayList<Category> categories, String supplier,
-                              int purchasedPrice, int originalPrice,int sellingPrice,int stock, String address) {
+    public Book createBook(String ISBN, String title, Author author, ArrayList<Category> categories, String supplier,
+                           int purchasedPrice, int originalPrice,int sellingPrice, String address) {
         for(Book b:FileController.books){
             if(b.getISBN().equals(ISBN))
-                return false;
+                return null;
         }
-        Book book= new Book(ISBN, title, author, categories, supplier, purchasedPrice, originalPrice, sellingPrice, stock, address);
+        Book book= new Book(ISBN, title, author, categories, supplier, purchasedPrice, originalPrice, sellingPrice,address);
         addBook(book);
         FileController.writeBooks();
-        return true;
+        return book;
     }
 
     public Book findBook(String ISBN) {
@@ -36,11 +33,9 @@ public class BookController {
         return null;
     }
 
-    public boolean verifyISBN(String ISBN){
-        if(ISBN.matches("^(?=[ 0-9]{17}$)97[89]\\s[0-9]{1,5}\\s[0-9]+\\s[0-9]+\\s[0-9]$")){
-            return true;
-        }else{
-            return false;
+    public void verifyISBN(String ISBN) throws InvalidIsbnFormatException {
+        if(!ISBN.matches("^(?=[ 0-9]{17}$)97[89]\\s[0-9]{1,5}\\s[0-9]+\\s[0-9]+\\s[0-9]$")){
+            throw new InvalidIsbnFormatException("Invalid ISBN format: " + ISBN);
         }
     }
 
