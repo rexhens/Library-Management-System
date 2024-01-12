@@ -3,7 +3,11 @@ package Controllers;
 import Models.*;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
+
+import static Controllers.BookController.isSameDay;
 
 public class LibrarianController implements Modifiable{
     @Override
@@ -308,5 +312,73 @@ public class LibrarianController implements Modifiable{
             }
         return false;
     }
+    public double calculateMoneyMadeToday(Librarian librarian)
+    {
+        double result = 0;
+        var bills = FileController.transactions;
+        for(var bill : bills)
+        {
+            if (isSameDay(bill.getCreatedDate(),new Date()) && bill.getSoldBy() == librarian.getId()){
+                result+=bill.getTotalPrice();
+            }
+        }
+        return result;
+    }
+    public double calculateMoneyMadeThisMonth(Librarian librarian){
+        Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(1).toInstant());
+        double result = 0;
+        var billList = FileController.transactions;
+        for(var bill : billList)
+        {
+            if (bill.getCreatedDate().toInstant().isAfter(beforeMonth.toInstant())&& bill.getSoldBy() == librarian.getId()) {
+                result+=bill.getTotalPrice();
+            }
+        }
+        return result;
+    }
+    public double calculateMoneyMadeThisYear(Librarian librarian){
+        Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(12).toInstant());
+        double result = 0;
+        var billList = FileController.transactions;
+        for(var bill : billList)
+        {
+            if (bill.getCreatedDate().toInstant().isAfter(beforeMonth.toInstant()) && bill.getSoldBy() == librarian.getId()) {
+                result+=bill.getTotalPrice();
+            }
+        }
+        return result;
+    }
+
+    public int totalNoBills(Librarian librarian)
+    {
+        int result = 0;
+        var bills = FileController.transactions;
+        for(var bill : bills)
+        {
+            if (isSameDay(bill.getCreatedDate(),new Date()) && bill.getSoldBy() == librarian.getId()){
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public int totalNoBooksSold(Librarian librarian)
+    {
+        int result = 0;
+        var bills = FileController.transactions;
+        for(var bill : bills)
+        {
+            var books = bill.getBooks();
+            for(var book : books)
+            {
+                result++;
+            }
+        }
+        return result;
+    }
+
+
 
 }
+
+

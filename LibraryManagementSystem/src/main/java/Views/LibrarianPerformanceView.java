@@ -1,5 +1,6 @@
 package Views;
 
+import Controllers.LibrarianController;
 import Models.Librarian;
 import Models.User;
 import javafx.geometry.Insets;
@@ -25,7 +26,7 @@ public class LibrarianPerformanceView {
     public Scene showLibrarianPerformanceView(Stage stage, Librarian librarian){
 
         BorderPane borderPane = new BorderPane();
-
+        LibrarianController librarianController = new LibrarianController();
         StackPane stackText = new StackPane();
         Text text = new Text(librarian.getName() + "'s Performance");
         text.setFont(new Font(30));
@@ -40,31 +41,31 @@ public class LibrarianPerformanceView {
         gridPane.setAlignment(Pos.CENTER);
 
         Label nrBillsLabel = new Label("Total number of Bills");
-        TextField noBillsField = new TextField();
+        TextField noBillsField = new TextField(Integer.toString(librarianController.totalNoBills(librarian)));
         noBillsField.setEditable(false);
         gridPane.add(nrBillsLabel,0,0);
         gridPane.add(noBillsField,1,0);
 
         Label booksSoldLabel = new Label("Books sold");
-        TextField booksSoldField = new TextField();
+        TextField booksSoldField = new TextField(Integer.toString(librarianController.totalNoBooksSold(librarian)));
         booksSoldField.setEditable(false);
         gridPane.add(booksSoldLabel,0,1);
         gridPane.add(booksSoldField,1,1);
 
         Label moneyMadeTodayLabel = new Label("Money made today");
-        TextField moneyMadeTodayField = new TextField();
+        TextField moneyMadeTodayField = new TextField(Double.toString(librarianController.calculateMoneyMadeToday(librarian)));
         moneyMadeTodayField.setEditable(false);
         gridPane.add(moneyMadeTodayLabel,0,2);
         gridPane.add(moneyMadeTodayField,1,2);
 
         Label moneyMadeThisMonthLabel = new Label("Money made this month");
-        TextField moneyMadeThisMonthField = new TextField();
+        TextField moneyMadeThisMonthField = new TextField(Double.toString(librarianController.calculateMoneyMadeThisMonth(librarian)));
         moneyMadeThisMonthField.setEditable(false);
         gridPane.add(moneyMadeThisMonthLabel,0,3);
         gridPane.add(moneyMadeThisMonthField,1,3);
 
         Label moneyMadeYearLabel = new Label("Money made this year");
-        TextField moneyMadeYEarField = new TextField();
+        TextField moneyMadeYEarField = new TextField(Double.toString(librarianController.calculateMoneyMadeThisYear(librarian)));
         moneyMadeYEarField.setEditable(false);
         gridPane.add(moneyMadeYearLabel,0,4);
         gridPane.add(moneyMadeYEarField,1,4);
