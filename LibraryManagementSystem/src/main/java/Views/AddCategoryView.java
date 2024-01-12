@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.CategoryController;
+import Models.AccessLevel;
 import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -53,19 +54,19 @@ public class AddCategoryView {
                 success.setHeaderText("Category was successfully added!");
                 success.showAndWait();
                 EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                stage.setScene(employeeHomePage.showView(stage));
+                stage.setScene(employeeHomePage.showView(stage, AccessLevel.Manager));
             }else{
                 Alert fail = new Alert(Alert.AlertType.ERROR);
                 fail.setHeaderText("Category was not successfully added!");
                 fail.showAndWait();
                 EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                stage.setScene(employeeHomePage.showView(stage));
+                stage.setScene(employeeHomePage.showView(stage,AccessLevel.Librarian));
             }
         });
         Button back = new Button("Back");
         back.setOnAction(e -> {
             EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-            stage.setScene(employeeHomePage.showView(stage));
+            stage.setScene(employeeHomePage.showView(stage,AccessLevel.Manager));
         });
         HBox b2 = new HBox();
         b2.setSpacing(10);

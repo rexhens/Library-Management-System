@@ -4,10 +4,7 @@ import java.util.ArrayList;
 
 import Controllers.BillController;
 import Controllers.BookController;
-import Models.BillsType;
-import Models.Book;
-import Models.InvalidIsbnFormatException;
-import Models.User;
+import Models.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -139,7 +136,7 @@ public class PrintBillView {
         Button back = new Button("Cancel");
         back.setOnAction(e -> {
             EmployeeHomePage hp = new EmployeeHomePage(currentUser);
-            stage.setScene(hp.showView(stage));
+            stage.setScene(hp.showView(stage, AccessLevel.Librarian));
         });
         Button print = new Button("Finish Transaction");
         print.setOnAction(e -> {

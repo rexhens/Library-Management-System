@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class LibrarianController implements Modifiable{
     @Override
     public StandardViewResponse<User> editUser(String name, String surname, String username,
-                                                        String salary, String phoneNum,int id,Gender gender,int accessLevel
-                                                        ,LocalDate localDate)
+                                               String salary, String phoneNum, int id, Gender gender, int accessLevel
+            , LocalDate localDate, String password)
     {
         double salaryDouble;
         Librarian librarian = findUserById(id);
@@ -63,6 +63,10 @@ public class LibrarianController implements Modifiable{
             {
                 return new StandardViewResponse<>(librarian,"There already exists a user with this username");
             }
+             if(!isValidPassword(password).isEmpty())
+             {
+                 return new StandardViewResponse<>(librarian,isValidPassword(password));
+             }
             LocalDate localDateCompare = LocalDate.now();
             if (localDate.isAfter(localDateCompare)) {
                 return new StandardViewResponse<>(librarian,"BirthDate cannot be after actual date!");
@@ -80,6 +84,7 @@ public class LibrarianController implements Modifiable{
             librarian.setBirthDate(localDate);
             librarian.setGender(gender);
             librarian.setAccessLevel(accessLevel);
+            librarian.setPassword(password);
 
             System.out.println("Librarian was successfully edited");
         }catch(NumberFormatException n){
@@ -96,8 +101,8 @@ public class LibrarianController implements Modifiable{
 
     @Override
     public StandardViewResponse<User> addUser(String name, String surname, String username,
-                                                        String password, String salary, String phoneNum, LocalDate localDate,
-                                                        Gender gender,int accessLevel,String checkPassword)
+                                              String password, String salary, String phoneNum, LocalDate localDate,
+                                              Gender gender, int accessLevel, String checkPassword)
     {
         double salaryDouble;
         User librarian = null;

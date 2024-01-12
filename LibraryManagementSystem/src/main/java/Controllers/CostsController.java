@@ -14,50 +14,59 @@ public class CostsController {
 
     public ArrayList<Book> getBooksBoughtThisMonth()
     {
-        var books = FileController.books;
-        var booksBoughtToday = new ArrayList<Book>();
-        Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(1).toInstant());
-
-        for(Book book : books)
+        Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(12).toInstant());
+        var result = new ArrayList<Book>();
+        var billList = FileController.transactions;
+        for(var bill : billList)
         {
-            if(book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant()))
-            {
-                booksBoughtToday.add(book);
-                System.out.println(book);
+            var books = bill.getBooks();
+            if( bill.getType() == BillsType.Bought) {
+                for (var book : books) {
+                    if(book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant()))
+                        result.add(book);
+                    // System.out.println(book);
+                }
             }
         }
-        return booksBoughtToday;
+
+        return result;
     }
     public ArrayList<Book> getBooksBoughtThisYear()
     {
-        var books = FileController.books;
-        var booksBoughtToday = new ArrayList<Book>();
         Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(12).toInstant());
-
-        for(Book book : books)
+        var result = new ArrayList<Book>();
+        var billList = FileController.transactions;
+        for(var bill : billList)
         {
-            if(book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant()))
-            {
-                booksBoughtToday.add(book);
-                System.out.println(book);
+            var books = bill.getBooks();
+            if( bill.getType() == BillsType.Bought) {
+                for (var book : books) {
+                    if(book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant()))
+                        result.add(book);
+                        // System.out.println(book);
+                    }
+                }
             }
-        }
-        return booksBoughtToday;
+
+        return result;
     }
 
     public ArrayList<Book> getBooksBoughtToday()
-    { var books = FileController.books;
-        var booksBoughtToday = new ArrayList<Book>();
-
-        for(Book book : books)
+    {   var result = new ArrayList<Book>();
+        var billList = FileController.transactions;
+        for(var bill : billList)
         {
-            if(isSameDay(book.getPurchasedDate(),new Date()))
-            {
-                booksBoughtToday.add(book);
-                System.out.println(book);
+            var books = bill.getBooks();
+            if( bill.getType() == BillsType.Bought) {
+                for (var book : books) {
+                    if (isSameDay(book.getPurchasedDate(),new Date())) {
+                        result.add(book);
+                        // System.out.println(book);
+                    }
+                }
             }
         }
-        return booksBoughtToday;
+        return result;
     }
     public double getDailyCost()
     {

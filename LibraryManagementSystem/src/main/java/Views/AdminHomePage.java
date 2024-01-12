@@ -6,6 +6,7 @@ import Controllers.ManagerController;
 import Models.Librarian;
 import Models.Manager;
 import Models.User;
+import Views.Access.AccessMainPage;
 import Views.Statistics.StatisticMainView;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -39,6 +40,7 @@ public class AdminHomePage extends Application {
         Button manageLibrarianBtn = new Button("Manage Librarians");
         Button manageManagerBtn = new Button("Manage Manager");
         Button statisticBtn = new Button("Statistics");
+        Button accessButton = new Button("Access");
         Button logOutbtn = new Button("Log Out");
 
         GridPane grid = new GridPane();
@@ -48,7 +50,8 @@ public class AdminHomePage extends Application {
         grid.add(manageLibrarianBtn, 0, 0);
         grid.add(manageManagerBtn, 1, 0);
         grid.add(statisticBtn, 2, 0);
-        grid.add(logOutbtn, 3, 0);
+        grid.add(accessButton,3,0);
+        grid.add(logOutbtn, 4, 0);
         border.setCenter(grid);
 
         manageLibrarianBtn.setOnAction(e -> {
@@ -68,6 +71,10 @@ public class AdminHomePage extends Application {
             error.showAndWait();
             LogInView logInView = new LogInView();
             stage.setScene(logInView.showLogInScene(stage));
+        });
+        accessButton.setOnAction(e->{
+            AccessMainPage accessMainPage = new AccessMainPage();
+            stage.setScene(accessMainPage.showMainAccessPage(stage));
         });
         return new Scene(border,700,500);
     }

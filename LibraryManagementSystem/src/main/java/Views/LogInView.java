@@ -84,7 +84,7 @@ public class LogInView {
                 }
                 else {
                     EmployeeHomePage employeeHomePage = new EmployeeHomePage(user.getUser());
-                    stage.setScene(employeeHomePage.showView(stage));
+                    stage.setScene(employeeHomePage.showView(stage,AccessLevel.Librarian));
                 }
             }
         });
@@ -120,7 +120,7 @@ public class LogInView {
                     else
                     {
                         EmployeeHomePage employeeHomePage = new EmployeeHomePage(user.getUser());
-                        stage.setScene(employeeHomePage.showView(stage));
+                        stage.setScene(employeeHomePage.showView(stage,AccessLevel.Librarian));
                     }
 
                 }

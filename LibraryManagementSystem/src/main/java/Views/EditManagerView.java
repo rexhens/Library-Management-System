@@ -49,8 +49,9 @@ public class EditManagerView {
         gridPane.add(usernameTxtField,1,2);
 
         Label passwordLabel = new Label("Password");
-        TextField passwordField = new TextField("**********");
-        passwordField.setEditable(false);
+        TextField passwordField = new PasswordField();
+        passwordField.setText(manager.getPassword());
+        passwordField.setEditable(true);
         gridPane.add(passwordLabel,0,3);
         gridPane.add(passwordField,1,3);
 
@@ -149,7 +150,7 @@ public class EditManagerView {
             }
             var edited = controller.editUser(nameField.getText(),surnameTxtField.getText(),
                     usernameTxtField.getText(),salaryField.getText(),phoneNumField.getText(),
-                    manager.getId(),gender,accessLevel,dateP.getValue());
+                    manager.getId(),gender,accessLevel,dateP.getValue(),passwordField.getText());
             if(edited.getErrorMessage().isEmpty() || edited.getErrorMessage() == null)
             {
                 Alert error = new Alert(Alert.AlertType.INFORMATION);

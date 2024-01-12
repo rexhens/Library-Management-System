@@ -3,10 +3,7 @@ package Views;
 import Controllers.BookController;
 import Controllers.CategoryController;
 import Controllers.FileController;
-import Models.Author;
-import Models.Category;
-import Models.InvalidIsbnFormatException;
-import Models.User;
+import Models.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -212,7 +209,7 @@ public class AddBookView {
                         success.setHeaderText("Book was successfully added!");
                         success.showAndWait();
                         EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                        stage.setScene(employeeHomePage.showView(stage));
+                        stage.setScene(employeeHomePage.showView(stage, AccessLevel.Librarian));
                     }
                 }catch(InvalidIsbnFormatException e2){
                     System.out.println(e2.getMessage());
@@ -225,7 +222,7 @@ public class AddBookView {
         Button back = new Button("Back");
         back.setOnAction(e -> {
             EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-            stage.setScene(employeeHomePage.showView(stage));
+            stage.setScene(employeeHomePage.showView(stage,AccessLevel.Manager));
         });
         HBox b2 = new HBox();
         b2.setSpacing(10);

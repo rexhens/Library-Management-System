@@ -98,6 +98,8 @@ public class BoughtBooksView {
         if(booksBoughtThisMonth.isEmpty()){
             Label labelNoBooks = new Label("No books Bought!");
             gridPane.add(labelNoBooks,1,1);
+            bookNameLabel2.setVisible(false);
+            bookPriceLabel2.setVisible(false);
         }else {
             for (int i = 0; i < booksBoughtThisMonth.size(); i++) {
                 Label bookTitleLabel = new Label(booksBoughtThisMonth.get(i).getBookTitle());
