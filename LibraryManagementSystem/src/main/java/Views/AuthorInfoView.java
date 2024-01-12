@@ -3,7 +3,6 @@ package Views;
 import Controllers.AuthorController;
 import Controllers.FileController;
 import Controllers.LibrarianController;
-import Models.AccessLevel;
 import Models.Author;
 import Models.Librarian;
 import Models.User;
@@ -80,7 +79,7 @@ public class AuthorInfoView {
                     //stage.setScene(librarianDetails.editLibrarian(stage, librarian));
                 }else if (finalI == authorNameBt.size() - 1) { // Back button
                     EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                    stage.setScene(employeeHomePage.showView(stage, AccessLevel.Manager));}
+                    stage.setScene(employeeHomePage.showView(stage));}
             });
         }
 

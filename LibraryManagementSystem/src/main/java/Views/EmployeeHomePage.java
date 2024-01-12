@@ -1,8 +1,6 @@
 package Views;
-import Models.AccessLevel;
 import Models.Roles;
 import Models.User;
-import Views.Access.AccessMainPage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -28,7 +26,7 @@ public class EmployeeHomePage {
         this.currentUser = currentUser;
     }
 
-    public Scene showView(Stage stage, AccessLevel accessLevel) {
+    public Scene showView(Stage stage) {
         BorderPane bp = new BorderPane();
         Text text = new Text("Homepage");
         StackPane pane1 = new StackPane();
@@ -111,15 +109,15 @@ public class EmployeeHomePage {
 
         Button back = new Button("Log out");
         EmployeeBt.add(back);
-        if(accessLevel == AccessLevel.Admin)
-        {
-            Button backToAdminPageButton = new Button("Back to Admin");
-            EmployeeBt.add(backToAdminPageButton);
-            backToAdminPageButton.setOnAction(e->{
-                AccessMainPage accessMainPage = new AccessMainPage();
-                stage.setScene(accessMainPage.showMainAccessPage(stage));
-            });
-        }
+        // if(accessLevel == AccessLevel.Admin)
+        // {
+        //     Button backToAdminPageButton = new Button("Back to Admin");
+        //     EmployeeBt.add(backToAdminPageButton);
+        //     backToAdminPageButton.setOnAction(e->{
+        //         AccessMainPage accessMainPage = new AccessMainPage();
+        //         stage.setScene(accessMainPage.showMainAccessPage(stage));
+        //     });
+        // }
 
         back.setOnAction(new EventHandler<ActionEvent>() {
             @Override

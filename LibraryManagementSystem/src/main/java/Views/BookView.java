@@ -1,7 +1,6 @@
 package Views;
 
 import Controllers.BookController;
-import Models.AccessLevel;
 import Models.Book;
 import Models.InvalidIsbnFormatException;
 import Models.User;
@@ -61,7 +60,7 @@ public class BookView {
         pane1.add(back, 2, 1);
         back.setOnAction(e -> {
             EmployeeHomePage hp = new EmployeeHomePage(currentUser);
-            stage.setScene(hp.showView(stage, AccessLevel.Librarian));
+            stage.setScene(hp.showView(stage));
         });
 
         BookController bc = new BookController();

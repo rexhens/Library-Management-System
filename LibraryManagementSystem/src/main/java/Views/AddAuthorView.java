@@ -1,7 +1,6 @@
 package Views;
 
 import Controllers.AuthorController;
-import Models.AccessLevel;
 import Models.Gender;
 import Models.User;
 import javafx.geometry.Insets;
@@ -77,19 +76,19 @@ public class AddAuthorView {
                 success.setHeaderText("Author was successfully added!");
                 success.showAndWait();
                 EmployeeHomePage employeeHomePage =  new EmployeeHomePage(currentUser);
-                stage.setScene(employeeHomePage.showView(stage, AccessLevel.Manager));
+                stage.setScene(employeeHomePage.showView(stage));
             }else{
                 Alert fail = new Alert(Alert.AlertType.ERROR);
                 fail.setHeaderText("Author wasn't added!");
                 fail.showAndWait();
                 EmployeeHomePage employeeHomePage =  new EmployeeHomePage(currentUser);
-                stage.setScene(employeeHomePage.showView(stage,AccessLevel.Manager));
+                stage.setScene(employeeHomePage.showView(stage));
             }
         });
         Button back = new Button("Back");
         back.setOnAction(e ->{
             EmployeeHomePage employeeHomePage =  new EmployeeHomePage(currentUser);
-            stage.setScene(employeeHomePage.showView(stage,AccessLevel.Librarian));
+            stage.setScene(employeeHomePage.showView(stage));
         });
         HBox b2 = new HBox();
         b2.setSpacing(10);

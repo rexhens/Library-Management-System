@@ -6,7 +6,6 @@ import Controllers.ManagerController;
 import Models.Librarian;
 import Models.Manager;
 import Models.User;
-import Views.Access.AccessMainPage;
 import Views.Statistics.StatisticMainView;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -72,10 +71,10 @@ public class AdminHomePage extends Application {
             LogInView logInView = new LogInView();
             stage.setScene(logInView.showLogInScene(stage));
         });
-        accessButton.setOnAction(e->{
-            AccessMainPage accessMainPage = new AccessMainPage();
-            stage.setScene(accessMainPage.showMainAccessPage(stage));
-        });
+        // accessButton.setOnAction(e->{
+        //     AccessMainPage accessMainPage = new AccessMainPage();
+        //     stage.setScene(accessMainPage.showMainAccessPage(stage));
+        // });
         return new Scene(border,700,500);
     }
 

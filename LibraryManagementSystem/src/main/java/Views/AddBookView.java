@@ -209,7 +209,7 @@ public class AddBookView {
                         success.setHeaderText("Book was successfully added!");
                         success.showAndWait();
                         EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                        stage.setScene(employeeHomePage.showView(stage, AccessLevel.Librarian));
+                        stage.setScene(employeeHomePage.showView(stage));
                     }
                 }catch(InvalidIsbnFormatException e2){
                     System.out.println(e2.getMessage());
@@ -222,7 +222,7 @@ public class AddBookView {
         Button back = new Button("Back");
         back.setOnAction(e -> {
             EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-            stage.setScene(employeeHomePage.showView(stage,AccessLevel.Manager));
+            stage.setScene(employeeHomePage.showView(stage));
         });
         HBox b2 = new HBox();
         b2.setSpacing(10);
