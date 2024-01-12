@@ -49,7 +49,7 @@ public class ManageManagerView {
 
         deleteManagerButton.setOnAction(e->{
             ManagerController managerController = new ManagerController();
-            var deleted = managerController.DeleteManagerById(manager.getId());
+            var deleted = managerController.deleteUserById(manager.getId());
             if(deleted)
             {
                 Alert error = new Alert(Alert.AlertType.ERROR);

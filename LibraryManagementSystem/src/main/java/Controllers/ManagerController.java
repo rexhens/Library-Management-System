@@ -7,13 +7,15 @@ import java.util.ArrayList;
 
 import static Controllers.LibrarianController.*;
 
-public class ManagerController {
-    public StandardViewResponse<User> editManager(String name, String surname, String username,
+public class ManagerController implements Modifiable {
+
+    @Override
+    public StandardViewResponse<User> editUser(String name, String surname, String username,
                                                     String salary, String phoneNum, int id, Gender gender, int accessLevel
             , LocalDate localDate)
     {
         double salaryDouble;
-        Manager manager = findManagerById(id);
+        Manager manager = findUserById(id);
         try {
 
             if(name.isEmpty() || surname.isEmpty() || username.isEmpty()
@@ -60,7 +62,7 @@ public class ManagerController {
             if(!phoneNum.matches("^\\+355 6[0-9] [0-9]{3} [0-9]{4}$"))
             {
                 return new StandardViewResponse<>(manager,"Phone number must be of specified format +355 6X XXX XXXX!");
-            }else if(!isUniqueUsername(username) && !findManagerById(id).getUsername().equals(username))
+            }else if(!isUniqueUsername(username) && !findUserById(id).getUsername().equals(username))
             {
                 return new StandardViewResponse<>( manager,"There already exists a user with this username");
             }
@@ -95,12 +97,13 @@ public class ManagerController {
         return new StandardViewResponse<>(manager,"");
     }
 
-    public StandardViewResponse<Manager> addManager(String name, String surname, String username,
+    @Override
+    public StandardViewResponse<User> addUser(String name, String surname, String username,
                                                    String password, String salary, String phoneNum, LocalDate localDate,
                                                    Gender gender,int accessLevel,String checkPassword)
     {
         double salaryDouble;
-        Manager manager = null;
+        User manager = null;
         try {
 
             if(name.isEmpty() || surname.isEmpty() || username.isEmpty() || password.isEmpty()
@@ -171,7 +174,7 @@ public class ManagerController {
             }
             manager = new Manager(name, surname, username,Roles.Manager,
                     password, salaryDouble, phoneNum,gender,localDate,accessLevel);
-            addManager(manager);
+            FileController.users.add(manager);
             System.out.println("Manager was successfully added");
         }catch(NumberFormatException n){
             System.out.println(n.getMessage());
@@ -185,7 +188,8 @@ public class ManagerController {
         return new StandardViewResponse<>(manager,"");
     }
 
-    public Manager findManagerById(int id)
+    @Override
+    public Manager findUserById(int id)
     {
         for(User manager : FileController.users)
         {
@@ -210,9 +214,10 @@ public class ManagerController {
         FileController.users.add(manager);
     }
 
-    public boolean DeleteManagerById(int id)
+    @Override
+    public boolean deleteUserById(int id)
     {
-        var exist = findManagerById(id);
+        var exist = findUserById(id);
         if (exist == null) {
         return false;
     }

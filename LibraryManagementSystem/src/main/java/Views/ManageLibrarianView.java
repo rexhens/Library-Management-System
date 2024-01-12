@@ -49,7 +49,7 @@ public class ManageLibrarianView {
 
         deleteManagerButton.setOnAction(e->{
             LibrarianController librarianController = new LibrarianController();
-            var deleted = librarianController.deleteLibrarianById(librarian.getId());
+            var deleted = librarianController.deleteUserById(librarian.getId());
             if(deleted)
             {
                 Alert error = new Alert(Alert.AlertType.ERROR);

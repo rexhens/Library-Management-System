@@ -1,5 +1,6 @@
 package Views.Statistics;
 
+import Controllers.BookController;
 import Controllers.FileController;
 import Models.Book;
 import Views.AdminHomePage;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 public class SoldBooksView {
     public Scene showSoldBooksView(Stage stage) {
         BorderPane borderPane = new BorderPane();
+        BookController bookController = new BookController();
 
         Text text = new Text("Sold books");
         StackPane stack = new StackPane();
@@ -39,7 +41,7 @@ public class SoldBooksView {
         Label boughtTodayLabel = new Label("Books Sold Today");
         boughtTodayLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14)); // Set font to bold
         gridPane.add(boughtTodayLabel,0,0);
-        ArrayList<Book> booksBoughtToday = FileController.books;
+        ArrayList<Book> booksBoughtToday = bookController.getBooksSoldToday();
         int j = 1;
 
         HBox hBox = new HBox();
@@ -86,7 +88,7 @@ public class SoldBooksView {
         hBox2.setSpacing(10);
         gridPane.add(hBox2, 1, 1);
 
-        ArrayList<Book> booksBoughtThisMonth = FileController.books;
+        ArrayList<Book> booksBoughtThisMonth = bookController.getBooksSoldThisMonth();
         j =1;
         double totalBoughtThisMonth = 0;
         for(int i = 0; i < booksBoughtThisMonth.size();i++)
@@ -121,7 +123,7 @@ public class SoldBooksView {
         boughtThisYearLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14)); // Set font to bold
         gridPane.add(boughtThisYearLabel, 2, 0);
         gridPane.add(hBox3, 2, 1);
-        ArrayList<Book> booksBoughtThisYear = FileController.books;
+        ArrayList<Book> booksBoughtThisYear = bookController.getBooksSoldThisYear();
         j=1;
         double totalBoughtThisYear = 0;
         for(int i = 0; i < booksBoughtThisYear.size();i++)

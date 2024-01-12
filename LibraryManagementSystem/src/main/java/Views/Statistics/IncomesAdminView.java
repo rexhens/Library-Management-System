@@ -1,5 +1,6 @@
 package Views.Statistics;
 
+import Controllers.IncomesController;
 import Controllers.StatisticsController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -53,18 +54,35 @@ public class IncomesAdminView {
         Button validateDates = new Button("Enter");
         Button clearDates = new Button("Clear");
 
+
+
+       //String cssStyle = this.getClass().getResource("application.css").toExternalForm();
         HBox hBox = new HBox();
         hBox.setSpacing(20);
         hBox.getChildren().addAll(inputIncomesLabel,dateStart,dateEnd,validateDates,clearDates);
+        //hBox.getStylesheets().add(cssStyle);
+        validateDates.getStyleClass().add("styled-button");
+        clearDates.getStyleClass().add("styled-button");
+
+        validateDates.setOnMouseEntered(e -> validateDates.getStyleClass().add("hovered-button"));
+        validateDates.setOnMouseExited(e -> validateDates.getStyleClass().remove("hovered-button"));
+
+        clearDates.setOnMouseEntered(e -> clearDates.getStyleClass().add("hovered-button"));
+        clearDates.setOnMouseExited(e -> clearDates.getStyleClass().remove("hovered-button"));
+
 
         Label generalStatisticLabel = new Label("General Statistics");
         generalStatisticLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: grey;");
 
-        Label totalBooksSelectedTimeLabel = new Label("Total books during this period");
+        Label totalBooksSelectedTimeLabel = new Label("Total books sold during this period");
+        totalBooksSelectedTimeLabel.setVisible(false);
         TextField totalBooksSelectedTimeField = new TextField();
+        totalBooksSelectedTimeField.setVisible(false);
 
         Label totalPriceSelectedTimeLabel = new Label("Total earnings during this period");
         TextField totalPriceSelectedTimeField = new TextField();
+        totalPriceSelectedTimeLabel.setVisible(false);
+        totalPriceSelectedTimeField.setVisible(false);
 
         Label errorLabel = new Label();
         errorLabel.setVisible(false);
@@ -103,12 +121,13 @@ public class IncomesAdminView {
         totalBooksYearly.setEditable(false);
         totalIncomeYearly.setEditable(false);
 
-        totalBooksDay.setText( Integer.toString( 0 ) );
-        totalIncomeDay.setText( Double.toString( 0.0));
-        totalBooksMonth.setText( Integer.toString(0)  );
-        totalIncomeMonth.setText( Double.toString(0 ));
-        totalBooksYearly.setText( Integer.toString( 0 ));
-        totalIncomeYearly.setText( Double.toString( 0 ));
+        IncomesController incomesController = new IncomesController();
+        totalBooksDay.setText( Integer.toString( incomesController.numberOfBooksSoldToday() ) );
+        totalIncomeDay.setText( Double.toString( incomesController.getDailyIncome()));
+        totalBooksMonth.setText( Integer.toString(incomesController.numberOfBooksSoldThisMonth())  );
+        totalIncomeMonth.setText( Double.toString(incomesController.getMonthlyIncome() ));
+        totalBooksYearly.setText( Integer.toString( incomesController.numberOfBooksSoldThisYear() ));
+        totalIncomeYearly.setText( Double.toString( incomesController.getYearlyIncome() ));
 
         StackPane stackBackButton = new StackPane();
         Button backButton = new Button("Back");
@@ -140,7 +159,7 @@ public class IncomesAdminView {
             generalStatisticLabel.setVisible(shouldBeVisible);
 
             StatisticsController statisticsController = new StatisticsController();
-            var result = statisticsController.numberOfBooksDuringPeriod(dateStart.getValue(), dateEnd.getValue());
+            var result = statisticsController.numberOfBooksSoldDuringPeriod(dateStart.getValue(), dateEnd.getValue());
             if (result.getErrorMessage() != null) {
                 errorLabel.setText(result.getErrorMessage());
                 errorLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: red;");
@@ -149,7 +168,7 @@ public class IncomesAdminView {
                 totalBooksSelectedTimeField.setEditable(false);
                 totalBooksSelectedTimeField.setText(Integer.toString(result.getUser()));
                 totalPriceSelectedTimeField.setEditable(false);
-                totalPriceSelectedTimeField.setText(Double.toString(0));
+                totalPriceSelectedTimeField.setText(Double.toString(statisticsController.getProfitThroughPeriod(dateStart.getValue(), dateEnd.getValue())));
                 totalBooksSelectedTimeField.setVisible(true);
                 totalBooksSelectedTimeLabel.setVisible(true);
                 totalPriceSelectedTimeField.setVisible(true);

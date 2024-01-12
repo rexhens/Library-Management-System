@@ -129,7 +129,7 @@ public class AddManagerView {
             } else {
                 accessLevel = 3;
             }
-            var added = controller.addManager(nameTxtField.getText(),surnameTxtField.getText(),usernameTxtField.getText(),
+            var added = controller.addUser(nameTxtField.getText(),surnameTxtField.getText(),usernameTxtField.getText(),
                     passwordField.getText(),salaryField.getText(),phoneNumField.getText(),dateP.getValue(),gender,accessLevel,
                     CheckpasswordField.getText());
             if(added.getUser() != null)

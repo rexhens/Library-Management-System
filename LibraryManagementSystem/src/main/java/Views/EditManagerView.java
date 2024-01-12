@@ -147,7 +147,7 @@ public class EditManagerView {
             } else {
                 accessLevel = 3;
             }
-            var edited = controller.editManager(nameField.getText(),surnameTxtField.getText(),
+            var edited = controller.editUser(nameField.getText(),surnameTxtField.getText(),
                     usernameTxtField.getText(),salaryField.getText(),phoneNumField.getText(),
                     manager.getId(),gender,accessLevel,dateP.getValue());
             if(edited.getErrorMessage().isEmpty() || edited.getErrorMessage() == null)

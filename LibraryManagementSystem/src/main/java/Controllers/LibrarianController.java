@@ -5,13 +5,14 @@ import Models.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class LibrarianController {
-    public StandardViewResponse<User> editLibrarian(String name, String surname, String username,
+public class LibrarianController implements Modifiable{
+    @Override
+    public StandardViewResponse<User> editUser(String name, String surname, String username,
                                                         String salary, String phoneNum,int id,Gender gender,int accessLevel
                                                         ,LocalDate localDate)
     {
         double salaryDouble;
-        Librarian librarian = findLibrarianById(id);
+        Librarian librarian = findUserById(id);
         try {
 
             if(name.isEmpty() || surname.isEmpty() || username.isEmpty()
@@ -58,7 +59,7 @@ public class LibrarianController {
             if(!phoneNum.matches("^\\+355 6[0-9] [0-9]{3} [0-9]{4}$"))
             {
                 return new StandardViewResponse<>(librarian,"Phone number must be of specified format +355 6X XXX XXXX!");
-            }else if(!isUniqueUsername(username) && !findLibrarianById(id).getUsername().equals(username))
+            }else if(!isUniqueUsername(username) && !findUserById(id).getUsername().equals(username))
             {
                 return new StandardViewResponse<>(librarian,"There already exists a user with this username");
             }
@@ -93,7 +94,8 @@ public class LibrarianController {
         return new StandardViewResponse<>(librarian,"");
     }
 
-    public StandardViewResponse<User> addLibrarian(String name, String surname, String username,
+    @Override
+    public StandardViewResponse<User> addUser(String name, String surname, String username,
                                                         String password, String salary, String phoneNum, LocalDate localDate,
                                                         Gender gender,int accessLevel,String checkPassword)
     {
@@ -247,7 +249,8 @@ public class LibrarianController {
         }
         return true;
     }
-    public Librarian findLibrarianById(int id)
+    @Override
+    public Librarian findUserById(int id)
     {
         for(User librarian : FileController.users)
         {
@@ -275,14 +278,15 @@ public class LibrarianController {
         for(int i = 0; i < FileController.users.size();i++)
         {
             if(FileController.users.get(i).getUsername().equals(username)) {
-                deleteLibrarianById(i);
+                deleteUserById(i);
                 return;
             }
         }
     }
-    public boolean deleteLibrarianById(int id)
+    @Override
+    public boolean deleteUserById(int id)
     {
-        var exists = findLibrarianById(id);
+        var exists = findUserById(id);
         if(exists == null){
             return false;
         }

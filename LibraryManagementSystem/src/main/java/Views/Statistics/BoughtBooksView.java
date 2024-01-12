@@ -1,6 +1,7 @@
 package Views.Statistics;
 
 import Controllers.BookController;
+import Controllers.CostsController;
 import Models.Book;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,6 +24,7 @@ public class BoughtBooksView {
         BorderPane borderPane = new BorderPane();
 
         BookController booksController = new BookController();
+        CostsController costsController = new CostsController();
 
         Text text = new Text("Bought books");
         StackPane stack = new StackPane();
@@ -40,7 +42,7 @@ public class BoughtBooksView {
         Label boughtTodayLabel = new Label("Books bought Today");
         boughtTodayLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14)); // Set font to bold
         gridPane.add(boughtTodayLabel,0,0);
-        ArrayList<Book> booksBoughtToday = booksController.getBooksBoughtToday();
+        ArrayList<Book> booksBoughtToday = costsController.getBooksBoughtToday();
         int j = 1;
         if(booksBoughtToday.isEmpty())
         {
@@ -90,7 +92,7 @@ public class BoughtBooksView {
         hBox2.setSpacing(10);
         gridPane.add(hBox2, 1, 1);
 
-        ArrayList<Book> booksBoughtThisMonth = booksController.getBooksBoughtThisMonth();
+        ArrayList<Book> booksBoughtThisMonth = costsController.getBooksBoughtThisMonth();
         j =1;
         double totalBoughtThisMonth = 0;
         if(booksBoughtThisMonth.isEmpty()){
@@ -128,7 +130,7 @@ public class BoughtBooksView {
         boughtThisYearLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14)); // Set font to bold
         gridPane.add(boughtThisYearLabel, 2, 0);
         gridPane.add(hBox3, 2, 1);
-        ArrayList<Book> booksBoughtThisYear = booksController.getBooksBoughtThisYear();
+        ArrayList<Book> booksBoughtThisYear = costsController.getBooksBoughtThisYear();
         if(booksBoughtThisYear.isEmpty())
         {
             Label labelNoBooks = new Label("No books Bought!");
