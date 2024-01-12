@@ -75,14 +75,14 @@ public class AddAuthorView {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setHeaderText("Author was successfully added!");
                 success.showAndWait();
-                AuthorInfoView authorInfoView = new AuthorInfoView(currentUser);
-                stage.setScene(authorInfoView.showView(stage));
+                EmployeeHomePage employeeHomePage =  new EmployeeHomePage(currentUser);
+                stage.setScene(employeeHomePage.showView(stage));
             }else{
                 Alert fail = new Alert(Alert.AlertType.ERROR);
-                fail.setHeaderText("Author was successfully added!");
+                fail.setHeaderText("Author wasn't added!");
                 fail.showAndWait();
-                AuthorInfoView authorInfoView = new AuthorInfoView(currentUser);
-                stage.setScene(authorInfoView.showView(stage));
+                EmployeeHomePage employeeHomePage =  new EmployeeHomePage(currentUser);
+                stage.setScene(employeeHomePage.showView(stage));
             }
         });
         Button back = new Button("Back");

@@ -1,7 +1,6 @@
 package Views;
 
 import Controllers.LibrarianController;
-import Controllers.ManagerController;
 import Models.Librarian;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

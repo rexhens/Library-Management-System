@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import Models.Bill;
 import Models.BillsType;
 import Models.Book;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 public class BillController {
     public void addBill(Bill b){

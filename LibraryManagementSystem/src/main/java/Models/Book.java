@@ -31,7 +31,6 @@ public class Book implements Serializable{
         this.author=author;
         this.bookCategories=bookCategories;
         this.supplier=supplier;
-        this.purchasedDate=new Date();
         this.purchasedPrice=purchasedPrice;
         this.originalPrice=originalPrice;
         this.sellingPrice=sellingPrice;
