@@ -2,6 +2,7 @@ package Views.Statistics;
 
 import Controllers.IncomesController;
 import Controllers.StatisticsController;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -18,6 +19,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class IncomesAdminView {
+
+        private User currentUser;
+
+    public IncomesAdminView(User currentUser) {
+        this.currentUser = currentUser;
+    }
     public Scene showAdministratorIncomePage(Stage stage) {
 
         BorderPane border = new BorderPane();
@@ -133,7 +140,7 @@ public class IncomesAdminView {
         Button backButton = new Button("Back");
         stackBackButton.getChildren().add(backButton);
         backButton.setOnAction(event -> {
-           StatisticMainView statisticMainView = new StatisticMainView();
+           StatisticMainView statisticMainView = new StatisticMainView(currentUser);
            stage.setScene(statisticMainView.showStatisticsView(stage));
             });
 

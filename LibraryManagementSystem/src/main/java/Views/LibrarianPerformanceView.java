@@ -1,7 +1,7 @@
 package Views;
 
 import Models.Librarian;
-import Models.Manager;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +16,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LibrarianPerformanceView {
+            private User currentUser;
+
+    public LibrarianPerformanceView(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Scene showLibrarianPerformanceView(Stage stage, Librarian librarian){
 
         BorderPane borderPane = new BorderPane();
@@ -66,7 +72,7 @@ public class LibrarianPerformanceView {
         Button backButton = new Button("Back");
         backButton.setOnAction(e->
         {
-            ManageLibrarianView manageLibrarianView = new ManageLibrarianView();
+            ManageLibrarianView manageLibrarianView = new ManageLibrarianView(currentUser);
             stage.setScene(manageLibrarianView.showManageLibrarianView(librarian,stage));
         });
         gridPane.add(backButton,2,5);

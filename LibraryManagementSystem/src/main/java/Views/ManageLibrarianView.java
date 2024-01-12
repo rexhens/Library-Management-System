@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.LibrarianController;
 import Models.Librarian;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +16,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ManageLibrarianView {
+
+            private User currentUser;
+
+    public ManageLibrarianView(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Scene showManageLibrarianView(Librarian librarian, Stage stage)
     {
 
@@ -42,7 +50,7 @@ public class ManageLibrarianView {
         grid.add(backButton, 3, 0);
         border.setCenter(grid);
         editManagerButton.setOnAction(e->{
-            EditLibrarianView managerView = new EditLibrarianView();
+            EditLibrarianView managerView = new EditLibrarianView(currentUser);
             stage.setScene(managerView.editLibrarian(stage,librarian));
         });
 
@@ -55,22 +63,22 @@ public class ManageLibrarianView {
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setHeaderText("Librarian was Successfully Deleted!");
                 error.showAndWait();
-                AdminHomePage adminHomePage = new AdminHomePage();
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageLibrariansView(stage));
             }else{
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setHeaderText("An error happened while trying to Delete librarian!");
                 error.showAndWait();
-                AdminHomePage adminHomePage = new AdminHomePage();
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageLibrariansView(stage));            }
 
         });
         backButton.setOnAction(e->{
-            AdminHomePage adminHomePage = new AdminHomePage();
+            AdminHomePage adminHomePage = new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.manageLibrariansView(stage));
         });
         performanceButton.setOnAction(e->{
-            LibrarianPerformanceView librarianPerformanceView = new LibrarianPerformanceView();
+            LibrarianPerformanceView librarianPerformanceView = new LibrarianPerformanceView(currentUser);
             stage.setScene(librarianPerformanceView.showLibrarianPerformanceView(stage,librarian));
         });
         return new Scene(border, 700, 500);

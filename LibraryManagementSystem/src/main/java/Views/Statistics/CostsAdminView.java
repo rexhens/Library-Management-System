@@ -3,6 +3,7 @@ package Views.Statistics;
 import Controllers.BookController;
 import Controllers.CostsController;
 import Controllers.StatisticsController;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,6 +20,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class CostsAdminView {
+            private User currentUser;
+
+    public CostsAdminView(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Scene showAdminCostPage(Stage stage) {
 
         BorderPane border = new BorderPane();
@@ -153,7 +160,7 @@ public class CostsAdminView {
         Button backButton = new Button("Back");
         stackBackButton.getChildren().add(backButton);
         backButton.setOnAction(event -> {
-            StatisticMainView statisticMainView = new StatisticMainView();
+            StatisticMainView statisticMainView = new StatisticMainView(currentUser);
             stage.setScene(statisticMainView.showStatisticsView(stage));
         });
         validateDates.setOnAction(e->

@@ -3,6 +3,7 @@ package Views.Statistics;
 import Controllers.BookController;
 import Controllers.CostsController;
 import Models.Book;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,6 +21,12 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class BoughtBooksView {
+            private User currentUser;
+
+    public BoughtBooksView(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Scene showBoughtBooksView(Stage stage){
         BorderPane borderPane = new BorderPane();
 
@@ -164,7 +171,7 @@ public class BoughtBooksView {
         Button backButton = new Button("Back");
         stackBackButton.getChildren().add(backButton);
         backButton.setOnAction(e->{
-            StatisticMainView adminHomePage = new StatisticMainView();
+            StatisticMainView adminHomePage = new StatisticMainView(currentUser);
             stage.setScene(adminHomePage.showStatisticsView(stage));
         });
         stackBackButton.setPadding(new Insets(0, 0, 40, 0));

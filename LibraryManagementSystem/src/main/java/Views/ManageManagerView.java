@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.ManagerController;
 import Models.Manager;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +16,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ManageManagerView {
+
+            private User currentUser;
+
+    public ManageManagerView(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Scene showManageManagerView(Manager manager, Stage stage)
     {
 
@@ -42,7 +50,7 @@ public class ManageManagerView {
         grid.add(backButton, 3, 0);
         border.setCenter(grid);
         editManagerButton.setOnAction(e->{
-            EditManagerView managerView = new EditManagerView();
+            EditManagerView managerView = new EditManagerView(currentUser);
             stage.setScene(managerView.showEditManagerView(manager,stage));
         });
 
@@ -55,18 +63,18 @@ public class ManageManagerView {
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setHeaderText("Manager was Successfully Deleted!");
                 error.showAndWait();
-                AdminHomePage adminHomePage = new AdminHomePage();
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageManagersView(stage));
             }else{
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setHeaderText("An error happened while trying to Delete Manager!");
                 error.showAndWait();
-                AdminHomePage adminHomePage = new AdminHomePage();
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageManagersView(stage));            }
 
         });
         backButton.setOnAction(e->{
-            AdminHomePage adminHomePage = new AdminHomePage();
+            AdminHomePage adminHomePage = new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.manageManagersView(stage));
         });
         performanceButton.setOnAction(e->{

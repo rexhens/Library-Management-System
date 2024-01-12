@@ -3,6 +3,7 @@ package Views;
 import Controllers.LibrarianController;
 import Models.Gender;
 import Models.Librarian;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +17,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class EditLibrarianView {
+
+        private User currentUser;
+
+    public EditLibrarianView(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Scene editLibrarian(Stage stage, Librarian librarian)
     {
         BorderPane borderPane = new BorderPane();
@@ -156,7 +164,7 @@ public class EditLibrarianView {
                 Alert error = new Alert(Alert.AlertType.INFORMATION);
                 error.setHeaderText("Librarian was successfully edited!");
                 error.showAndWait();
-                AdminHomePage adminHomePage = new AdminHomePage();
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageLibrariansView(stage));
             } else{
                 systemArea.setText(edited.getErrorMessage());
@@ -165,7 +173,7 @@ public class EditLibrarianView {
 
         Button backBtn = new Button("Back");
         backBtn.setOnAction(e->{
-            AdminHomePage adminHomePage = new AdminHomePage();
+            AdminHomePage adminHomePage = new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.manageLibrariansView(stage));
         });
         gridPane.add(backBtn,3,10);

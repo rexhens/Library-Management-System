@@ -1,8 +1,8 @@
 package Views;
 
-import Controllers.LibrarianController;
 import Controllers.ManagerController;
 import Models.Gender;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,8 +16,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AddManagerView {
+        private User currentUser;
+
+    public AddManagerView(User currentUser) {
+        this.currentUser = currentUser;
+    }
     public Scene showAddManagerView(Stage stage)
     {
+        
         BorderPane borderPane = new BorderPane();
 
         StackPane stackText = new StackPane();
@@ -137,7 +143,7 @@ public class AddManagerView {
                 Alert error = new Alert(Alert.AlertType.INFORMATION);
                 error.setHeaderText("Manager was successfully added!");
                 error.showAndWait();
-                AdminHomePage adminHomePage = new AdminHomePage();
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageManagersView(stage));
             }else{
                 systemField.setText(added.getErrorMessage());
@@ -146,7 +152,7 @@ public class AddManagerView {
 
         Button backBtn = new Button("Back");
         backBtn.setOnAction(e ->{
-            AdminHomePage adminHomePage =  new AdminHomePage();
+            AdminHomePage adminHomePage =  new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.manageManagersView(stage));
         });
         HBox hBox = new HBox();

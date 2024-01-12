@@ -1,9 +1,9 @@
 package Views;
 
-import Controllers.LibrarianController;
 import Controllers.ManagerController;
 import Models.Gender;
 import Models.Manager;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -17,6 +17,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class EditManagerView {
+
+            private User currentUser;
+
+    public EditManagerView(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Scene showEditManagerView(Manager manager, Stage stage){
         BorderPane borderPane = new BorderPane();
 
@@ -156,7 +163,7 @@ public class EditManagerView {
                 Alert error = new Alert(Alert.AlertType.INFORMATION);
                 error.setHeaderText("Manager was successfully edited!");
                 error.showAndWait();
-                AdminHomePage adminHomePage = new AdminHomePage();
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageManagersView(stage));
             } else{
                 systemArea.setText(edited.getErrorMessage());
@@ -165,7 +172,7 @@ public class EditManagerView {
 
         Button backBtn = new Button("Back");
         backBtn.setOnAction(e->{
-            AdminHomePage adminHomePage = new AdminHomePage();
+            AdminHomePage adminHomePage = new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.manageManagersView(stage));
         });
         gridPane.add(backBtn,3,10);

@@ -61,7 +61,7 @@ public class EmployeeHomePage {
         EmployeeBt.add(categoryInfo);
 
 
-        if(currentUser.getAccessLevel()==1||currentUser.getAccessLevel()==3) {
+        if(currentUser.getAccessLevel()==1||currentUser.getAccessLevel()==3||currentUser.getUserRole()==Roles.Admin) {
             Button billing = new Button("Print Bill");
             billing.setOnAction(e->{
                 PrintBillView printBill= new PrintBillView(currentUser);
@@ -70,7 +70,7 @@ public class EmployeeHomePage {
             EmployeeBt.add(billing);
         }
 
-        if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3){
+        if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3||currentUser.getUserRole()==Roles.Admin){
             Button addNewBook = new Button ("Add New Book");
             addNewBook.setOnAction(e->{
             AddBookView addBookView= new AddBookView(currentUser);
@@ -102,22 +102,22 @@ public class EmployeeHomePage {
             EmployeeBt.add(addAuthor);
             EmployeeBt.add(addCategory);
         }
-        if(currentUser.getUserRole()== Roles.Manager){
+        if(currentUser.getUserRole()== Roles.Manager||currentUser.getUserRole()==Roles.Admin){
             //search librarian - only role manager
             //check statistics for specific librarian (tot no bills/books sold/tot money made for a date or period) - only role manager
         }
 
         Button back = new Button("Log out");
         EmployeeBt.add(back);
-        // if(accessLevel == AccessLevel.Admin)
-        // {
-        //     Button backToAdminPageButton = new Button("Back to Admin");
-        //     EmployeeBt.add(backToAdminPageButton);
-        //     backToAdminPageButton.setOnAction(e->{
-        //         AccessMainPage accessMainPage = new AccessMainPage();
-        //         stage.setScene(accessMainPage.showMainAccessPage(stage));
-        //     });
-        // }
+        if(currentUser.getUserRole()==Roles.Admin)
+        {
+            Button backToAdminPageButton = new Button("Back to Admin");
+            EmployeeBt.add(backToAdminPageButton);
+            backToAdminPageButton.setOnAction(e->{
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
+                stage.setScene(adminHomePage.showAdminHomePage(stage));
+            });
+        }
 
         back.setOnAction(new EventHandler<ActionEvent>() {
             @Override

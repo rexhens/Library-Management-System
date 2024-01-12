@@ -25,6 +25,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AdminHomePage extends Application {
+    private User currentUser;
+
+    public AdminHomePage(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Scene showAdminHomePage(Stage stage)
     {
         BorderPane border = new BorderPane();
@@ -39,7 +45,7 @@ public class AdminHomePage extends Application {
         Button manageLibrarianBtn = new Button("Manage Librarians");
         Button manageManagerBtn = new Button("Manage Manager");
         Button statisticBtn = new Button("Statistics");
-        Button accessButton = new Button("Access");
+        Button employeeHP = new Button("Employee Homepage");
         Button logOutbtn = new Button("Log Out");
 
         GridPane grid = new GridPane();
@@ -49,7 +55,7 @@ public class AdminHomePage extends Application {
         grid.add(manageLibrarianBtn, 0, 0);
         grid.add(manageManagerBtn, 1, 0);
         grid.add(statisticBtn, 2, 0);
-        grid.add(accessButton,3,0);
+        grid.add(employeeHP,3,0);
         grid.add(logOutbtn, 4, 0);
         border.setCenter(grid);
 
@@ -61,7 +67,7 @@ public class AdminHomePage extends Application {
            stage.setScene(manageManagersView(stage));
         });
         statisticBtn.setOnAction(e->{
-            StatisticMainView statisticMainView = new StatisticMainView();
+            StatisticMainView statisticMainView = new StatisticMainView(currentUser);
             stage.setScene(statisticMainView.showStatisticsView(stage));
         });
         logOutbtn.setOnAction(e -> {
@@ -71,10 +77,10 @@ public class AdminHomePage extends Application {
             LogInView logInView = new LogInView();
             stage.setScene(logInView.showLogInScene(stage));
         });
-        // accessButton.setOnAction(e->{
-        //     AccessMainPage accessMainPage = new AccessMainPage();
-        //     stage.setScene(accessMainPage.showMainAccessPage(stage));
-        // });
+        employeeHP.setOnAction(e->{
+            EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
+        stage.setScene(employeeHomePage.showView(stage));
+        });
         return new Scene(border,700,500);
     }
 
@@ -124,13 +130,13 @@ public class AdminHomePage extends Application {
                 if (finalI < librarians.size()) {
                     LibrarianController librarianController = new LibrarianController();
                     Librarian librarian = librarianController.findLibrarian(finalI);
-                    ManageLibrarianView librarianDetails = new ManageLibrarianView();
+                    ManageLibrarianView librarianDetails = new ManageLibrarianView(currentUser);
                     stage.setScene(librarianDetails.showManageLibrarianView(librarian, stage));
                 } else if (finalI == librarianNameBtn.size() - 2) { // Back button
-                    AdminHomePage adminHomePage = new AdminHomePage();
+                    AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                     stage.setScene(adminHomePage.showAdminHomePage(stage));
                 } else if (finalI == librarianNameBtn.size() - 1) { // Add new Librarian button
-                    AddLibrarianView addUserView = new AddLibrarianView();
+                    AddLibrarianView addUserView = new AddLibrarianView(currentUser);
                     stage.setScene(addUserView.addLibrarian(stage));
                 }
             });
@@ -188,14 +194,14 @@ public class AdminHomePage extends Application {
 
                     ManagerController managerController = new ManagerController();
                     Manager manager = managerController.findManagerByIndex(finalI);
-                  ManageManagerView manageManagersView = new ManageManagerView();
+                  ManageManagerView manageManagersView = new ManageManagerView(currentUser);
                     stage.setScene(manageManagersView.showManageManagerView(manager,stage));
 
                 } else if (finalI == managersNameBtn.size() - 2) { // Back button
-                    AdminHomePage adminHomePage = new AdminHomePage();
+                    AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                     stage.setScene(adminHomePage.showAdminHomePage(stage));
                 } else if (finalI == managersNameBtn.size() - 1) { // Add new Manager button
-                    AddManagerView addUserView = new AddManagerView();
+                    AddManagerView addUserView = new AddManagerView(currentUser);
                     stage.setScene(addUserView.showAddManagerView(stage));
                 }
             });

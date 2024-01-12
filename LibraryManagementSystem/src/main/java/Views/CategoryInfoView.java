@@ -1,10 +1,9 @@
 package Views;
 
-import Controllers.AuthorController;
 import Controllers.CategoryController;
 import Controllers.FileController;
-import Models.Author;
 import Models.Category;
+import Models.Roles;
 import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,7 +37,7 @@ public class CategoryInfoView {
 
         BorderPane border = new BorderPane();
         Text text = new Text(" ");
-        if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3){
+        if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3||currentUser.getUserRole()==Roles.Admin){
             text.setText("Category Info/Edit");
         }
         else{

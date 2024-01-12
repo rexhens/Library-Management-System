@@ -1,5 +1,6 @@
 package Views.Statistics;
 
+import Models.User;
 import Views.AdminHomePage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,6 +14,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class StatisticMainView {
+            private User currentUser;
+
+    public StatisticMainView(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
     public Scene showStatisticsView(Stage stage){
         BorderPane border = new BorderPane();
 
@@ -41,23 +48,23 @@ public class StatisticMainView {
         border.setCenter(grid);
 
         backBtn.setOnAction(e->{
-            AdminHomePage adminHomePage = new AdminHomePage();
+            AdminHomePage adminHomePage = new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.showAdminHomePage(stage));
         });
         boughtBooksBtn.setOnAction(e->{
-            BoughtBooksView boughtBooksView = new BoughtBooksView();
+            BoughtBooksView boughtBooksView = new BoughtBooksView(currentUser);
             stage.setScene(boughtBooksView.showBoughtBooksView(stage));
         });
         soldBooksBtn.setOnAction(e->{
-            SoldBooksView soldBooksView = new SoldBooksView();
+            SoldBooksView soldBooksView = new SoldBooksView(currentUser);
             stage.setScene(soldBooksView.showSoldBooksView(stage));
         });
         incomeBtn.setOnAction(e->{
-            IncomesAdminView incomeView = new IncomesAdminView();
+            IncomesAdminView incomeView = new IncomesAdminView(currentUser);
             stage.setScene(incomeView.showAdministratorIncomePage(stage));
         });
         costBtn.setOnAction(e->{
-            CostsAdminView costsAdminView = new CostsAdminView();
+            CostsAdminView costsAdminView = new CostsAdminView(currentUser);
             stage.setScene(costsAdminView.showAdminCostPage(stage));
         });
 

@@ -1,13 +1,11 @@
 package Views;
 
-import Controllers.StockController;
 import Controllers.LogInController;
 import Models.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -81,7 +79,7 @@ public class LogInView {
             }
             else {
                 if (user.getUser() instanceof Admin) {
-                    AdminHomePage adminHomePage = new AdminHomePage();
+                    AdminHomePage adminHomePage = new AdminHomePage(user.getUser());
                     stage.setScene(adminHomePage.showAdminHomePage(stage));
                 }
                 else {
@@ -116,7 +114,7 @@ public class LogInView {
                 } else {
                     if(user.getUser() instanceof Admin)
                     {
-                        AdminHomePage adminHomePage = new AdminHomePage();
+                        AdminHomePage adminHomePage = new AdminHomePage(user.getUser());
                         stage.setScene(adminHomePage.showAdminHomePage(stage));
                     }
                     else

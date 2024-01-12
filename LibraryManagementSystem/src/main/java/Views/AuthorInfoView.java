@@ -2,9 +2,8 @@ package Views;
 
 import Controllers.AuthorController;
 import Controllers.FileController;
-import Controllers.LibrarianController;
 import Models.Author;
-import Models.Librarian;
+import Models.Roles;
 import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -42,7 +41,7 @@ public class AuthorInfoView {
 
         BorderPane border = new BorderPane();
         Text text = new Text(" ");
-        if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3){
+        if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3||currentUser.getUserRole()==Roles.Admin){
             text.setText("Author Info/Edit");
         }
         else{

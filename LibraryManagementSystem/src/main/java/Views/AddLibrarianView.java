@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.LibrarianController;
 import Models.Gender;
+import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -15,6 +16,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class AddLibrarianView {
+
+        private User currentUser;
+
+    public AddLibrarianView(User currentUser) {
+        this.currentUser = currentUser;
+    }
     public Scene addLibrarian(Stage stage)
     {
         BorderPane borderPane = new BorderPane();
@@ -136,7 +143,7 @@ public class AddLibrarianView {
                 Alert error = new Alert(Alert.AlertType.INFORMATION);
                 error.setHeaderText("Librarian was successfully added!");
                 error.showAndWait();
-                AdminHomePage adminHomePage = new AdminHomePage();
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageLibrariansView(stage));
             }else{
                 systemField.setText(added.getErrorMessage());
@@ -145,7 +152,7 @@ public class AddLibrarianView {
 
         Button backBtn = new Button("Back");
         backBtn.setOnAction(e ->{
-            AdminHomePage adminHomePage =  new AdminHomePage();
+            AdminHomePage adminHomePage =  new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.manageLibrariansView(stage));
         });
         HBox hBox = new HBox();
