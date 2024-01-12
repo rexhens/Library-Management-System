@@ -123,18 +123,6 @@ public class LogInView {
                     {
                         EmployeeHomePage employeeHomePage = new EmployeeHomePage(user.getUser());
                         stage.setScene(employeeHomePage.showView(stage));
-                        if((user.getUser()).getAccessLevel()==2||(user.getUser()).getAccessLevel()==3){
-                            StockController sc = new StockController();
-                            if(!sc.needRestock().isEmpty()){
-                                String str= "";
-                                for(String s : sc.needRestock()){
-                                    str+="\n"+s;
-                                }
-                                Alert info = new Alert(AlertType.INFORMATION);
-                                info.setHeaderText("The following books need to be restocked:"+str);
-                                info.showAndWait();
-                            }
-                        }
                     }
 
                 }

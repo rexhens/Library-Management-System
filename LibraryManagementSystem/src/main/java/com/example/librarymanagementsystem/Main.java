@@ -1,6 +1,9 @@
 package com.example.librarymanagementsystem;
 
 import Controllers.FileController;
+import Controllers.ManagerController;
+import Controllers.Modifiable;
+import Views.AdminHomePage;
 import Views.LogInView;
 import Views.Statistics.StatisticMainView;
 import javafx.application.Application;
@@ -16,7 +19,7 @@ public class Main extends Application {
         @SuppressWarnings("unused")
         FileController fileController = new FileController();
         LogInView lg = new LogInView();
-        //StatisticMainView statisticMainView = new StatisticMainView();
+       AdminHomePage statisticMainView = new AdminHomePage();
         Scene scene = lg.showLogInScene(stage);
 
         stage.setOnCloseRequest(e->
@@ -31,8 +34,8 @@ public class Main extends Application {
 
 
         stage.setTitle("Library Management System");
-        //stage.setScene(statisticMainView.showStatisticsView(stage));
-        stage.setScene(scene);
+        stage.setScene(statisticMainView.showAdminHomePage(stage));
+        //stage.setScene(scene);
         stage.show();
     }
 

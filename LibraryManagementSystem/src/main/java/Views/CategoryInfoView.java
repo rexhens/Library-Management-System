@@ -3,6 +3,7 @@ package Views;
 import Controllers.AuthorController;
 import Controllers.CategoryController;
 import Controllers.FileController;
+import Models.AccessLevel;
 import Models.Author;
 import Models.Category;
 import Models.User;
@@ -72,7 +73,7 @@ public class CategoryInfoView {
                     Category category = categoryController.findCategory(finalI);
                 }else if (finalI == categoryNameBt.size() - 1) {
                     EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                    stage.setScene(employeeHomePage.showView(stage));}
+                    stage.setScene(employeeHomePage.showView(stage, AccessLevel.Librarian));}
             });
         }
 

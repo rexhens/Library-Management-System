@@ -12,7 +12,7 @@ public class ManagerController implements Modifiable {
     @Override
     public StandardViewResponse<User> editUser(String name, String surname, String username,
                                                     String salary, String phoneNum, int id, Gender gender, int accessLevel
-            , LocalDate localDate)
+            , LocalDate localDate,String password)
     {
         double salaryDouble;
         Manager manager = findUserById(id);
@@ -66,6 +66,10 @@ public class ManagerController implements Modifiable {
             {
                 return new StandardViewResponse<>( manager,"There already exists a user with this username");
             }
+            if(!isValidPassword(password).isEmpty())
+            {
+                return new StandardViewResponse<>(manager,isValidPassword(password));
+            }
             LocalDate localDateCompare = LocalDate.now();
             if (localDate.isAfter(localDateCompare)) {
                 return new StandardViewResponse<>(manager,"BirthDate cannot be after actual date!");
@@ -83,6 +87,7 @@ public class ManagerController implements Modifiable {
             manager.setBirthDate(localDate);
             manager.setGender(gender);
             manager.setAccessLevel(accessLevel);
+            manager.setPassword(password);
 
             System.out.println("Manager was successfully edited");
         }catch(NumberFormatException n){

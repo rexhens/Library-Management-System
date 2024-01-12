@@ -139,7 +139,8 @@ public abstract class User implements Serializable {
     @Override
     public String toString()
     {
-        return "Name: " + getName() +
+        return "Id:" + getId() +
+                "Name: " + getName() +
                 "\nUsername: " + getUsername() +
                 "\nPassword: " + getPassword() +
                 "\nRole: " + getUserRole() +
