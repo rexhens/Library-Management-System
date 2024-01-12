@@ -1,11 +1,14 @@
 package Controllers;
 
-import java.io.File;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
-
-import Models.*;
+import Models.Author;
+import Models.BillsType;
+import Models.Book;
+import Models.Category;
+import Models.InvalidIsbnFormatException;
+import javafx.scene.control.CheckBox;
 
 public class BookController {
 
@@ -13,16 +16,10 @@ public class BookController {
         FileController.books.add(b);
     }
 
-    public Book createBook(String ISBN, String title, Author author, ArrayList<Category> categories, String supplier,
-                           int purchasedPrice, int originalPrice,int sellingPrice, String address) {
-        for(Book b:FileController.books){
-            if(b.getISBN().equals(ISBN))
-                return null;
-        }
+    public void createBook(String ISBN, String title, Author author, ArrayList<Category> categories, String supplier,
+                              int purchasedPrice, int originalPrice,int sellingPrice, String address) {
         Book book= new Book(ISBN, title, author, categories, supplier, purchasedPrice, originalPrice, sellingPrice,address);
         addBook(book);
-        FileController.writeBooks();
-        return book;
     }
 
     public Book findBook(String ISBN) {
@@ -33,10 +30,29 @@ public class BookController {
         return null;
     }
 
-    public void verifyISBN(String ISBN) throws InvalidIsbnFormatException {
-        if(!ISBN.matches("^(?=[ 0-9]{17}$)97[89]\\s[0-9]{1,5}\\s[0-9]+\\s[0-9]+\\s[0-9]$")){
-            throw new InvalidIsbnFormatException("Invalid ISBN format: " + ISBN);
+    public boolean priceValidation (String x){
+        try{
+            int n= Integer.parseInt(x);
+            return true;
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+            return false;
         }
+    }
+
+    public void verifyISBN(String ISBN) throws InvalidIsbnFormatException{
+		if(!ISBN.matches("^(?=[ 0-9]{17}$)97[89]\\s[0-9]{1,5}\\s[0-9]+\\s[0-9]+\\s[0-9]$")){
+			throw new InvalidIsbnFormatException("Invalid ISBN format: " + ISBN);
+        }
+	}
+
+    public boolean selectedCategory(ArrayList<CheckBox> c){
+        for(CheckBox cc : c){
+            if(cc.isSelected()){
+                return true;
+            }
+        }
+        return false;
     }
 
     static boolean isSameDay(Date date1, Date date2) {
