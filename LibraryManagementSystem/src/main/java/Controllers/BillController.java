@@ -10,6 +10,7 @@ import Models.BillsType;
 import Models.Book;
 
 public class BillController {
+
     public void addBill(Bill b){
         FileController.transactions.add(b);
     }
@@ -48,15 +49,5 @@ public class BillController {
                 return -1;
             }
         return q;
-    }
-
-    public void updateStockAfterSold(ArrayList<Book> book, ArrayList<Integer> quantity){
-        for (int i=0;i<book.size();i++){
-            book.get(i).setStock(book.get(i).getStock()-quantity.get(i));
-        }
-    }
-
-    public void updateStockAfterBought(Book book, int quantity){
-            book.setStock(book.getStock()+quantity);
     }
 }

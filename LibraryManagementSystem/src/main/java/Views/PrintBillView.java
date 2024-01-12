@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Controllers.BillController;
 import Controllers.BookController;
+import Controllers.StockController;
 import Models.BillsType;
 import Models.Book;
 import Models.InvalidIsbnFormatException;
@@ -53,6 +54,7 @@ public class PrintBillView {
 
         BookController bc = new BookController();
         BillController bl = new BillController();
+        StockController stc = new StockController();
         ArrayList<Book> books = new ArrayList<>();
         ArrayList<Integer> quantity = new ArrayList<>();
 
@@ -148,7 +150,7 @@ public class PrintBillView {
                 Alert info = new Alert(AlertType.INFORMATION);
                 info.setHeaderText("Bill Printed!");
                 info.showAndWait();
-                bl.updateStockAfterSold(books,quantity);
+                stc.updateStockAfterSold(books,quantity);
                 vb.getChildren().clear();
                 vb.getChildren().addAll(gp);
                 totalPriceF.clear();
