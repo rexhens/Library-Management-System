@@ -21,13 +21,13 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class BoughtBooksView {
-            private User currentUser;
+    private User currentUser;
 
     public BoughtBooksView(User currentUser) {
         this.currentUser = currentUser;
     }
 
-    public Scene showBoughtBooksView(Stage stage){
+    public Scene showBoughtBooksView(Stage stage) {
         BorderPane borderPane = new BorderPane();
 
         BookController booksController = new BookController();
@@ -43,19 +43,18 @@ public class BoughtBooksView {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10,10,10,10));
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setAlignment(Pos.CENTER);
 
         Label boughtTodayLabel = new Label("Books bought Today");
         boughtTodayLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14)); // Set font to bold
-        gridPane.add(boughtTodayLabel,0,0);
+        gridPane.add(boughtTodayLabel, 0, 0);
         ArrayList<Book> booksBoughtToday = costsController.getBooksBoughtToday();
         int j = 1;
-        if(booksBoughtToday.isEmpty())
-        {
+        if (booksBoughtToday.isEmpty()) {
             Label labelNoBooks = new Label("No books Bought!");
-            gridPane.add(labelNoBooks,0,1);
-        }else {
+            gridPane.add(labelNoBooks, 0, 1);
+        } else {
             HBox hBox = new HBox();
             Label bookNameLabel = new Label("Book Name");
             Label bookPriceLabel = new Label("Original Price");
@@ -77,7 +76,8 @@ public class BoughtBooksView {
             }
             HBox hBoxTotal1 = new HBox();
             Label totalTxtLabel = new Label("Total");
-            totalTxtLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14;"); // Set font weight to bold and font size
+            totalTxtLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14;"); // Set font weight to bold and font
+                                                                                 // size
 
             Label totalPriceLabel = new Label(totalBoughtToday + " ALL");
             totalPriceLabel.setStyle("-fx-text-fill: Grey; -fx-font-size: 14;");
@@ -100,14 +100,14 @@ public class BoughtBooksView {
         gridPane.add(hBox2, 1, 1);
 
         ArrayList<Book> booksBoughtThisMonth = costsController.getBooksBoughtThisMonth();
-        j =1;
+        j = 1;
         double totalBoughtThisMonth = 0;
-        if(booksBoughtThisMonth.isEmpty()){
+        if (booksBoughtThisMonth.isEmpty()) {
             Label labelNoBooks = new Label("No books Bought!");
-            gridPane.add(labelNoBooks,1,1);
+            gridPane.add(labelNoBooks, 1, 1);
             bookNameLabel2.setVisible(false);
             bookPriceLabel2.setVisible(false);
-        }else {
+        } else {
             for (int i = 0; i < booksBoughtThisMonth.size(); i++) {
                 Label bookTitleLabel = new Label(booksBoughtThisMonth.get(i).getBookTitle());
                 Label priceBookLabel = new Label(booksBoughtThisMonth.get(i).getOriginalPrice() + " ALL");
@@ -120,7 +120,8 @@ public class BoughtBooksView {
             }
             HBox hBoxTotal2 = new HBox();
             Label totalTxtLabel2 = new Label("Total");
-            totalTxtLabel2.setStyle("-fx-font-weight: bold; -fx-font-size: 14;"); // Set font weight to bold and font size
+            totalTxtLabel2.setStyle("-fx-font-weight: bold; -fx-font-size: 14;"); // Set font weight to bold and font
+                                                                                  // size
 
             Label totalPriceLabel2 = new Label(totalBoughtThisMonth + " ALL");
             totalPriceLabel2.setStyle("-fx-text-fill: Grey; -fx-font-size: 14;");
@@ -140,11 +141,10 @@ public class BoughtBooksView {
         gridPane.add(boughtThisYearLabel, 2, 0);
         gridPane.add(hBox3, 2, 1);
         ArrayList<Book> booksBoughtThisYear = costsController.getBooksBoughtThisYear();
-        if(booksBoughtThisYear.isEmpty())
-        {
+        if (booksBoughtThisYear.isEmpty()) {
             Label labelNoBooks = new Label("No books Bought!");
-            gridPane.add(labelNoBooks,0,1);
-        }else {
+            gridPane.add(labelNoBooks, 0, 1);
+        } else {
             j = 1;
             double totalBoughtThisYear = 0;
             for (int i = 0; i < booksBoughtThisYear.size(); i++) {
@@ -159,7 +159,8 @@ public class BoughtBooksView {
             }
             HBox hBoxTotal3 = new HBox();
             Label totalTxtLabel3 = new Label("Total");
-            totalTxtLabel3.setStyle("-fx-font-weight: bold; -fx-font-size: 14;"); // Set font weight to bold and font size
+            totalTxtLabel3.setStyle("-fx-font-weight: bold; -fx-font-size: 14;"); // Set font weight to bold and font
+                                                                                  // size
 
             Label totalPriceLabel3 = new Label(totalBoughtThisYear + " ALL");
             totalPriceLabel3.setStyle("-fx-text-fill: grey; -fx-font-size: 14;");
@@ -170,7 +171,7 @@ public class BoughtBooksView {
         StackPane stackBackButton = new StackPane();
         Button backButton = new Button("Back");
         stackBackButton.getChildren().add(backButton);
-        backButton.setOnAction(e->{
+        backButton.setOnAction(e -> {
             StatisticMainView adminHomePage = new StatisticMainView(currentUser);
             stage.setScene(adminHomePage.showStatisticsView(stage));
         });
@@ -179,6 +180,6 @@ public class BoughtBooksView {
 
         borderPane.setBottom(stackBackButton);
         borderPane.setCenter(gridPane);
-        return new Scene(borderPane,700,500);
+        return new Scene(borderPane, 700, 500);
     }
 }

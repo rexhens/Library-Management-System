@@ -17,8 +17,7 @@ public class Main extends Application {
         LogInView lg = new LogInView();
         Scene scene = lg.showLogInScene(stage);
 
-        stage.setOnCloseRequest(e->
-        {
+        stage.setOnCloseRequest(e -> {
             FileController.writeUsers();
             FileController.writeAuthors();
             FileController.writeBooks();

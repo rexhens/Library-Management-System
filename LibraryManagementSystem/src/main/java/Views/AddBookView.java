@@ -123,8 +123,9 @@ public class AddBookView {
 
         openButton.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + File.separator + "Desktop"));
             fileChooser.getExtensionFilters()
-                    .add(new FileChooser.ExtensionFilter("Image Files", ".png", ".jpg", "*.jpeg"));
+                    .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
             setSelectedFile(fileChooser.showOpenDialog(stage));
             if (selectedFile != null) {
                 Path imageFolder = Path.of("LibraryManagementSystem\\src\\main\\java\\Controllers\\images");
@@ -133,7 +134,7 @@ public class AddBookView {
                 ImageView cover = new ImageView(image);
                 cover.setFitHeight(120);
                 cover.setFitWidth(100);
-                gp.add(cover,2,8);
+                gp.add(cover, 2, 8);
             } else {
                 Alert error = new Alert(AlertType.ERROR);
                 error.setHeaderText("You need to select a picture!");
@@ -148,76 +149,79 @@ public class AddBookView {
             BookController controller = new BookController();
             CategoryController cc = new CategoryController();
             ArrayList<Category> selected = new ArrayList<>();
-            if(isbn1.getText().isEmpty()){
+            if (isbn1.getText().isEmpty()) {
                 Alert error = new Alert(AlertType.ERROR);
                 error.setHeaderText("ISBN can't be empty!");
                 error.showAndWait();
             } else {
-                try{
+                try {
                     controller.verifyISBN(isbn1.getText());
-                    if (booktitle.getText().isEmpty()){
+                    if (booktitle.getText().isEmpty()) {
                         Alert error = new Alert(AlertType.ERROR);
                         error.setHeaderText("You need to inseret a title!");
                         error.showAndWait();
-                    } else if (authorComboBox.getSelectionModel().getSelectedItem()==null){
+                    } else if (authorComboBox.getSelectionModel().getSelectedItem() == null) {
                         Alert error = new Alert(AlertType.ERROR);
                         error.setHeaderText("Select at least one author!");
                         error.showAndWait();
-                    } else if(!controller.selectedCategory(categoryCheckboxes)){
+                    } else if (!controller.selectedCategory(categoryCheckboxes)) {
                         Alert error = new Alert(AlertType.ERROR);
                         error.setHeaderText("Select at least one category!");
                         error.showAndWait();
-                    } else if (sut.getText().isEmpty()){
+                    } else if (sut.getText().isEmpty()) {
                         Alert error = new Alert(AlertType.ERROR);
                         error.setHeaderText("You need to insert a supplier!");
                         error.showAndWait();
-                    } else if(pt.getText().isEmpty()|| ot.getText().isEmpty() || st.getText().isEmpty()){
+                    } else if (pt.getText().isEmpty() || ot.getText().isEmpty() || st.getText().isEmpty()) {
                         Alert error = new Alert(AlertType.ERROR);
                         error.setHeaderText("You need to insert price!");
                         error.showAndWait();
-                    } else if(!controller.priceValidation(pt.getText())||!controller.priceValidation(ot.getText())||!controller.priceValidation(st.getText())){
+                    } else if (!controller.priceValidation(pt.getText()) || !controller.priceValidation(ot.getText())
+                            || !controller.priceValidation(st.getText())) {
                         Alert error = new Alert(AlertType.ERROR);
                         error.setHeaderText("Price can't have letters!");
                         error.showAndWait();
-                    } else  if (selectedFile == null){
+                    } else if (selectedFile == null) {
                         Alert error = new Alert(AlertType.ERROR);
                         error.setHeaderText("You need to select a picture!");
                         error.showAndWait();
-                    } else if(controller.findBook(isbn1.getText())!=null){
+                    } else if (controller.findBook(isbn1.getText()) != null) {
                         Alert error = new Alert(AlertType.ERROR);
                         error.setHeaderText("Book with this ISBN already exists!");
                         error.showAndWait();
-                    } else if(Integer.parseInt(pt.getText())<=0 || Integer.parseInt(ot.getText())<=0 || Integer.parseInt(st.getText())<=0) {
+                    } else if (Integer.parseInt(pt.getText()) <= 0 || Integer.parseInt(ot.getText()) <= 0
+                            || Integer.parseInt(st.getText()) <= 0) {
                         Alert error = new Alert(AlertType.ERROR);
                         error.setHeaderText("Price can't be negative or 0!");
                         error.showAndWait();
                     } else {
-                        for (int i=0; i<categoryCheckboxes.size();i++) {
+                        for (int i = 0; i < categoryCheckboxes.size(); i++) {
                             if (categoryCheckboxes.get(i).isSelected()) {
                                 selected.add(cc.findCategory(i));
                             }
                         }
-        
-                        for(Category c:selected){
+
+                        for (Category c : selected) {
                             System.out.println(c.getCategoryName());
                         }
-        
+
                         saveToFolder();
                         controller.createBook(isbn1.getText(), booktitle.getText(), authorComboBox.getValue(), selected,
-                            sut.getText(), Integer.parseInt(pt.getText()), Integer.parseInt(ot.getText()), Integer.parseInt(st.getText()), targetPath.toUri().toString());
-                            Alert success = new Alert(Alert.AlertType.INFORMATION);
+                                sut.getText(), Integer.parseInt(pt.getText()), Integer.parseInt(ot.getText()),
+                                Integer.parseInt(st.getText()), targetPath.toUri().toString());
+                        Alert success = new Alert(Alert.AlertType.INFORMATION);
                         success.setHeaderText("Book was successfully added!");
                         success.showAndWait();
                         EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
                         stage.setScene(employeeHomePage.showView(stage));
                     }
-                }catch(InvalidIsbnFormatException e2){
+                } catch (InvalidIsbnFormatException e2) {
                     System.out.println(e2.getMessage());
                     Alert error = new Alert(AlertType.ERROR);
                     error.setHeaderText("ISBN format is incorrect!");
                     error.showAndWait();
                 }
-            } 
+            }
         });
         Button back = new Button("Back");
         back.setOnAction(e -> {

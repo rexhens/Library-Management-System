@@ -18,13 +18,13 @@ import javafx.stage.Stage;
 
 public class EditManagerView {
 
-            private User currentUser;
+    private User currentUser;
 
     public EditManagerView(User currentUser) {
         this.currentUser = currentUser;
     }
 
-    public Scene showEditManagerView(Manager manager, Stage stage){
+    public Scene showEditManagerView(Manager manager, Stage stage) {
         BorderPane borderPane = new BorderPane();
 
         StackPane stackText = new StackPane();
@@ -37,41 +37,41 @@ public class EditManagerView {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10,10,10,10));
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setAlignment(Pos.CENTER);
 
         Label nameLabel = new Label("Name");
         TextField nameField = new TextField(manager.getName());
-        gridPane.add(nameLabel,0,0);
-        gridPane.add(nameField,1,0);
+        gridPane.add(nameLabel, 0, 0);
+        gridPane.add(nameField, 1, 0);
 
         Label surnameLabel = new Label("Surname");
         TextField surnameTxtField = new TextField(manager.getSurname());
-        gridPane.add(surnameLabel,0,1);
-        gridPane.add(surnameTxtField,1,1);
+        gridPane.add(surnameLabel, 0, 1);
+        gridPane.add(surnameTxtField, 1, 1);
 
         Label usernameLabel = new Label("Username");
         TextField usernameTxtField = new TextField(manager.getUsername());
-        gridPane.add(usernameLabel,0,2);
-        gridPane.add(usernameTxtField,1,2);
+        gridPane.add(usernameLabel, 0, 2);
+        gridPane.add(usernameTxtField, 1, 2);
 
         Label passwordLabel = new Label("Password");
         TextField passwordField = new PasswordField();
         passwordField.setText(manager.getPassword());
         passwordField.setEditable(true);
-        gridPane.add(passwordLabel,0,3);
-        gridPane.add(passwordField,1,3);
+        gridPane.add(passwordLabel, 0, 3);
+        gridPane.add(passwordField, 1, 3);
 
         Label phoneNumLabel = new Label("Phone Number");
         TextField phoneNumField = new TextField(manager.getPhoneNum());
-        gridPane.add(phoneNumLabel,0,4);
-        gridPane.add(phoneNumField,1,4);
+        gridPane.add(phoneNumLabel, 0, 4);
+        gridPane.add(phoneNumField, 1, 4);
 
         Label BirthDateLabel = new Label("Birth Date");
         DatePicker dateP = new DatePicker(manager.getBirthDate());
         dateP.setEditable(false);
-        gridPane.add(BirthDateLabel,0,5);
-        gridPane.add(dateP,1,5);
+        gridPane.add(BirthDateLabel, 0, 5);
+        gridPane.add(dateP, 1, 5);
 
         Label genderLabel = new Label("Gender");
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -82,8 +82,8 @@ public class EditManagerView {
         Female.setToggleGroup(toggleGroup);
         Other.setToggleGroup(toggleGroup);
         HBox b1 = new HBox(10);
-        b1.getChildren().addAll(Male, Female, Other );
-        gridPane.add(genderLabel,0,6);
+        b1.getChildren().addAll(Male, Female, Other);
+        gridPane.add(genderLabel, 0, 6);
         gridPane.add(b1, 1, 6);
         switch (manager.getGender()) {
             case Male:
@@ -125,24 +125,24 @@ public class EditManagerView {
         }
         Label salaryLabel = new Label("Salary");
         TextField salaryField = new TextField(Double.toString(manager.getSalary()));
-        gridPane.add(salaryLabel,0,8);
-        gridPane.add(salaryField,1,8);
+        gridPane.add(salaryLabel, 0, 8);
+        gridPane.add(salaryField, 1, 8);
 
         Label systemLabel = new Label("System");
         TextArea systemArea = new TextArea();
         systemArea.setEditable(false);
         systemArea.setWrapText(true);
-        gridPane.add(systemLabel,0,9);
-        gridPane.add(systemArea,1,9);
+        gridPane.add(systemLabel, 0, 9);
+        gridPane.add(systemArea, 1, 9);
 
         Button editButton = new Button("Edit");
-        gridPane.add(editButton, 2,10) ;
-        editButton.setOnAction(e ->{
+        gridPane.add(editButton, 2, 10);
+        editButton.setOnAction(e -> {
             ManagerController controller = new ManagerController();
             Gender gender;
-            if(Male.isSelected())
+            if (Male.isSelected())
                 gender = Gender.Male;
-            else if(Female.isSelected())
+            else if (Female.isSelected())
                 gender = Gender.Female;
             else
                 gender = Gender.Other;
@@ -155,29 +155,28 @@ public class EditManagerView {
             } else {
                 accessLevel = 3;
             }
-            var edited = controller.editUser(nameField.getText(),surnameTxtField.getText(),
-                    usernameTxtField.getText(),salaryField.getText(),phoneNumField.getText(),
-                    manager.getId(),gender,accessLevel,dateP.getValue(),passwordField.getText());
-            if(edited.getErrorMessage().isEmpty() || edited.getErrorMessage() == null)
-            {
+            var edited = controller.editUser(nameField.getText(), surnameTxtField.getText(),
+                    usernameTxtField.getText(), salaryField.getText(), phoneNumField.getText(),
+                    manager.getId(), gender, accessLevel, dateP.getValue(), passwordField.getText());
+            if (edited.getErrorMessage().isEmpty() || edited.getErrorMessage() == null) {
                 Alert error = new Alert(Alert.AlertType.INFORMATION);
                 error.setHeaderText("Manager was successfully edited!");
                 error.showAndWait();
                 AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageManagersView(stage));
-            } else{
+            } else {
                 systemArea.setText(edited.getErrorMessage());
             }
         });
 
         Button backBtn = new Button("Back");
-        backBtn.setOnAction(e->{
+        backBtn.setOnAction(e -> {
             AdminHomePage adminHomePage = new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.manageManagersView(stage));
         });
-        gridPane.add(backBtn,3,10);
+        gridPane.add(backBtn, 3, 10);
 
         borderPane.setCenter(gridPane);
-        return new Scene(borderPane,700,500);
+        return new Scene(borderPane, 700, 500);
     }
 }

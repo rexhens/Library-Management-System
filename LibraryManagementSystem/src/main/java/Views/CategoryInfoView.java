@@ -25,7 +25,8 @@ public class CategoryInfoView {
     public CategoryInfoView(User currentUser) {
         this.currentUser = currentUser;
     }
-    public Scene showcategory(Stage stage){
+
+    public Scene showcategory(Stage stage) {
         ArrayList<Category> categories = new ArrayList<>();
         ArrayList<Button> categoryNameBt = new ArrayList<>();
         for (Category category : FileController.categories) {
@@ -37,10 +38,10 @@ public class CategoryInfoView {
 
         BorderPane border = new BorderPane();
         Text text = new Text(" ");
-        if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3||currentUser.getUserRole()==Roles.Admin){
+        if (currentUser.getAccessLevel() == 2 || currentUser.getAccessLevel() == 3
+                || currentUser.getUserRole() == Roles.Admin) {
             text.setText("Category Info/Edit");
-        }
-        else{
+        } else {
             text.setText("Category Info");
         }
         StackPane p = new StackPane();
@@ -67,11 +68,12 @@ public class CategoryInfoView {
             }
             categoryNameBt.get(i).setOnAction(e -> {
                 if (finalI < categories.size()) {
-                    CategoryController categoryController= new CategoryController();
+                    CategoryController categoryController = new CategoryController();
                     Category category = categoryController.findCategory(finalI);
-                }else if (finalI == categoryNameBt.size() - 1) {
+                } else if (finalI == categoryNameBt.size() - 1) {
                     EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                    stage.setScene(employeeHomePage.showView(stage));}
+                    stage.setScene(employeeHomePage.showView(stage));
+                }
             });
         }
 

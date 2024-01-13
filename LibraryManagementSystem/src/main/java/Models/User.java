@@ -21,7 +21,7 @@ public abstract class User implements Serializable {
     private int accessLevel;
     private Gender gender;
 
-    public User(){
+    public User() {
 
     }
 
@@ -41,16 +41,16 @@ public abstract class User implements Serializable {
         this.gender = gender;
     }
 
-    public User(String username, String password, Roles role){
+    public User(String username, String password, Roles role) {
         this.username = username;
         this.password = password;
         this.userRole = role;
-        this.id=++noUsers;
+        this.id = ++noUsers;
     }
 
     public User(String name, String surname, String username,
-                Roles userRole, String password, double salary,
-                String phoneNum,LocalDate date, Gender gender,int accessLevel) {
+            Roles userRole, String password, double salary,
+            String phoneNum, LocalDate date, Gender gender, int accessLevel) {
         this.id = ++noUsers;
         this.name = name;
         this.surname = surname;
@@ -127,8 +127,12 @@ public abstract class User implements Serializable {
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
-    public int getId(){ return this.id;}
-        public static int getNoUsers() {
+
+    public int getId() {
+        return this.id;
+    }
+
+    public static int getNoUsers() {
         return noUsers;
     }
 
@@ -137,8 +141,7 @@ public abstract class User implements Serializable {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "Id:" + getId() +
                 "Name: " + getName() +
                 "\nUsername: " + getUsername() +

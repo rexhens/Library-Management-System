@@ -17,14 +17,13 @@ import javafx.stage.Stage;
 
 public class ManageManagerView {
 
-            private User currentUser;
+    private User currentUser;
 
     public ManageManagerView(User currentUser) {
         this.currentUser = currentUser;
     }
 
-    public Scene showManageManagerView(Manager manager, Stage stage)
-    {
+    public Scene showManageManagerView(Manager manager, Stage stage) {
 
         BorderPane border = new BorderPane();
 
@@ -49,35 +48,34 @@ public class ManageManagerView {
         grid.add(deleteManagerButton, 2, 0);
         grid.add(backButton, 3, 0);
         border.setCenter(grid);
-        editManagerButton.setOnAction(e->{
+        editManagerButton.setOnAction(e -> {
             EditManagerView managerView = new EditManagerView(currentUser);
-            stage.setScene(managerView.showEditManagerView(manager,stage));
+            stage.setScene(managerView.showEditManagerView(manager, stage));
         });
 
-
-        deleteManagerButton.setOnAction(e->{
+        deleteManagerButton.setOnAction(e -> {
             ManagerController managerController = new ManagerController();
             var deleted = managerController.deleteUserById(manager.getId());
-            if(deleted)
-            {
+            if (deleted) {
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setHeaderText("Manager was Successfully Deleted!");
                 error.showAndWait();
                 AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                 stage.setScene(adminHomePage.manageManagersView(stage));
-            }else{
+            } else {
                 Alert error = new Alert(Alert.AlertType.ERROR);
                 error.setHeaderText("An error happened while trying to Delete Manager!");
                 error.showAndWait();
                 AdminHomePage adminHomePage = new AdminHomePage(currentUser);
-                stage.setScene(adminHomePage.manageManagersView(stage));            }
+                stage.setScene(adminHomePage.manageManagersView(stage));
+            }
 
         });
-        backButton.setOnAction(e->{
+        backButton.setOnAction(e -> {
             AdminHomePage adminHomePage = new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.manageManagersView(stage));
         });
-        performanceButton.setOnAction(e->{
+        performanceButton.setOnAction(e -> {
 
         });
         return new Scene(border, 700, 500);

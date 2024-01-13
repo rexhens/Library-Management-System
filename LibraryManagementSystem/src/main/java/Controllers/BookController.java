@@ -12,43 +12,44 @@ import javafx.scene.control.CheckBox;
 
 public class BookController {
 
-    public void addBook(Book b){
+    public void addBook(Book b) {
         FileController.books.add(b);
     }
 
     public void createBook(String ISBN, String title, Author author, ArrayList<Category> categories, String supplier,
-                              int purchasedPrice, int originalPrice,int sellingPrice, String address) {
-        Book book= new Book(ISBN, title, author, categories, supplier, purchasedPrice, originalPrice, sellingPrice,address);
+            int purchasedPrice, int originalPrice, int sellingPrice, String address) {
+        Book book = new Book(ISBN, title, author, categories, supplier, purchasedPrice, originalPrice, sellingPrice,
+                address);
         addBook(book);
     }
 
     public Book findBook(String ISBN) {
-        for(Book b:FileController.books){
-            if(b.getISBN().equals(ISBN))
+        for (Book b : FileController.books) {
+            if (b.getISBN().equals(ISBN))
                 return b;
         }
         return null;
     }
 
-    public boolean priceValidation (String x){
-        try{
-            int n= Integer.parseInt(x);
+    public boolean priceValidation(String x) {
+        try {
+            int n = Integer.parseInt(x);
             return true;
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
     }
 
-    public void verifyISBN(String ISBN) throws InvalidIsbnFormatException{
-		if(!ISBN.matches("^(?=[ 0-9]{17}$)97[89]\\s[0-9]{1,5}\\s[0-9]+\\s[0-9]+\\s[0-9]$")){
-			throw new InvalidIsbnFormatException("Invalid ISBN format: " + ISBN);
+    public void verifyISBN(String ISBN) throws InvalidIsbnFormatException {
+        if (!ISBN.matches("^(?=[ 0-9]{17}$)97[89]\\s[0-9]{1,5}\\s[0-9]+\\s[0-9]+\\s[0-9]$")) {
+            throw new InvalidIsbnFormatException("Invalid ISBN format: " + ISBN);
         }
-	}
+    }
 
-    public boolean selectedCategory(ArrayList<CheckBox> c){
-        for(CheckBox cc : c){
-            if(cc.isSelected()){
+    public boolean selectedCategory(ArrayList<CheckBox> c) {
+        for (CheckBox cc : c) {
+            if (cc.isSelected()) {
                 return true;
             }
         }
@@ -63,14 +64,13 @@ public class BookController {
         // Compare the dates
         return localDate1.isEqual(localDate2);
     }
-    public ArrayList<Book> getBooksSoldToday()
-    {
+
+    public ArrayList<Book> getBooksSoldToday() {
         var result = new ArrayList<Book>();
         var billList = FileController.transactions;
-        for(var bill : billList)
-        {
+        for (var bill : billList) {
             var books = bill.getBooks();
-            if( bill.getType() == BillsType.Sold) {
+            if (bill.getType() == BillsType.Sold) {
                 for (var book : books) {
                     if (isSameDay(book.getPurchasedDate(), new Date())) {
                         result.add(book);
@@ -82,15 +82,13 @@ public class BookController {
         return result;
     }
 
-    public ArrayList<Book> getBooksSoldThisMonth()
-    {
+    public ArrayList<Book> getBooksSoldThisMonth() {
         Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(1).toInstant());
         var result = new ArrayList<Book>();
         var billList = FileController.transactions;
-        for(var bill : billList)
-        {
+        for (var bill : billList) {
             var books = bill.getBooks();
-            if( bill.getType() == BillsType.Sold) {
+            if (bill.getType() == BillsType.Sold) {
                 for (var book : books) {
                     if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
                         result.add(book);
@@ -101,15 +99,14 @@ public class BookController {
         }
         return result;
     }
-    public ArrayList<Book> getBooksSoldThisYear()
-    {
+
+    public ArrayList<Book> getBooksSoldThisYear() {
         Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(12).toInstant());
         var result = new ArrayList<Book>();
         var billList = FileController.transactions;
-        for(var bill : billList)
-        {
+        for (var bill : billList) {
             var books = bill.getBooks();
-            if( bill.getType() == BillsType.Sold) {
+            if (bill.getType() == BillsType.Sold) {
                 for (var book : books) {
                     if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
                         result.add(book);
@@ -120,7 +117,5 @@ public class BookController {
         }
         return result;
     }
-
-
 
 }

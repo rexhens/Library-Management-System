@@ -1,6 +1,11 @@
 package Views;
 
+import java.util.ArrayList;
+
+import Controllers.BillController;
 import Controllers.BookController;
+import Controllers.StockController;
+import Models.BillsType;
 import Models.Book;
 import Models.InvalidIsbnFormatException;
 import Models.User;
@@ -33,7 +38,7 @@ public class AddStockView {
 
     public AddStockView(User u, Stage s) {
         currentUser = u;
-        stage= s;
+        stage = s;
     }
 
     public Scene showView() {
@@ -63,7 +68,7 @@ public class AddStockView {
         stack.getChildren().add(text);
         stack.setPadding(new Insets(20));
 
-        gPane.add(text, 1 , 0);
+        gPane.add(text, 1, 0);
         gPane.add(searchL, 0, 1);
         gPane.add(searchF, 1, 1);
         gPane.add(searchMsg, 1, 2);
@@ -82,13 +87,15 @@ public class AddStockView {
         back.setOnAction(myBtn::handle);
 
         BookController bc = new BookController();
+        BillController bb = new BillController();
+        StockController ss = new StockController();
 
         searchF.textProperty().addListener((observable, oldValue, newValue) -> {
-            try{
+            try {
                 bc.verifyISBN(newValue);
                 searchF.setStyle("-fx-text-fill: black;");
                 searchMsg.setText(null);
-            }catch(InvalidIsbnFormatException e){
+            } catch (InvalidIsbnFormatException e) {
                 searchF.setStyle("-fx-text-fill: red;");
                 searchMsg.setText(e.getMessage());
             }
@@ -97,28 +104,92 @@ public class AddStockView {
         searchF.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ENTER) {
                 if (searchMsg.getText() == null) {
+                    hb.getChildren().clear();
+                    vb.getChildren().clear();
                     Book foundBook = bc.findBook(searchF.getText());
                     if (foundBook != null) {
                         ImageView cover = new ImageView(new Image(foundBook.getCover()));
-                        Label book = new Label("Book: "+foundBook.getBookTitle());
-                        Label author = new Label("Author: "+foundBook.getAuthor().getName()+" "+foundBook.getAuthor().getSurname());
-                        Label price = new Label("Purchase price: "+ foundBook.getPurchasedPrice());
+                        cover.setFitWidth(300);
+                        cover.setFitHeight(290);
+                        cover.setPreserveRatio(true);
+                        Label book = new Label("Book: " + foundBook.getBookTitle());
+                        Label author = new Label("Author: " + foundBook.getAuthor().getName() + " "
+                                + foundBook.getAuthor().getSurname());
+                        Label price = new Label("Purchase price: " + foundBook.getPurchasedPrice());
                         Label date = new Label();
-                        if(foundBook.getPurchasedDate()==null){
+                        if (foundBook.getPurchasedDate() == null) {
                             date.setText("Last purchased date: Not purchased yet");
+                        } else {
+                            date.setText("Last purchased date: " + foundBook.getPurchasedDate().toString());
                         }
-                        else{
-                            date.setText("Last purchased date: "+foundBook.getPurchasedDate().toString());
-                        }
-                        Label stock = new Label("Current stock: "+ foundBook.getStock());
-                        
-                        Button add= new Button("Add Stock");
-                        add.setOnAction(null);
-                
-                        vb.getChildren().addAll(book,author,price,date,stock);
-                        hb.getChildren().addAll(cover,vb);
+                        Label stock = new Label("Current stock: " + foundBook.getStock());
 
+                        Label newStock = new Label("No. books:");
+                        TextField newStockT = new TextField();
+                        Label newStockM = new Label();
+                        newStockM.setStyle("-fx-text-fill: red;");
+                        Label stockP = new Label("Stock Price: ");
+                        TextField stockPF = new TextField();
+                        stockPF.setEditable(false);
+                        newStockT.textProperty().addListener((observable, oldValue, newValue) -> {
+                            try {
+                                if (newValue != null) {
+                                    String s = Integer
+                                            .toString(totalPriceCalculation(foundBook, Integer.parseInt(newValue)));
+                                    stockPF.setText(s);
+                                    newStockT.setStyle("-fx-text-fill: black;");
+                                    newStockM.setText(null);
+                                } else {
+                                    stockPF.setText(null);
+                                    newStockM.setText("Can't be empty!");
+                                }
+                            } catch (Exception e2) {
+                                System.out.println(e2.getMessage());
+                                newStockT.setStyle("-fx-text-fill: red;");
+                                newStockM.setText("Can't have letters in stock field!");
+                            }
+                        });
 
+                        Button add = new Button("Add Stock");
+                        add.setOnAction(x -> {
+                            if (newStockM.getText() != null) {
+                                Alert error = new Alert(AlertType.ERROR);
+                                error.setHeaderText("Check Stock Field!");
+                                error.showAndWait();
+                            } else {
+                                ArrayList<Book> b = new ArrayList<>();
+                                b.add(foundBook);
+                                ArrayList<Integer> q = new ArrayList<>();
+                                q.add(Integer.parseInt(newStockT.getText()));
+                                bb.createBill(currentUser.getId(), b, q,
+                                        totalPriceCalculation(foundBook, Integer.parseInt(newStockT.getText())),
+                                        BillsType.Bought);
+                                ss.updateStockAfterBought(foundBook, Integer.parseInt(newStockT.getText()));
+                                date.setText("Last purchased date: " + foundBook.getPurchasedDate().toString());
+                                stock.setText("Current stock: " + foundBook.getStock());
+                                Alert info = new Alert(AlertType.INFORMATION);
+                                info.setHeaderText("Book stock added successfully!");
+                                info.showAndWait();
+                                newStockT.setText(null);
+                                stockPF.setText(null);
+                                newStockM.setText(null);
+                            }
+
+                        });
+
+                        GridPane gp1 = new GridPane();
+                        gp1.setAlignment(Pos.CENTER);
+                        gp1.setVgap(10);
+                        gp1.setHgap(10);
+                        gp1.add(newStock, 0, 0);
+                        gp1.add(newStockT, 1, 0);
+                        gp1.add(newStockM, 2, 0);
+                        gp1.add(stockP, 0, 1);
+                        gp1.add(stockPF, 1, 1);
+                        gp1.add(add, 1, 2);
+
+                        vb.getChildren().addAll(book, author, price, date, stock);
+                        hb.getChildren().addAll(cover, vb, gp1);
                     } else {
                         Alert error = new Alert(AlertType.INFORMATION);
                         error.setHeaderText("This book doesn't exists in the database!");
@@ -136,8 +207,8 @@ public class AddStockView {
         sp.prefHeightProperty().bind(sc.heightProperty());
         return sc;
     }
-    
-    public int totalPriceCalculation(Book b, int quantity){
-        return b.getSellingPrice()*quantity;
+
+    public int totalPriceCalculation(Book b, int quantity) {
+        return b.getPurchasedPrice() * quantity;
     }
 }

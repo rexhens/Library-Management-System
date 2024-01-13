@@ -50,7 +50,7 @@ public class BookView {
         stack.getChildren().add(text);
         stack.setPadding(new Insets(20));
 
-        pane1.add(text, 1 , 0);
+        pane1.add(text, 1, 0);
         pane1.add(searchL, 0, 1);
         pane1.add(searchF, 1, 1);
         pane1.add(searchMsg, 1, 2);
@@ -65,14 +65,14 @@ public class BookView {
         BookController bc = new BookController();
         BookCatalogPane bcp = new BookCatalogPane();
         BookDetailsPane bdp = new BookDetailsPane();
-        pane.getChildren().addAll( bcp.showPane());
+        pane.getChildren().addAll(bcp.showPane());
 
         searchF.textProperty().addListener((observable, oldValue, newValue) -> {
-            try{
+            try {
                 bc.verifyISBN(newValue);
                 searchF.setStyle("-fx-text-fill: black;");
                 searchMsg.setText(null);
-            }catch(InvalidIsbnFormatException e){
+            } catch (InvalidIsbnFormatException e) {
                 searchF.setStyle("-fx-text-fill: red;");
                 searchMsg.setText(e.getMessage());
             }

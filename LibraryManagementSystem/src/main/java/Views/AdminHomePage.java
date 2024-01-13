@@ -31,8 +31,7 @@ public class AdminHomePage extends Application {
         this.currentUser = currentUser;
     }
 
-    public Scene showAdminHomePage(Stage stage)
-    {
+    public Scene showAdminHomePage(Stage stage) {
         BorderPane border = new BorderPane();
 
         Text text = new Text("Manage Employees");
@@ -55,7 +54,7 @@ public class AdminHomePage extends Application {
         grid.add(manageLibrarianBtn, 0, 0);
         grid.add(manageManagerBtn, 1, 0);
         grid.add(statisticBtn, 2, 0);
-        grid.add(employeeHP,3,0);
+        grid.add(employeeHP, 3, 0);
         grid.add(logOutbtn, 4, 0);
         border.setCenter(grid);
 
@@ -63,10 +62,10 @@ public class AdminHomePage extends Application {
 
             stage.setScene(manageLibrariansView(stage));
         });
-        manageManagerBtn.setOnAction(e ->{
-           stage.setScene(manageManagersView(stage));
+        manageManagerBtn.setOnAction(e -> {
+            stage.setScene(manageManagersView(stage));
         });
-        statisticBtn.setOnAction(e->{
+        statisticBtn.setOnAction(e -> {
             StatisticMainView statisticMainView = new StatisticMainView(currentUser);
             stage.setScene(statisticMainView.showStatisticsView(stage));
         });
@@ -77,11 +76,11 @@ public class AdminHomePage extends Application {
             LogInView logInView = new LogInView();
             stage.setScene(logInView.showLogInScene(stage));
         });
-        employeeHP.setOnAction(e->{
+        employeeHP.setOnAction(e -> {
             EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-        stage.setScene(employeeHomePage.showView(stage));
+            stage.setScene(employeeHomePage.showView(stage));
         });
-        return new Scene(border,700,500);
+        return new Scene(border, 700, 500);
     }
 
     public Scene manageLibrariansView(Stage stage) {
@@ -89,10 +88,10 @@ public class AdminHomePage extends Application {
         ArrayList<Button> librarianNameBtn = new ArrayList<>();
 
         for (User librarian : FileController.users) {
-            if(librarian instanceof Librarian){
-                librarians.add((Librarian)librarian);
+            if (librarian instanceof Librarian) {
+                librarians.add((Librarian) librarian);
                 librarianNameBtn.add(new Button(librarian.getName()));
-            } 
+            }
         }
 
         Button backBtn = new Button("Back");
@@ -146,14 +145,13 @@ public class AdminHomePage extends Application {
         return new Scene(border, 700, 500);
     }
 
-
     public Scene manageManagersView(Stage stage) {
         ArrayList<Manager> managers = new ArrayList<>();
         ArrayList<Button> managersNameBtn = new ArrayList<>();
 
         for (User manager : FileController.users) {
-            if(manager instanceof Manager){
-                managers.add((Manager)manager);
+            if (manager instanceof Manager) {
+                managers.add((Manager) manager);
                 managersNameBtn.add(new Button(manager.getName()));
             }
         }
@@ -194,8 +192,8 @@ public class AdminHomePage extends Application {
 
                     ManagerController managerController = new ManagerController();
                     Manager manager = managerController.findManagerByIndex(finalI);
-                  ManageManagerView manageManagersView = new ManageManagerView(currentUser);
-                    stage.setScene(manageManagersView.showManageManagerView(manager,stage));
+                    ManageManagerView manageManagersView = new ManageManagerView(currentUser);
+                    stage.setScene(manageManagersView.showManageManagerView(manager, stage));
 
                 } else if (finalI == managersNameBtn.size() - 2) { // Back button
                     AdminHomePage adminHomePage = new AdminHomePage(currentUser);
@@ -213,19 +211,22 @@ public class AdminHomePage extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-//        FileController fileController = new FileController();
-//
-//        ArrayList<Librarian> setLibrarians = new ArrayList<>();
-//          setLibrarians.add(new Librarian("name1","surname1","username1","password",100,"23423424"));
-//          setLibrarians.add(new Librarian("name2","surname2","username2","password",100,"23423424"));
-//         setLibrarians.add(new Librarian("name3","surname3","username3","password",100,"23423424"));
-//            Admin.setLibrarians(setLibrarians);
-//            fileController.writeToFile(FileController.librarians,"users.dat");
-//        Admin.setLibrarians(fileController.readFromFile("users.dat"));
-//        Scene scene = manageLibrariansView(stage);
-//        stage.setTitle("Library Management System");
-//        stage.setScene(scene);
-//        stage.show();
+        // FileController fileController = new FileController();
+        //
+        // ArrayList<Librarian> setLibrarians = new ArrayList<>();
+        // setLibrarians.add(new
+        // Librarian("name1","surname1","username1","password",100,"23423424"));
+        // setLibrarians.add(new
+        // Librarian("name2","surname2","username2","password",100,"23423424"));
+        // setLibrarians.add(new
+        // Librarian("name3","surname3","username3","password",100,"23423424"));
+        // Admin.setLibrarians(setLibrarians);
+        // fileController.writeToFile(FileController.librarians,"users.dat");
+        // Admin.setLibrarians(fileController.readFromFile("users.dat"));
+        // Scene scene = manageLibrariansView(stage);
+        // stage.setTitle("Library Management System");
+        // stage.setScene(scene);
+        // stage.show();
     }
 
     public static void main(String[] args) {

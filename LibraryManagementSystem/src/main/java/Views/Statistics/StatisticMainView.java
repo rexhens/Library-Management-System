@@ -14,13 +14,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class StatisticMainView {
-            private User currentUser;
+    private User currentUser;
 
     public StatisticMainView(User currentUser) {
         this.currentUser = currentUser;
     }
 
-    public Scene showStatisticsView(Stage stage){
+    public Scene showStatisticsView(Stage stage) {
         BorderPane border = new BorderPane();
 
         Text text = new Text("Statistics");
@@ -44,31 +44,30 @@ public class StatisticMainView {
         grid.add(boughtBooksBtn, 1, 0);
         grid.add(incomeBtn, 2, 0);
         grid.add(costBtn, 3, 0);
-        grid.add(backBtn,4,0);
+        grid.add(backBtn, 4, 0);
         border.setCenter(grid);
 
-        backBtn.setOnAction(e->{
+        backBtn.setOnAction(e -> {
             AdminHomePage adminHomePage = new AdminHomePage(currentUser);
             stage.setScene(adminHomePage.showAdminHomePage(stage));
         });
-        boughtBooksBtn.setOnAction(e->{
+        boughtBooksBtn.setOnAction(e -> {
             BoughtBooksView boughtBooksView = new BoughtBooksView(currentUser);
             stage.setScene(boughtBooksView.showBoughtBooksView(stage));
         });
-        soldBooksBtn.setOnAction(e->{
+        soldBooksBtn.setOnAction(e -> {
             SoldBooksView soldBooksView = new SoldBooksView(currentUser);
             stage.setScene(soldBooksView.showSoldBooksView(stage));
         });
-        incomeBtn.setOnAction(e->{
+        incomeBtn.setOnAction(e -> {
             IncomesAdminView incomeView = new IncomesAdminView(currentUser);
             stage.setScene(incomeView.showAdministratorIncomePage(stage));
         });
-        costBtn.setOnAction(e->{
+        costBtn.setOnAction(e -> {
             CostsAdminView costsAdminView = new CostsAdminView(currentUser);
             stage.setScene(costsAdminView.showAdminCostPage(stage));
         });
 
-
-        return new Scene(border,700,500);
+        return new Scene(border, 700, 500);
     }
 }

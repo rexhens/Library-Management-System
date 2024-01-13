@@ -20,7 +20,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class CostsAdminView {
-            private User currentUser;
+    private User currentUser;
 
     public CostsAdminView(User currentUser) {
         this.currentUser = currentUser;
@@ -37,7 +37,6 @@ public class CostsAdminView {
         stack.getChildren().add(text);
         stack.setPadding(new Insets(20));
         border.setTop(stack);
-
 
         TextField totalBooksDay = new TextField();
         Text textTotalBooksDay = new Text("Total Books Today");
@@ -69,8 +68,8 @@ public class CostsAdminView {
 
         HBox hBox = new HBox();
         hBox.setSpacing(20);
-        hBox.getChildren().addAll(inputIncomesLabel,dateStart,dateEnd,validateDates,clearDates);
-        //hBox.getStylesheets().add(cssStyle);
+        hBox.getChildren().addAll(inputIncomesLabel, dateStart, dateEnd, validateDates, clearDates);
+        // hBox.getStylesheets().add(cssStyle);
         validateDates.getStyleClass().add("styled-button");
         clearDates.getStyleClass().add("styled-button");
 
@@ -79,7 +78,6 @@ public class CostsAdminView {
 
         clearDates.setOnMouseEntered(e -> clearDates.getStyleClass().add("hovered-button"));
         clearDates.setOnMouseExited(e -> clearDates.getStyleClass().remove("hovered-button"));
-
 
         Label generalStatisticLabel = new Label("General Statistics");
         generalStatisticLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: grey;");
@@ -97,23 +95,22 @@ public class CostsAdminView {
         Label errorLabel = new Label();
         errorLabel.setVisible(false);
 
-
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(5);
         grid.setVgap(5);
         grid.add(hBox, 0, 0, 6, 1);
-        grid.add(generalStatisticLabel,2,3,6,1);
+        grid.add(generalStatisticLabel, 2, 3, 6, 1);
         grid.add(textTotalBooksDay, 0, 5);
         grid.add(totalBooksDay, 1, 5);
         grid.add(textIncomeDay, 0, 6);
-        grid.add(totalIncomeDay,1,6);
+        grid.add(totalIncomeDay, 1, 6);
 
         grid.add(textTotalBooksMonth, 2, 5);
-        grid.add(totalBooksMonth,3,5);
+        grid.add(totalBooksMonth, 3, 5);
         grid.add(textIncomeMonth, 2, 6);
         grid.add(totalIncomeMonth, 3, 6);
-        grid.add(textSalaryMonth,2,7);
+        grid.add(textSalaryMonth, 2, 7);
         grid.add(salaryMonth, 3, 7);
 
         grid.add(textTotalBooksYearly, 4, 5);
@@ -128,8 +125,6 @@ public class CostsAdminView {
         grid.add(totalPriceSelectedTimeLabel, 0, 6, 3, 1);
         grid.add(totalPriceSelectedTimeField, 3, 6, 3, 1);
 
-
-
         border.setCenter(grid);
 
         totalBooksDay.setEditable(false);
@@ -141,20 +136,19 @@ public class CostsAdminView {
         salaryMonth.setEditable(false);
         salaryYear.setEditable(false);
 
-
         BookController bookController = new BookController();
         CostsController costsController = new CostsController();
         StatisticsController statisticsController = new StatisticsController();
-        totalBooksDay.setText( Integer.toString( costsController.numberOfBooksBoughtToday()) );
-        totalIncomeDay.setText( Double.toString(costsController.getDailyCost()));
+        totalBooksDay.setText(Integer.toString(costsController.numberOfBooksBoughtToday()));
+        totalIncomeDay.setText(Double.toString(costsController.getDailyCost()));
 
-        totalBooksMonth.setText( Integer.toString( costsController.numberOfBooksBoughtThisMonth())  );
-        totalIncomeMonth.setText( Double.toString( costsController.getMonthlyCost())  );
-        salaryMonth.setText( Double.toString(statisticsController.getTotalSalary()) );
+        totalBooksMonth.setText(Integer.toString(costsController.numberOfBooksBoughtThisMonth()));
+        totalIncomeMonth.setText(Double.toString(costsController.getMonthlyCost()));
+        salaryMonth.setText(Double.toString(statisticsController.getTotalSalary()));
 
-        totalBooksYearly.setText( Integer.toString(costsController.numberOfBooksBoughtThisYear()));
-        totalIncomeYearly.setText( Double.toString( costsController.getYearlyCost()));
-        salaryYear.setText( Double.toString(statisticsController.getTotalSalary() * 12) );
+        totalBooksYearly.setText(Integer.toString(costsController.numberOfBooksBoughtThisYear()));
+        totalIncomeYearly.setText(Double.toString(costsController.getYearlyCost()));
+        salaryYear.setText(Double.toString(statisticsController.getTotalSalary() * 12));
 
         StackPane stackBackButton = new StackPane();
         Button backButton = new Button("Back");
@@ -163,8 +157,7 @@ public class CostsAdminView {
             StatisticMainView statisticMainView = new StatisticMainView(currentUser);
             stage.setScene(statisticMainView.showStatisticsView(stage));
         });
-        validateDates.setOnAction(e->
-        {
+        validateDates.setOnAction(e -> {
             boolean shouldBeVisible = false;
 
             textTotalBooksDay.setVisible(shouldBeVisible);
@@ -190,11 +183,12 @@ public class CostsAdminView {
                 errorLabel.setText(result.getErrorMessage());
                 errorLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: red;");
                 errorLabel.setVisible(true);
-            }else {
+            } else {
                 totalBooksSelectedTimeField.setEditable(false);
                 totalBooksSelectedTimeField.setText(Integer.toString(result.getUser()));
                 totalPriceSelectedTimeField.setEditable(false);
-                totalPriceSelectedTimeField.setText(Double.toString(statisticsController.getBookCostsThroughPeriod(dateStart.getValue(),dateEnd.getValue())));
+                totalPriceSelectedTimeField.setText(Double.toString(
+                        statisticsController.getBookCostsThroughPeriod(dateStart.getValue(), dateEnd.getValue())));
                 totalBooksSelectedTimeField.setVisible(true);
                 totalBooksSelectedTimeLabel.setVisible(true);
                 totalPriceSelectedTimeField.setVisible(true);
@@ -203,7 +197,7 @@ public class CostsAdminView {
                 errorLabel.setVisible(false);
             }
         });
-        clearDates.setOnAction(e->{
+        clearDates.setOnAction(e -> {
             boolean shouldBeVisible = true;
             textTotalBooksDay.setVisible(shouldBeVisible);
             totalBooksDay.setVisible(shouldBeVisible);
@@ -235,7 +229,7 @@ public class CostsAdminView {
         stackBackButton.setPadding(new Insets(0, 0, 40, 0));
         border.setBottom(stackBackButton);
 
-        return new Scene(border,700,500);
+        return new Scene(border, 700, 500);
 
     }
 

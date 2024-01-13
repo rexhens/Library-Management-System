@@ -25,26 +25,25 @@ public class AuthorInfoView {
     public AuthorInfoView(User currentUser) {
         this.currentUser = currentUser;
     }
+
     public Scene showView(Stage stage) {
         ArrayList<Author> authors = new ArrayList<>();
         ArrayList<Button> authorNameBt = new ArrayList<>();
 
-
         for (Author author : FileController.authors) {
             authors.add(author);
-            authorNameBt.add(new Button(author.getName()+" "+author.getSurname()));
+            authorNameBt.add(new Button(author.getName() + " " + author.getSurname()));
         }
 
         Button backBt = new Button("Back");
         authorNameBt.add(backBt);
 
-
         BorderPane border = new BorderPane();
         Text text = new Text(" ");
-        if(currentUser.getAccessLevel()==2||currentUser.getAccessLevel()==3||currentUser.getUserRole()==Roles.Admin){
+        if (currentUser.getAccessLevel() == 2 || currentUser.getAccessLevel() == 3
+                || currentUser.getUserRole() == Roles.Admin) {
             text.setText("Author Info/Edit");
-        }
-        else{
+        } else {
             text.setText("Author Info");
         }
 
@@ -72,13 +71,14 @@ public class AuthorInfoView {
             }
             authorNameBt.get(i).setOnAction(e -> {
                 if (finalI < authors.size()) {
-                    AuthorController authorController= new AuthorController();
+                    AuthorController authorController = new AuthorController();
                     Author author = authorController.findAuthor(finalI);
-                    //EditLibrarianView librarianDetails = new EditLibrarianView();
-                    //stage.setScene(librarianDetails.editLibrarian(stage, librarian));
-                }else if (finalI == authorNameBt.size() - 1) { // Back button
+                    // EditLibrarianView librarianDetails = new EditLibrarianView();
+                    // stage.setScene(librarianDetails.editLibrarian(stage, librarian));
+                } else if (finalI == authorNameBt.size() - 1) { // Back button
                     EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                    stage.setScene(employeeHomePage.showView(stage));}
+                    stage.setScene(employeeHomePage.showView(stage));
+                }
             });
         }
 

@@ -11,7 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-
 public class BookCatalogPane {
     public VBox showPane() {
         VBox pane = new VBox(10);

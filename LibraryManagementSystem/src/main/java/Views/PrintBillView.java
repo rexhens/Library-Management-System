@@ -50,7 +50,7 @@ public class PrintBillView {
         totalPriceF.setEditable(false);
         HBox hb = new HBox(10);
         hb.setAlignment(Pos.CENTER);
-        hb.getChildren().addAll(totalPrice,totalPriceF);
+        hb.getChildren().addAll(totalPrice, totalPriceF);
 
         BookController bc = new BookController();
         BillController bl = new BillController();
@@ -71,13 +71,13 @@ public class PrintBillView {
         gp.setHgap(10);
         gp.setVgap(10);
         gp.setAlignment(Pos.CENTER);
-        gp.add(isbnL,0,0);
-        gp.add(priceL,1,0);
-        gp.add(copiesL,2,0);
-        gp.add(isbnF,0,1);
-        gp.add(priceF,1,1);
-        gp.add(copiesF,2,1);
-        gp.add(addField,3,1);
+        gp.add(isbnL, 0, 0);
+        gp.add(priceL, 1, 0);
+        gp.add(copiesL, 2, 0);
+        gp.add(isbnF, 0, 1);
+        gp.add(priceF, 1, 1);
+        gp.add(copiesF, 2, 1);
+        gp.add(addField, 3, 1);
 
         VBox vb = new VBox(10);
         vb.setAlignment(Pos.TOP_CENTER);
@@ -85,56 +85,58 @@ public class PrintBillView {
         pane.setCenter(vb);
 
         isbnF.textProperty().addListener((observable, oldValue, newValue) -> {
-            try{
+            try {
                 bc.verifyISBN(newValue);
                 isbnF.setStyle("-fx-text-fill: black;");
-                if(bc.findBook(newValue)!=null){
+                if (bc.findBook(newValue) != null) {
                     priceF.setText(Integer.toString(bc.findBook(newValue).getSellingPrice()));
                 } else {
                     priceF.clear();
                 }
-            }catch(InvalidIsbnFormatException e){
+            } catch (InvalidIsbnFormatException e) {
                 isbnF.setStyle("-fx-text-fill: red;");
             }
         });
-        
-        addField.setOnAction(e->{
-            if (isbnF.getText().isEmpty()||bc.findBook(isbnF.getText())==null){
+
+        addField.setOnAction(e -> {
+            if (isbnF.getText().isEmpty() || bc.findBook(isbnF.getText()) == null) {
                 Alert error = new Alert(AlertType.ERROR);
                 error.setHeaderText("Check ISBN Field!");
                 error.showAndWait();
-            } else if(copiesF.getText().isEmpty()){
+            } else if (copiesF.getText().isEmpty()) {
                 Alert error = new Alert(AlertType.ERROR);
                 error.setHeaderText("Number of copies can't be empty!");
                 error.showAndWait();
-            } else if (priceF.getText().isEmpty()){
+            } else if (priceF.getText().isEmpty()) {
                 Alert error = new Alert(AlertType.ERROR);
                 error.setHeaderText("This book doesn't exists in the database!");
                 error.showAndWait();
             } else {
-                int q=bl.stringToInt(copiesF.getText());
-                if(q==-2){
+                int q = bl.stringToInt(copiesF.getText());
+                if (q == -2) {
                     Alert error = new Alert(AlertType.ERROR);
                     error.setHeaderText("Copies field has to be a number!");
                     error.showAndWait();
-                } else if(q==-1){
+                } else if (q == -1) {
                     Alert error = new Alert(AlertType.ERROR);
                     error.setHeaderText("Numbers of copies should be greater than 0!");
                     error.showAndWait();
-                }else if(q>bc.findBook(isbnF.getText()).getStock()){
+                } else if (q > bc.findBook(isbnF.getText()).getStock()) {
                     Alert error = new Alert(AlertType.ERROR);
-                    error.setHeaderText("Only "+Integer.toString(bc.findBook(isbnF.getText()).getStock())+" left!");
+                    error.setHeaderText("Only " + Integer.toString(bc.findBook(isbnF.getText()).getStock()) + " left!");
                     error.showAndWait();
-                } else{
+                } else {
                     quantity.add(q);
                     books.add(bc.findBook(isbnF.getText()));
-                    Label lbl1 = new Label(isbnF.getText()+".................."+bc.findBook(isbnF.getText()).getBookTitle()+".................."+copiesF.getText()+" x "+priceF.getText());
+                    Label lbl1 = new Label(
+                            isbnF.getText() + ".................." + bc.findBook(isbnF.getText()).getBookTitle()
+                                    + ".................." + copiesF.getText() + " x " + priceF.getText());
                     vb.getChildren().addAll(lbl1);
-                    totalPriceF.setText(Integer.toString(totalPriceCalculation(books,quantity)));
+                    totalPriceF.setText(Integer.toString(totalPriceCalculation(books, quantity)));
                     isbnF.clear();
                     copiesF.clear();
                     priceF.clear();
-                }        
+                }
             }
         });
 
@@ -145,12 +147,13 @@ public class PrintBillView {
         });
         Button print = new Button("Finish Transaction");
         print.setOnAction(e -> {
-            if(!totalPriceF.getText().isEmpty()){
-                bl.createBill(currentUser.getId(),books,quantity,totalPriceCalculation(books, quantity),BillsType.Sold);
+            if (!totalPriceF.getText().isEmpty()) {
+                bl.createBill(currentUser.getId(), books, quantity, totalPriceCalculation(books, quantity),
+                        BillsType.Sold);
                 Alert info = new Alert(AlertType.INFORMATION);
                 info.setHeaderText("Bill Printed!");
                 info.showAndWait();
-                stc.updateStockAfterSold(books,quantity);
+                stc.updateStockAfterSold(books, quantity);
                 vb.getChildren().clear();
                 vb.getChildren().addAll(gp);
                 totalPriceF.clear();
@@ -161,13 +164,13 @@ public class PrintBillView {
                 error.setHeaderText("No books added in bill!");
                 error.showAndWait();
             }
-            
+
         });
         VBox vbBottom = new VBox(10);
         HBox hb3 = new HBox(10);
         hb3.setAlignment(Pos.CENTER);
         hb3.getChildren().addAll(print, back);
-        vbBottom.getChildren().addAll(hb,hb3);
+        vbBottom.getChildren().addAll(hb, hb3);
         pane.setBottom(vbBottom);
 
         ScrollPane sp = new ScrollPane(pane);
@@ -179,10 +182,10 @@ public class PrintBillView {
         return sc;
     }
 
-    public int totalPriceCalculation(ArrayList<Book> books, ArrayList<Integer> quantity){
-        int tp=0;
-        for(int i=0; i<books.size();i++){
-            tp+=books.get(i).getSellingPrice()*quantity.get(i);
+    public int totalPriceCalculation(ArrayList<Book> books, ArrayList<Integer> quantity) {
+        int tp = 0;
+        for (int i = 0; i < books.size(); i++) {
+            tp += books.get(i).getSellingPrice() * quantity.get(i);
         }
         return tp;
     }
