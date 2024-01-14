@@ -73,8 +73,8 @@ public class AuthorInfoView {
                 if (finalI < authors.size()) {
                     AuthorController authorController = new AuthorController();
                     Author author = authorController.findAuthor(finalI);
-                    // EditLibrarianView librarianDetails = new EditLibrarianView();
-                    // stage.setScene(librarianDetails.editLibrarian(stage, librarian));
+                    EditAuthorView editAuthorView = new EditAuthorView(currentUser);
+                    stage.setScene(editAuthorView.editAuthor(stage, author));
                 } else if (finalI == authorNameBt.size() - 1) { // Back button
                     EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
                     stage.setScene(employeeHomePage.showView(stage));

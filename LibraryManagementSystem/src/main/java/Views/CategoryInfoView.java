@@ -70,6 +70,8 @@ public class CategoryInfoView {
                 if (finalI < categories.size()) {
                     CategoryController categoryController = new CategoryController();
                     Category category = categoryController.findCategory(finalI);
+                    EditCategoryView editCategoryView= new EditCategoryView(currentUser);
+                    stage.setScene(editCategoryView.editCategory(stage, category));
                 } else if (finalI == categoryNameBt.size() - 1) {
                     EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
                     stage.setScene(employeeHomePage.showView(stage));
