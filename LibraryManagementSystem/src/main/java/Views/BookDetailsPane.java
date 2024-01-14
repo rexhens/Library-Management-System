@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import java.nio.file.Path;
 
 public class BookDetailsPane {
     public VBox showPane(Book foundBook) {
@@ -84,7 +85,9 @@ public class BookDetailsPane {
         hbStock.getChildren().addAll(stock, stockC);
         hbStock.setAlignment(Pos.CENTER_LEFT);
 
-        ImageView cover = new ImageView(new Image(foundBook.getCover()));
+        Path folderPath = Path.of("LibraryManagementSystem\\src\\main\\java\\Controllers\\images\\");
+        Path imagePath = folderPath.resolve(foundBook.getCover());
+        ImageView cover = new ImageView(new Image(imagePath.toUri().toString()));
         cover.setFitWidth(300);
         cover.setFitHeight(290);
         cover.setPreserveRatio(true);

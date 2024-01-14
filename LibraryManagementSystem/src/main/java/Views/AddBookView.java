@@ -30,6 +30,11 @@ public class AddBookView {
     private User currentUser;
     private Path targetPath;
     private File selectedFile;
+    private String relativeImagePath;
+
+    public void setRelativeImagePath(String relativeImagePath) {
+        this.relativeImagePath = relativeImagePath;
+    }
 
     public void saveToFolder() {
         try {
@@ -129,7 +134,8 @@ public class AddBookView {
             setSelectedFile(fileChooser.showOpenDialog(stage));
             if (selectedFile != null) {
                 Path imageFolder = Path.of("LibraryManagementSystem\\src\\main\\java\\Controllers\\images");
-                setTargetPath(imageFolder.resolve(System.currentTimeMillis() + "_" + selectedFile.getName()));
+                setRelativeImagePath(System.currentTimeMillis() + "_" + selectedFile.getName());
+                setTargetPath(imageFolder.resolve(relativeImagePath));
                 Image image = new Image(selectedFile.toString());
                 ImageView cover = new ImageView(image);
                 cover.setFitHeight(120);
@@ -204,11 +210,10 @@ public class AddBookView {
                         for (Category c : selected) {
                             System.out.println(c.getCategoryName());
                         }
-
                         saveToFolder();
                         controller.createBook(isbn1.getText(), booktitle.getText(), authorComboBox.getValue(), selected,
                                 sut.getText(), Integer.parseInt(pt.getText()), Integer.parseInt(ot.getText()),
-                                Integer.parseInt(st.getText()), targetPath.toUri().toString());
+                                Integer.parseInt(st.getText()), relativeImagePath);
                         Alert success = new Alert(Alert.AlertType.INFORMATION);
                         success.setHeaderText("Book was successfully added!");
                         success.showAndWait();
