@@ -41,13 +41,13 @@ public class LibrarianPerformanceView {
         gridPane.setAlignment(Pos.CENTER);
 
         Label nrBillsLabel = new Label("Total number of Bills");
-        TextField noBillsField = new TextField(Integer.toString(librarianController.totalNoBills(librarian)));
+        TextField noBillsField = new TextField(Integer.toString(librarianController.totalNoBillsByLibrarian(librarian)));
         noBillsField.setEditable(false);
         gridPane.add(nrBillsLabel, 0, 0);
         gridPane.add(noBillsField, 1, 0);
 
         Label booksSoldLabel = new Label("Books sold");
-        TextField booksSoldField = new TextField(Integer.toString(librarianController.totalNoBooksSold(librarian)));
+        TextField booksSoldField = new TextField(Integer.toString(librarianController.totalNoBooksSoldByLibrarian(librarian)));
         booksSoldField.setEditable(false);
         gridPane.add(booksSoldLabel, 0, 1);
         gridPane.add(booksSoldField, 1, 1);

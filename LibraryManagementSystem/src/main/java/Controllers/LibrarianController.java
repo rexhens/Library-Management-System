@@ -307,7 +307,7 @@ public class LibrarianController implements Modifiable {
         return result;
     }
 
-    public int totalNoBills(Librarian librarian) {
+    public int totalNoBillsByLibrarian(Librarian librarian) {
         int result = 0;
         var bills = FileController.transactions;
         for (var bill : bills) {
@@ -318,13 +318,15 @@ public class LibrarianController implements Modifiable {
         return result;
     }
 
-    public int totalNoBooksSold(Librarian librarian) {
+    public int totalNoBooksSoldByLibrarian(Librarian librarian) {
         int result = 0;
         var bills = FileController.transactions;
         for (var bill : bills) {
             var books = bill.getBooks();
-            for (var book : books) {
-                result++;
+            if (bill.getType() == BillsType.Sold && bill.getSoldBy() == librarian.getId()) {
+                for (var book : books) {
+                    result++;
+                }
             }
         }
         return result;
