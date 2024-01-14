@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class BookDetailsPane {
     public VBox showPane(Book foundBook) {
@@ -85,7 +86,7 @@ public class BookDetailsPane {
         hbStock.getChildren().addAll(stock, stockC);
         hbStock.setAlignment(Pos.CENTER_LEFT);
 
-        Path folderPath = Path.of("LibraryManagementSystem\\src\\main\\java\\Controllers\\images\\");
+        Path folderPath = Paths.get("LibraryManagementSystem", "src", "main", "java", "Controllers", "images");
         Path imagePath = folderPath.resolve(foundBook.getCover());
         ImageView cover = new ImageView(new Image(imagePath.toUri().toString()));
         cover.setFitWidth(300);

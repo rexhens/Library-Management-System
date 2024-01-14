@@ -12,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class BookCatalogPane {
     public VBox showPane() {
@@ -20,7 +21,7 @@ public class BookCatalogPane {
 
         ArrayList<ImageView> bookCatalog = new ArrayList<>();
         for (int i = 0; i < FileController.books.size(); i++) {
-            Path folderPath = Path.of("LibraryManagementSystem\\src\\main\\java\\Controllers\\images\\");
+            Path folderPath = Paths.get("LibraryManagementSystem", "src", "main", "java", "Controllers", "images");
             Path imagePath = folderPath.resolve(FileController.books.get(i).getCover());
             ImageView display = new ImageView(new Image(imagePath.toUri().toString()));
             display.setFitWidth(100);

@@ -23,7 +23,7 @@ import javafx.scene.image.ImageView;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class AddBookView {
@@ -130,13 +130,18 @@ public class AddBookView {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + File.separator + "Desktop"));
             fileChooser.getExtensionFilters()
-                    .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
+                    .add(new FileChooser.ExtensionFilter("Image Files", ".png", ".jpg", "*.jpeg"));
             setSelectedFile(fileChooser.showOpenDialog(stage));
+
             if (selectedFile != null) {
-                Path imageFolder = Path.of("LibraryManagementSystem\\src\\main\\java\\Controllers\\images");
+                Path imageFolder = Paths.get("LibraryManagementSystem", "src", "main", "java", "Controllers", "images");
                 setRelativeImagePath(System.currentTimeMillis() + "_" + selectedFile.getName());
                 setTargetPath(imageFolder.resolve(relativeImagePath));
-                Image image = new Image(selectedFile.toString());
+
+                // Use a file URL to construct the Image
+                String imageUrl = selectedFile.toURI().toString();
+                Image image = new Image(imageUrl);
+
                 ImageView cover = new ImageView(image);
                 cover.setFitHeight(120);
                 cover.setFitWidth(100);
@@ -146,7 +151,6 @@ public class AddBookView {
                 error.setHeaderText("You need to select a picture!");
                 error.showAndWait();
             }
-
         });
 
         Button registerButton = new Button("Register Book");
