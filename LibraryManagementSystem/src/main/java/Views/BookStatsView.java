@@ -66,7 +66,7 @@ public class BookStatsView {
         Label searchMsg = new Label();
         searchMsg.setStyle("-fx-text-fill: red;");
 
-        Text text = new Text("Find Book For Stock");
+        Text text = new Text("Find Number Of Book Copies Sold");
         StackPane stack = new StackPane();
         text.setFont(new Font(30));
         stack.getChildren().add(text);

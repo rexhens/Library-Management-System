@@ -83,6 +83,10 @@ public class EmployeeHomePage {
                 stage.setScene(addBookView.addBook(stage));
             });
             Button modifyBook = new Button("Modify Book data");
+            modifyBook.setOnAction(e->{
+                ModifyBookView mbv = new ModifyBookView(currentUser, stage);
+                stage.setScene(mbv.showView());
+            });
             Button totalBookSold = new Button("Sold Book Copies");
             totalBookSold.setOnAction(e->{
                 BookStatsView bsv = new BookStatsView(currentUser, stage);

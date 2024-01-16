@@ -130,7 +130,7 @@ public class AddBookView {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + File.separator + "Desktop"));
             fileChooser.getExtensionFilters()
-                    .add(new FileChooser.ExtensionFilter("Image Files", ".png", ".jpg", "*.jpeg"));
+                    .add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg"));
             setSelectedFile(fileChooser.showOpenDialog(stage));
 
             if (selectedFile != null) {
@@ -208,10 +208,6 @@ public class AddBookView {
                             if (categoryCheckboxes.get(i).isSelected()) {
                                 selected.add(cc.findCategory(i));
                             }
-                        }
-
-                        for (Category c : selected) {
-                            System.out.println(c.getCategoryName());
                         }
                         saveToFolder();
                         controller.createBook(isbn1.getText(), booktitle.getText(), authorComboBox.getValue(), selected,
