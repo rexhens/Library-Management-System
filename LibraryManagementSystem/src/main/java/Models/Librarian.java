@@ -21,6 +21,10 @@ public class Librarian extends User {
         super(name, surname, username, Roles.Librarian, password, salary, phoneNum, date, gender, accesslevel);
     }
 
+    public Librarian() {
+
+    }
+
     public double moneyMadeInDay() {
 
         if (this.datesSold == null) {

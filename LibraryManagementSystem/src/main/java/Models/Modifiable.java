@@ -15,4 +15,5 @@ public interface Modifiable {
     User findUserById(int id);
 
     boolean deleteUserById(int id);
+    void changeAccessLevel(int newAccessLevel);
 }
