@@ -17,7 +17,6 @@ public class BillController {
 
     public void createBill(int ID, ArrayList<Book> books, ArrayList<Integer> quantity, int totalPrice, BillsType type) {
         Bill b = new Bill(ID, books, quantity, totalPrice, type);
-        addBill(b);
         printBill(b);
     }
 
@@ -32,6 +31,8 @@ public class BillController {
             try (
                     PrintWriter o = new PrintWriter(print);) {
                 o.print(b);
+                addBill(b);
+                System.out.println(FileController.transactions.get(b.getBillNumber()-1));
             }
             System.out.println("Bill " + b.getBillNumber() + " printed successfully.");
         } catch (NullPointerException e) {

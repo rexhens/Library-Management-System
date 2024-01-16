@@ -1,7 +1,7 @@
 Bill no.2
-Date:Tue Jan 16 00:17:00 CET 2024
+Date:Tue Jan 16 15:12:53 CET 2024
 Employee ID:2
 
-978 1 2345 6789 1 ..... Intro to Java ..... 4000 ALL x 58 copies
+978 1 2345 6789 0 ..... Intro to SWE ..... 3000 ALL x 13 copies
 
-Total Price 174000 ALL.
+Total Price 39000 ALL.
