@@ -265,7 +265,7 @@ public class ManagerController implements Modifiable {
         double result = 0;
         var bills = FileController.transactions;
         for (var bill : bills) {
-            if(bill.getType() == BillsType.Sold) {
+            if(bill.getType() == BillsType.Bought) {
                 if (isSameDay(bill.getCreatedDate(), new Date()) && bill.getSoldBy() == manager.getId()) {
                     result += bill.getTotalPrice();
                 }
