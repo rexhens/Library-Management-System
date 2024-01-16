@@ -27,9 +27,9 @@ public class Main extends Application {
             Platform.exit();
         });
 
-        for(Book b:FileController.books){
-            b.setStock(0);
-        }
+        // for(Book b:FileController.books){
+        //     b.setStock(0);
+        // }
         stage.setTitle("Library Management System");
         stage.setScene(scene);
         stage.show();
