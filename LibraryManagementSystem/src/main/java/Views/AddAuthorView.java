@@ -11,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -59,6 +60,12 @@ public class AddAuthorView {
         gp.add(gl, 0, 2);
         gp.add(b1, 1, 2);
 
+        Label systemLabel = new Label("System");
+        Label label1=new Label("");
+        label1.setTextFill(Color.RED);
+        gp.add(systemLabel, 0, 3);
+        gp.add(label1, 1, 3);
+
         Button registerButton = new Button("Register Author");
         registerButton.setOnAction(e -> {
             AuthorController controller = new AuthorController();
@@ -71,18 +78,14 @@ public class AddAuthorView {
                 gender = Gender.Other;
 
             var added = controller.createAuthor(nameT.getText(), surnameT.getText(), gender);
-            if (added != null) {
+            if (added.getUser() != null) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setHeaderText("Author was successfully added!");
                 success.showAndWait();
                 EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
                 stage.setScene(employeeHomePage.showView(stage));
-            } else {
-                Alert fail = new Alert(Alert.AlertType.ERROR);
-                fail.setHeaderText("Author wasn't added!");
-                fail.showAndWait();
-                EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                stage.setScene(employeeHomePage.showView(stage));
+            }else {
+                label1.setText(added.getErrorMessage());
             }
         });
         Button back = new Button("Back");
@@ -93,7 +96,7 @@ public class AddAuthorView {
         HBox b2 = new HBox();
         b2.setSpacing(10);
         b2.getChildren().addAll(registerButton, back);
-        gp.add(b2, 1, 11);
+        gp.add(b2, 1, 4);
         bp.setCenter(gp);
         return new Scene(bp, 700, 500);
     }

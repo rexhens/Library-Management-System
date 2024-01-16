@@ -1,7 +1,7 @@
 package Views;
 
 
-import Controllers.AuthorController;
+
 import Controllers.CategoryController;
 import Models.Category;
 import Models.User;
@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -47,22 +48,24 @@ public class EditCategoryView {
         gp.add(nameLabel, 0, 0);
         gp.add(nameField, 1, 0);
 
+        Label systemLabel = new Label("System");
+        Label label1=new Label("");
+        label1.setTextFill(Color.RED);
+        gp.add(systemLabel, 0, 1);
+        gp.add(label1, 1, 1);
+
         Button editButton = new Button("Edit");
         editButton.setOnAction(e -> {
             CategoryController controller = new CategoryController();
             var edited = controller.editCategory(category.getID(),nameField.getText());
-            if (edited.getErrorMessage().isEmpty() || edited.getErrorMessage() == null) {
+            if (edited.getErrorMessage() == null) {
                 Alert error = new Alert(Alert.AlertType.INFORMATION);
                 error.setHeaderText("Category was successfully edited!");
                 error.showAndWait();
                 Views.CategoryInfoView categoryInfoView = new Views.CategoryInfoView(currentUser);
                 stage.setScene(categoryInfoView.showcategory(stage));
             } else {
-                Alert fail = new Alert(Alert.AlertType.ERROR);
-                fail.setHeaderText("Category wasn't edited");
-                fail.showAndWait();
-                Views.CategoryInfoView categoryInfoView = new Views.CategoryInfoView(currentUser);
-                stage.setScene(categoryInfoView.showcategory(stage));
+                label1.setText(edited.getErrorMessage());
             }
         });
 
@@ -94,7 +97,7 @@ public class EditCategoryView {
         HBox b2 = new HBox();
         b2.setSpacing(10);
         b2.getChildren().addAll(editButton, backBtn);
-        gp.add(b2, 0, 3);
+        gp.add(b2, 1, 2);
         bp.setCenter(gp);
         return new Scene(bp, 700, 500);
     }

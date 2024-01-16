@@ -1,5 +1,6 @@
 package Controllers;
 
+
 import Models.Category;
 import Models.StandardViewResponse;
 
@@ -8,14 +9,35 @@ public class CategoryController {
         FileController.categories.add(c);
     }
 
-    public Category createCategory(String categoryname) {
-        for (Category c : FileController.categories) {
-            if (c.getCategoryName().equals(categoryname))
-                return null;
+    public StandardViewResponse<Category> createCategory(String categoryname) {
+        Category category=null;
+        try {
+
+            if (categoryname.isEmpty()) {
+                return new StandardViewResponse<>(category, "Field is empty!");
+            }
+
+            if (categoryname.length() < 3 || categoryname.length() > 20) {
+                return new StandardViewResponse<>(category, "Name can't have this length!");
+            } else if (categoryname.matches(".*\\d+.*")) {
+                return new StandardViewResponse<>(category, "Name can't contain numbers!");
+            }
+            for (char c : categoryname.toCharArray()) {
+                if (isSpecialChar(c)) {
+                    return new StandardViewResponse<>(category, "Name can't contain special characters!");
+                }
+            }
+            if(!isUniqueCategory(categoryname)) {
+                return new StandardViewResponse<>(category, "There already exists a category with this name");
+            }
+            category = new Category(categoryname);
+            addCategory(category);
+            System.out.println("Category was successfully added");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return new StandardViewResponse<>(category, e.getMessage());
         }
-        Category category = new Category(categoryname);
-        addCategory(category);
-        return category;
+        return new StandardViewResponse<>(category, "");
     }
 
     public Category findCategory(int id) {
@@ -29,9 +51,9 @@ public class CategoryController {
         String specialChars = "!@#$%^&*()._";
         return specialChars.contains(String.valueOf(c));
     }
-    static boolean isUniqueCategory(int ID, String categoryname) {
+    static boolean isUniqueCategory(String categoryname) {
         for (Category category : FileController.categories) {
-            if (category.getID()==ID && category.getCategoryName().equals(categoryname)) {
+            if (category.getCategoryName().equals(categoryname)) {
                 return false;
             }
         }
@@ -70,10 +92,7 @@ public class CategoryController {
                     return new StandardViewResponse<>(category, "Name can't contain special characters!");
                 }
             }
-            if (!Character.isUpperCase(categoryname.charAt(0))) {
-                categoryname = Character.toUpperCase(categoryname.charAt(0)) + categoryname.substring(1);
-            }
-            if(!isUniqueCategory(ID, categoryname)) {
+            if(!isUniqueCategory(categoryname)) {
                 return new StandardViewResponse<>(category, "There already exists a category with this name");
             }
             category.setCategoryName(categoryname);

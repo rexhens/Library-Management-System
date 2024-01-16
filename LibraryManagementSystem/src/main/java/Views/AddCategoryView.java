@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -45,22 +46,24 @@ public class AddCategoryView {
         gp.add(name, 0, 0);
         gp.add(nameT, 1, 0);
 
+        Label systemLabel = new Label("System");
+        Label label1=new Label("");
+        label1.setTextFill(Color.RED);
+        gp.add(systemLabel, 0, 1);
+        gp.add(label1, 1, 1);
+
         Button registerButton = new Button("Register Category");
         registerButton.setOnAction(e -> {
             CategoryController controller = new CategoryController();
             var added = controller.createCategory(nameT.getText());
-            if (added != null) {
+            if (added.getUser() != null) {
                 Alert success = new Alert(Alert.AlertType.INFORMATION);
                 success.setHeaderText("Category was successfully added!");
                 success.showAndWait();
                 EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
                 stage.setScene(employeeHomePage.showView(stage));
             } else {
-                Alert fail = new Alert(Alert.AlertType.ERROR);
-                fail.setHeaderText("Category was not successfully added!");
-                fail.showAndWait();
-                EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                stage.setScene(employeeHomePage.showView(stage));
+                label1.setText(added.getErrorMessage());
             }
         });
         Button back = new Button("Back");
@@ -71,7 +74,7 @@ public class AddCategoryView {
         HBox b2 = new HBox();
         b2.setSpacing(10);
         b2.getChildren().addAll(registerButton, back);
-        gp.add(b2, 1, 8);
+        gp.add(b2, 1, 2);
         bp.setCenter(gp);
         return new Scene(bp, 700, 500);
 

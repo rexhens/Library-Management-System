@@ -1,7 +1,6 @@
 package Views;
 
 import Controllers.AuthorController;
-import Controllers.LibrarianController;
 import Models.Author;
 import Models.Gender;
 import Models.User;
@@ -13,6 +12,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -59,6 +59,8 @@ public class EditAuthorView {
         Female.setToggleGroup(toggleGroup);
         Other.setToggleGroup(toggleGroup);
 
+
+
         HBox b1 = new HBox(10);
         b1.getChildren().addAll(Male, Female, Other);
         gp.add(genderLabel, 0, 2);
@@ -74,6 +76,11 @@ public class EditAuthorView {
                 Other.setSelected(true);
                 break;
         }
+        Label systemLabel = new Label("System");
+        Label label1=new Label("");
+        label1.setTextFill(Color.RED);
+        gp.add(systemLabel, 0, 3);
+        gp.add(label1, 1, 3);
 
         Button editButton = new Button("Edit");
         editButton.setOnAction(e -> {
@@ -87,18 +94,14 @@ public class EditAuthorView {
                 gender = Gender.Other;
 
             var edited = controller.editAuthor(author.getID(),nameField.getText(), surnameField.getText(), gender);
-            if (edited.getErrorMessage().isEmpty() || edited.getErrorMessage() == null) {
-                Alert error = new Alert(Alert.AlertType.INFORMATION);
-                error.setHeaderText("Author was successfully edited!");
-                error.showAndWait();
+            if (edited.getErrorMessage() == null) {
+                Alert success = new Alert(Alert.AlertType.INFORMATION);
+                success.setHeaderText("Author was successfully edited!");
+                success.showAndWait();
                 Views.AuthorInfoView authorInfoView = new Views.AuthorInfoView(currentUser);
                 stage.setScene(authorInfoView.showView(stage));
             } else {
-                Alert fail = new Alert(Alert.AlertType.ERROR);
-                fail.setHeaderText("Author wasn't edited");
-                fail.showAndWait();
-                Views.AuthorInfoView authorInfoView = new Views.AuthorInfoView(currentUser);
-                stage.setScene(authorInfoView.showView(stage));
+                label1.setText(edited.getErrorMessage());
             }
         });
         // Button deleteAuthorButton = new Button("Delete Author");
@@ -128,7 +131,7 @@ public class EditAuthorView {
         HBox b2 = new HBox();
         b2.setSpacing(10);
         b2.getChildren().addAll(editButton, backBtn);
-        gp.add(b2, 1, 3);
+        gp.add(b2, 1, 4);
         bp.setCenter(gp);
         return new Scene(bp, 700, 500);
     }
