@@ -1,11 +1,9 @@
 package Views.Statistics;
 
 import Controllers.BookController;
-import Controllers.FileController;
 import Controllers.IncomesController;
 import Models.Book;
 import Models.User;
-import Views.AdminHomePage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

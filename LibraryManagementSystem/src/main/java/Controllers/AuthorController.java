@@ -72,24 +72,6 @@ public class AuthorController {
         return true;
     }
 
-    // public boolean authorNameValidation() {
-    //     return false;
-    // }
-
-    // public boolean deleteAuthor(int id) {
-    //     var exists = findAuthor(id);
-    //     if (exists == null) {
-    //         return false;
-    //     }
-    //     for (Author author : FileController.authors) {
-    //         if (author.getID() == id) {
-    //             FileController.authors.remove(author);
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
-
     public StandardViewResponse<Author> editAuthor(int ID, String name, String surname, Gender gender) {
         Author author = findAuthor(ID);
         try {

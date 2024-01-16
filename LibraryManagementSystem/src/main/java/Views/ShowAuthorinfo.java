@@ -1,6 +1,5 @@
 package Views;
 
-import Controllers.AuthorController;
 import Models.Author;
 import Models.Gender;
 import Models.User;

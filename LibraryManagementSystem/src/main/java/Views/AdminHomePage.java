@@ -7,7 +7,6 @@ import Models.Librarian;
 import Models.Manager;
 import Models.User;
 import Views.Statistics.StatisticMainView;
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -21,10 +20,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class AdminHomePage extends Application {
+public class AdminHomePage {
     private User currentUser;
 
     public AdminHomePage(User currentUser) {
@@ -246,27 +244,4 @@ public class AdminHomePage extends Application {
         return new Scene(border, 700, 500);
     }
 
-    @Override
-    public void start(Stage stage) throws IOException {
-        // FileController fileController = new FileController();
-        //
-        // ArrayList<Librarian> setLibrarians = new ArrayList<>();
-        // setLibrarians.add(new
-        // Librarian("name1","surname1","username1","password",100,"23423424"));
-        // setLibrarians.add(new
-        // Librarian("name2","surname2","username2","password",100,"23423424"));
-        // setLibrarians.add(new
-        // Librarian("name3","surname3","username3","password",100,"23423424"));
-        // Admin.setLibrarians(setLibrarians);
-        // fileController.writeToFile(FileController.librarians,"users.dat");
-        // Admin.setLibrarians(fileController.readFromFile("users.dat"));
-        // Scene scene = manageLibrariansView(stage);
-        // stage.setTitle("Library Management System");
-        // stage.setScene(scene);
-        // stage.show();
-    }
-
-    public static void main(String[] args) {
-        launch();
-    }
 }
