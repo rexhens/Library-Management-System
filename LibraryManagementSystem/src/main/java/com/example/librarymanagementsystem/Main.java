@@ -1,6 +1,8 @@
 package com.example.librarymanagementsystem;
 
+import Controllers.BookController;
 import Controllers.FileController;
+import Models.Book;
 import Views.LogInView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,6 +24,7 @@ public class Main extends Application {
             FileController.writeAuthors();
             FileController.writeBooks();
             FileController.writeCategories();
+            FileController.writeTransactions();
             Platform.exit();
         });
 
