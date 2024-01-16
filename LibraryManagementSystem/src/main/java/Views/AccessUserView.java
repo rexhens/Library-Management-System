@@ -1,28 +1,33 @@
 package Views;
 
+import Controllers.FileController;
+import Controllers.LibrarianController;
+import Controllers.ManagerController;
+import Models.Admin;
 import Models.Librarian;
+import Models.Manager;
 import Models.User;
+import Views.Statistics.StatisticMainView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class AccessUserView {
-    public Scene showAccessUserView(User user)
+    public Scene showAccessUserView(User user, Stage stage,int userLevel)
     {
         BorderPane borderPane = new BorderPane();
 
         StackPane stackText = new StackPane();
         Text text = new Text();
-        if(user instanceof Librarian) {
+        if(userLevel == 1) {
              text.setText("Librarian Access");
         }else{
             text.setText("Manager Access");
@@ -41,6 +46,8 @@ public class AccessUserView {
 
         ToggleGroup tgA = new ToggleGroup();
         Label accessL = new Label("Access Level");
+        accessL.setStyle("-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: black;");
+
         RadioButton level1 = new RadioButton("Sell books");
         RadioButton level2 = new RadioButton("Add Stock/Authors/Categories");
         RadioButton level3 = new RadioButton("Both");
@@ -51,7 +58,50 @@ public class AccessUserView {
         gridPane.add(accessL, 0, 0);
         HBox b2 = new HBox(10);
         b2.getChildren().addAll(level1, level2, level3);
-        gridPane.add(b2, 1, 0);
+        gridPane.add(b2, 4, 0);
+
+        Button saveChangesButton = new Button("Save Changes");
+        Button backButton = new Button("Back");
+        backButton.setOnAction(event -> {
+            AdminHomePage statisticMainView = new AdminHomePage(user);
+            stage.setScene(statisticMainView.showAdminHomePage(stage));
+        });
+        HBox vBox = new HBox();
+        vBox.setSpacing(15);
+        vBox.getChildren().addAll(saveChangesButton,backButton);
+
+        Label errorLabel = new Label("Please choose one option!");
+        errorLabel.setVisible(false);
+        errorLabel.setStyle("-fx-text-fill: red");
+        gridPane.add(errorLabel,4,8);
+
+        saveChangesButton.setOnAction(e->{
+            int accessLevel = 0;
+            if (level1.isSelected()) {
+                accessLevel = 1;
+            } else if (level2.isSelected()) {
+                accessLevel = 2;
+            } else if(level3.isSelected()){
+                accessLevel = 3;
+            }
+            if(accessLevel == 0){
+                errorLabel.setVisible(true);
+            }else {
+                if (userLevel == 2) {
+                    ManagerController managerController = new ManagerController();
+                    managerController.changeAccessLevel(accessLevel);
+                } else if (userLevel == 1) {
+                    LibrarianController librarianController = new LibrarianController();
+                    librarianController.changeAccessLevel(accessLevel);
+                }
+                AdminHomePage adminHomePage = new AdminHomePage(user);
+                stage.setScene(adminHomePage.showAdminHomePage(stage));
+            }
+        });
+
+
+        vBox.setPadding(new Insets(60, 60, 60, 250));
+        borderPane.setBottom(vBox);
 
 
         borderPane.setCenter(gridPane);

@@ -274,4 +274,16 @@ public class ManagerController implements Modifiable {
         return result;
     }
 
+    public void changeAccessLevel(int newAccessLevel)
+    {
+        var users = FileController.users;
+        for(User user : users)
+        {
+            if(user instanceof Manager)
+            {
+                user.setAccessLevel(newAccessLevel);
+            }
+        }
+    }
+
 }

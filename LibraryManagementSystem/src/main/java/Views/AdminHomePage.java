@@ -34,7 +34,7 @@ public class AdminHomePage extends Application {
     public Scene showAdminHomePage(Stage stage) {
         BorderPane border = new BorderPane();
 
-        Text text = new Text("Manage Employees");
+        Text text = new Text("Admin Home Page");
         StackPane stack = new StackPane();
         text.setFont(new Font(30));
         stack.getChildren().add(text);
@@ -103,8 +103,10 @@ public class AdminHomePage extends Application {
 
         Button backBtn = new Button("Back");
         Button addNewLibrarianBtn = new Button("Add new Librarian");
+        Button accessLevelButton = new Button("Access Level");
         librarianNameBtn.add(backBtn);
         librarianNameBtn.add(addNewLibrarianBtn);
+        librarianNameBtn.add(accessLevelButton);
 
         BorderPane border = new BorderPane();
 
@@ -147,7 +149,20 @@ public class AdminHomePage extends Application {
                 }
             });
         }
+        accessLevelButton.setOnAction(e->{
+            AccessUserView accessUserView = new AccessUserView();
+            stage.setScene(accessUserView.showAccessUserView(currentUser,stage,1));
+        });
 
+        addNewLibrarianBtn.setOnAction(e->{
+            AddLibrarianView addLibrarianView = new AddLibrarianView(currentUser);
+            stage.setScene(addLibrarianView.addLibrarian(stage));
+        });
+
+        backBtn.setOnAction(e -> {
+            AdminHomePage adminHomePage = new AdminHomePage(currentUser);
+            stage.setScene(adminHomePage.showAdminHomePage(stage));
+        });
         border.setCenter(gridPane);
         return new Scene(border, 700, 500);
     }
@@ -216,9 +231,17 @@ public class AdminHomePage extends Application {
         }
         managerAccessButton.setOnAction(e->{
             AccessUserView accessUserView = new AccessUserView();
-            stage.setScene(accessUserView.showAccessUserView(new Manager()));
+            stage.setScene(accessUserView.showAccessUserView(currentUser,stage,2));
         });
 
+        addNewLibrarianBtn.setOnAction(e->{
+            AddManagerView addManagerView = new AddManagerView(currentUser);
+            stage.setScene(addManagerView.showAddManagerView(stage));
+        });
+        backBtn.setOnAction(e -> {
+            AdminHomePage adminHomePage = new AdminHomePage(currentUser);
+            stage.setScene(adminHomePage.showAdminHomePage(stage));
+        });
         border.setCenter(gridPane);
         return new Scene(border, 700, 500);
     }
