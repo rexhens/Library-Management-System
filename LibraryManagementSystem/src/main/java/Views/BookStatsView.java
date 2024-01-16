@@ -2,6 +2,9 @@ package Views;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import Controllers.BookController;
 import Controllers.FileController;
 import Models.Bill;
@@ -17,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -87,8 +91,6 @@ public class BookStatsView {
         back.setOnAction(myBtn::handle);
 
         BookController bc = new BookController();
-        // BillController bb = new BillController();
-        // StockController ss = new StockController();
 
         searchF.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -119,91 +121,66 @@ public class BookStatsView {
                         Label book = new Label("Book: " + foundBook.getBookTitle());
                         Label author = new Label("Author: " + foundBook.getAuthor().getName() + " "
                                 + foundBook.getAuthor().getSurname());
-                        int q=0;
-                        for(Bill b:FileController.transactions){
-                            // System.out.println(b);
-                            if(b.getType()==BillsType.Sold){
-                                for(int i=0;i<b.getBooks().size();i++){
-                                    if(b.getBooks().get(i).getISBN().equals(foundBook.getISBN()))
-                                    q+=b.getQuantity().get(i);
+
+                        DatePicker datePicker1 = new DatePicker();
+                        DatePicker datePicker2 = new DatePicker();
+                        datePicker1.setEditable(false);
+                        datePicker2.setEditable(false);
+
+                        int q = 0;
+                        Label sold = new Label();
+
+                            for (Bill b : FileController.transactions) {
+                                if (b.getType() == BillsType.Sold) {
+                                    for (int i = 0; i < b.getBooks().size(); i++) {
+                                        if (b.getBooks().get(i).getISBN().equals(foundBook.getISBN()))
+                                            q += b.getQuantity().get(i);
+                                    }
                                 }
                             }
-                        }
-                        Label allTimeSold = new Label("Total Sold Number: "+q);
-                        // Label price = new Label("Purchase price: " + foundBook.getPurchasedPrice());
-                        // Label date = new Label();
-                        // if (foundBook.getPurchasedDate() == null) {
-                        //     date.setText("Last purchased date: Not purchased yet");
-                        // } else {
-                        //     date.setText("Last purchased date: " + foundBook.getPurchasedDate().toString());
-                        // }
-                        // Label stock = new Label("Current stock: " + foundBook.getStock());
-
-                        // Label newStock = new Label("No. books:");
-                        // TextField newStockT = new TextField();
-                        // Label newStockM = new Label();
-                        // newStockM.setStyle("-fx-text-fill: red;");
-                        // Label stockP = new Label("Stock Price: ");
-                        // TextField stockPF = new TextField();
-                        // stockPF.setEditable(false);
-                        // newStockT.textProperty().addListener((observable, oldValue, newValue) -> {
-                        //     try {
-                        //         if (newValue != null) {
-                        //             String s = Integer
-                        //                     .toString(totalPriceCalculation(foundBook, Integer.parseInt(newValue)));
-                        //             stockPF.setText(s);
-                        //             newStockT.setStyle("-fx-text-fill: black;");
-                        //             newStockM.setText(null);
-                        //         } else {
-                        //             stockPF.setText(null);
-                        //             newStockM.setText("Can't be empty!");
-                        //         }
-                        //     } catch (Exception e2) {
-                        //         System.out.println(e2.getMessage());
-                        //         newStockT.setStyle("-fx-text-fill: red;");
-                        //         newStockM.setText("Can't have letters in stock field!");
-                        //     }
-                        // });
-
-                        // Button add = new Button("Add Stock");
-                        // add.setOnAction(x -> {
-                        //     if (newStockM.getText() != null) {
-                        //         Alert error = new Alert(AlertType.ERROR);
-                        //         error.setHeaderText("Check Stock Field!");
-                        //         error.showAndWait();
-                        //     } else {
-                        //         ArrayList<Book> b = new ArrayList<>();
-                        //         b.add(foundBook);
-                        //         ArrayList<Integer> q = new ArrayList<>();
-                        //         q.add(Integer.parseInt(newStockT.getText()));
-                        //         bb.createBill(currentUser.getId(), b, q,
-                        //                 totalPriceCalculation(foundBook, Integer.parseInt(newStockT.getText())),
-                        //                 BillsType.Bought);
-                        //         ss.updateStockAfterBought(foundBook, Integer.parseInt(newStockT.getText()));
-                        //         date.setText("Last purchased date: " + foundBook.getPurchasedDate().toString());
-                        //         stock.setText("Current stock: " + foundBook.getStock());
-                        //         Alert info = new Alert(AlertType.INFORMATION);
-                        //         info.setHeaderText("Book stock added successfully!");
-                        //         info.showAndWait();
-                        //         newStockT.setText(null);
-                        //         stockPF.setText(null);
-                        //         newStockM.setText(null);
-                        //     }
-
-                        // });
+                            sold.setText("Total Sold Number: " + q);
+                        
+                        int qFinal=q;
+                        Button check = new Button("Check");
+                        check.setOnAction(e1->{
+                            if(datePicker1.getValue()==null&&datePicker2.getValue()==null){
+                                sold.setText("Total Sold Number: " + qFinal);
+                            } else if(datePicker1.getValue()==null||datePicker2.getValue()==null){
+                                Alert error = new Alert(AlertType.ERROR);
+                                error.setHeaderText("You need to select both dates!");
+                                error.showAndWait();
+                            } else if(datePicker1.getValue().isAfter(LocalDate.now())||datePicker2.getValue().isAfter(LocalDate.now())){
+                                Alert error = new Alert(AlertType.ERROR);
+                                error.setHeaderText("Dates picked can't be after today's date!");
+                                error.showAndWait();
+                            } else if(datePicker1.getValue().isAfter(datePicker2.getValue())){
+                                Alert error = new Alert(AlertType.ERROR);
+                                error.setHeaderText("Beginning date can't be after end date!");
+                                error.showAndWait();
+                            } else {
+                                int qF=0;
+                                for (Bill b : FileController.transactions) {
+                                    if (b.getType() == BillsType.Sold&&isDateInRange(b.getCreatedDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                                                        datePicker1.getValue(),datePicker2.getValue())) {
+                                        for (int i = 0; i < b.getBooks().size(); i++) {
+                                            if (b.getBooks().get(i).getISBN().equals(foundBook.getISBN()))
+                                                qF += b.getQuantity().get(i);
+                                        }
+                                    }
+                                }
+                                sold.setText("Sold Number: " + qF);
+                            }
+                        });
 
                         GridPane gp1 = new GridPane();
                         gp1.setAlignment(Pos.CENTER);
                         gp1.setVgap(10);
                         gp1.setHgap(10);
-                        // gp1.add(newStock, 0, 0);
-                        // gp1.add(newStockT, 1, 0);
-                        // gp1.add(newStockM, 2, 0);
-                        // gp1.add(stockP, 0, 1);
-                        // gp1.add(stockPF, 1, 1);
-                        // gp1.add(add, 1, 2);
+                        gp1.add(datePicker1, 0, 0);
+                        gp1.add(datePicker2, 1, 0);
+                        gp1.add(check, 2, 0);
 
-                        vb.getChildren().addAll(book, author,allTimeSold);
+                        vb.getChildren().addAll(book, author, sold);
                         hb.getChildren().addAll(cover, vb, gp1);
                     } else {
                         Alert error = new Alert(AlertType.INFORMATION);
@@ -222,5 +199,9 @@ public class BookStatsView {
         sp.prefHeightProperty().bind(sc.heightProperty());
         return sc;
     }
-    
+
+    private boolean isDateInRange(LocalDate date, LocalDate startDate, LocalDate endDate) {
+        return (date.isEqual(startDate) || date.isAfter(startDate)) &&
+               (date.isEqual(endDate) || date.isBefore(endDate));
+    }
 }
