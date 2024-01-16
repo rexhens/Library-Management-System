@@ -3,6 +3,7 @@ package Controllers;
 import Models.BillsType;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 
 import static Controllers.BookController.isSameDay;
@@ -10,17 +11,16 @@ import static Controllers.BookController.isSameDay;
 public class IncomesController {
 
     public double getDailyIncome() {
+        Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(12).toInstant());
         double result = 0;
         var billList = FileController.transactions;
         for (var bill : billList) {
             var books = bill.getBooks();
-            if (bill.getType() == BillsType.Sold) {
-                for (var book : books) {
-                    if (isSameDay(book.getPurchasedDate(), new Date())) {
-                        result += book.getOriginalPrice();
-                        // System.out.println(book);
-                    }
-                }
+            if (bill.getType() == BillsType.Sold && isSameDay(bill.getCreatedDate(),new Date())) {
+
+                result += bill.getTotalPrice();
+                // System.out.println(book);
+
             }
         }
         return result;
@@ -31,16 +31,12 @@ public class IncomesController {
         double result = 0;
         var billList = FileController.transactions;
         for (var bill : billList) {
-            int i = 0;
             var books = bill.getBooks();
-            var quantities = bill.getQuantity();
-            if (bill.getType() == BillsType.Sold) {
-                for (var book : books) {
-                    if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
-                        result += quantities.get(i);
-                        // System.out.println(book);
-                    }
-                }
+            if (bill.getType() == BillsType.Sold && bill.getCreatedDate().toInstant().isAfter(beforeMonth.toInstant())) {
+
+                result += bill.getTotalPrice();
+                // System.out.println(book);
+
             }
         }
         return result;
@@ -52,13 +48,11 @@ public class IncomesController {
         var billList = FileController.transactions;
         for (var bill : billList) {
             var books = bill.getBooks();
-            if (bill.getType() == BillsType.Sold) {
-                for (var book : books) {
-                    if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
-                        result += book.getOriginalPrice();
+            if (bill.getType() == BillsType.Sold && bill.getCreatedDate().toInstant().isAfter(beforeMonth.toInstant())) {
+
+                        result += bill.getTotalPrice();
                         // System.out.println(book);
-                    }
-                }
+
             }
         }
         return result;
@@ -90,11 +84,14 @@ public class IncomesController {
         var billList = FileController.transactions;
         for (var bill : billList) {
             var books = bill.getBooks();
+            var quantities = bill.getQuantity();
             if (bill.getType() == BillsType.Sold) {
+                int i = 0;
                 for (var book : books) {
                     if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
-                        result++;
-                        // System.out.println(book);
+                        result+=quantities.get(i);
+                        i++;
+
                     }
                 }
             }
@@ -108,12 +105,70 @@ public class IncomesController {
         var billList = FileController.transactions;
         for (var bill : billList) {
             var books = bill.getBooks();
+            var quantities = bill.getQuantity();
             if (bill.getType() == BillsType.Sold) {
+                int i = 0;
                 for (var book : books) {
                     if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
-                        result++;
+                        result+=quantities.get(i);
+                        i++;
                         // System.out.println(book);
                     }
+                }
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Integer> getBillsOfSoldBooksThisYear() {
+        Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(12).toInstant());
+        var result = new ArrayList<Integer>();
+        var billList = FileController.transactions;
+        for (var bill : billList) {
+            var books = bill.getBooks();
+            var quantities = bill.getQuantity();
+            if (bill.getType() == BillsType.Sold) {
+                int i = 0;
+                for (var book : books) {
+                    if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant()))
+                        result.add(quantities.get(i++));
+                    // System.out.println(book);
+                }
+            }
+        }
+        return result;
+    }
+    public ArrayList<Integer> getBillsOfSoldBooksThisMonth() {
+        Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(1).toInstant());
+        var result = new ArrayList<Integer>();
+        var billList = FileController.transactions;
+        for (var bill : billList) {
+            var books = bill.getBooks();
+            var quantities = bill.getQuantity();
+            if (bill.getType() == BillsType.Sold) {
+                int i = 0;
+                for (var book : books) {
+                    if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant()))
+                        result.add(quantities.get(i++));
+                    // System.out.println(book);
+                }
+            }
+        }
+        return result;
+    }
+    public ArrayList<Integer> getBillsOfSoldBooksToday() {
+
+        var result = new ArrayList<Integer>();
+        var billList = FileController.transactions;
+        for (var bill : billList) {
+            var books = bill.getBooks();
+            var quantities = bill.getQuantity();
+            if (bill.getType() == BillsType.Sold) {
+                int i = 0;
+                for (var book : books) {
+                    if (isSameDay(book.getPurchasedDate(),new Date()))
+                        result.add(quantities.get(i++));
+                    // System.out.println(book);
                 }
             }
         }

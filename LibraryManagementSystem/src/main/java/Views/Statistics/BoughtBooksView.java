@@ -50,6 +50,8 @@ public class BoughtBooksView {
         boughtTodayLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14)); // Set font to bold
         gridPane.add(boughtTodayLabel, 0, 0);
         ArrayList<Book> booksBoughtToday = costsController.getBooksBoughtToday();
+        var quantitiesOfTodayBoughtBooks = costsController.getBillsOfBoughtBooksToday();
+
         int j = 1;
         if (booksBoughtToday.isEmpty()) {
             Label labelNoBooks = new Label("No books Bought!");
@@ -65,14 +67,14 @@ public class BoughtBooksView {
             gridPane.add(hBox, 0, 1);
             double totalBoughtToday = 0;
             for (int i = 0; i < booksBoughtToday.size(); i++) {
-                Label bookTitleLabel = new Label(booksBoughtToday.get(i).getBookTitle());
+                Label bookTitleLabel = new Label(booksBoughtToday.get(i).getBookTitle() + " x " + quantitiesOfTodayBoughtBooks.get(i));
                 Label priceBookLabel = new Label(booksBoughtToday.get(i).getOriginalPrice() + " ALL");
                 HBox hBox1 = new HBox();
                 hBox1.getChildren().addAll(bookTitleLabel, priceBookLabel);
                 hBox1.setSpacing(10);
                 bookTitleLabel.setStyle("-fx-font-size: 10;"); // Set font size
                 gridPane.add(hBox1, 0, ++j);
-                totalBoughtToday += booksBoughtToday.get(i).getOriginalPrice();
+                totalBoughtToday += booksBoughtToday.get(i).getOriginalPrice()*quantitiesOfTodayBoughtBooks.get(i);
             }
             HBox hBoxTotal1 = new HBox();
             Label totalTxtLabel = new Label("Total");
@@ -100,6 +102,8 @@ public class BoughtBooksView {
         gridPane.add(hBox2, 1, 1);
 
         ArrayList<Book> booksBoughtThisMonth = costsController.getBooksBoughtThisMonth();
+        var quantitiesOfYThisMonthBoughtBooks = costsController.getBillsOfBoughtBooksThisMonth();
+
         j = 1;
         double totalBoughtThisMonth = 0;
         if (booksBoughtThisMonth.isEmpty()) {
@@ -109,14 +113,14 @@ public class BoughtBooksView {
             bookPriceLabel2.setVisible(false);
         } else {
             for (int i = 0; i < booksBoughtThisMonth.size(); i++) {
-                Label bookTitleLabel = new Label(booksBoughtThisMonth.get(i).getBookTitle());
+                Label bookTitleLabel = new Label(booksBoughtThisMonth.get(i).getBookTitle() + " x " + quantitiesOfYThisMonthBoughtBooks.get(i)) ;
                 Label priceBookLabel = new Label(booksBoughtThisMonth.get(i).getOriginalPrice() + " ALL");
                 HBox hBox1 = new HBox();
                 hBox1.getChildren().addAll(bookTitleLabel, priceBookLabel);
                 hBox1.setSpacing(20);
                 bookTitleLabel.setStyle("-fx-font-size: 10;"); // Set font size
                 gridPane.add(hBox1, 1, ++j);
-                totalBoughtThisMonth += booksBoughtThisMonth.get(i).getOriginalPrice();
+                totalBoughtThisMonth += booksBoughtThisMonth.get(i).getOriginalPrice()*quantitiesOfYThisMonthBoughtBooks.get(i);
             }
             HBox hBoxTotal2 = new HBox();
             Label totalTxtLabel2 = new Label("Total");
@@ -141,6 +145,7 @@ public class BoughtBooksView {
         gridPane.add(boughtThisYearLabel, 2, 0);
         gridPane.add(hBox3, 2, 1);
         ArrayList<Book> booksBoughtThisYear = costsController.getBooksBoughtThisYear();
+        var quantitiesOfYThisYearBoughtBooks = costsController.getBillsOfBoughtBooksThisYear();
         if (booksBoughtThisYear.isEmpty()) {
             Label labelNoBooks = new Label("No books Bought!");
             gridPane.add(labelNoBooks, 0, 1);
@@ -148,14 +153,14 @@ public class BoughtBooksView {
             j = 1;
             double totalBoughtThisYear = 0;
             for (int i = 0; i < booksBoughtThisYear.size(); i++) {
-                Label bookTitleLabel = new Label(booksBoughtThisYear.get(i).getBookTitle());
+                Label bookTitleLabel = new Label(booksBoughtThisYear.get(i).getBookTitle() + " x " + quantitiesOfYThisYearBoughtBooks.get(i));
                 Label priceBookLabel = new Label(booksBoughtThisYear.get(i).getOriginalPrice() + " ALL");
                 HBox hBox1 = new HBox();
                 hBox1.getChildren().addAll(bookTitleLabel, priceBookLabel);
                 hBox1.setSpacing(30);
                 bookTitleLabel.setStyle("-fx-font-size: 10;"); // Set font size
                 gridPane.add(hBox1, 2, ++j);
-                totalBoughtThisYear += booksBoughtThisYear.get(i).getOriginalPrice();
+                totalBoughtThisYear += booksBoughtThisYear.get(i).getOriginalPrice()*quantitiesOfYThisYearBoughtBooks.get(i);
             }
             HBox hBoxTotal3 = new HBox();
             Label totalTxtLabel3 = new Label("Total");

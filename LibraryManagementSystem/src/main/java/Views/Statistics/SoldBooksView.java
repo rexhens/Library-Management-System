@@ -2,6 +2,7 @@ package Views.Statistics;
 
 import Controllers.BookController;
 import Controllers.FileController;
+import Controllers.IncomesController;
 import Models.Book;
 import Models.User;
 import Views.AdminHomePage;
@@ -31,6 +32,7 @@ public class SoldBooksView {
     public Scene showSoldBooksView(Stage stage) {
         BorderPane borderPane = new BorderPane();
         BookController bookController = new BookController();
+        IncomesController incomesController = new IncomesController();
 
         Text text = new Text("Sold books");
         StackPane stack = new StackPane();
@@ -49,6 +51,7 @@ public class SoldBooksView {
         boughtTodayLabel.setFont(Font.font("Arial", FontWeight.BOLD, 14)); // Set font to bold
         gridPane.add(boughtTodayLabel, 0, 0);
         ArrayList<Book> booksBoughtToday = bookController.getBooksSoldToday();
+        var quantitiesToday = incomesController.getBillsOfSoldBooksToday();
         int j = 1;
 
         HBox hBox = new HBox();
@@ -61,14 +64,14 @@ public class SoldBooksView {
         gridPane.add(hBox, 0, 1);
         double totalBoughtToday = 0;
         for (int i = 0; i < booksBoughtToday.size(); i++) {
-            Label bookTitleLabel = new Label(booksBoughtToday.get(i).getBookTitle());
+            Label bookTitleLabel = new Label(booksBoughtToday.get(i).getBookTitle() + " x " + quantitiesToday.get(i));
             Label priceBookLabel = new Label(booksBoughtToday.get(i).getSellingPrice() + " ALL");
             HBox hBox1 = new HBox();
             hBox1.getChildren().addAll(bookTitleLabel, priceBookLabel);
             hBox1.setSpacing(10);
             bookTitleLabel.setStyle("-fx-font-size: 10;"); // Set font size
             gridPane.add(hBox1, 0, ++j);
-            totalBoughtToday += booksBoughtToday.get(i).getSellingPrice();
+            totalBoughtToday += booksBoughtToday.get(i).getSellingPrice()*quantitiesToday.get(i);
         }
         HBox hBoxTotal1 = new HBox();
         Label totalTxtLabel = new Label("Total");
@@ -94,17 +97,18 @@ public class SoldBooksView {
         gridPane.add(hBox2, 1, 1);
 
         ArrayList<Book> booksBoughtThisMonth = bookController.getBooksSoldThisMonth();
+        var quantitiesThisMonth = incomesController.getBillsOfSoldBooksThisMonth();
         j = 1;
         double totalBoughtThisMonth = 0;
         for (int i = 0; i < booksBoughtThisMonth.size(); i++) {
-            Label bookTitleLabel = new Label(booksBoughtThisMonth.get(i).getBookTitle());
+            Label bookTitleLabel = new Label(booksBoughtThisMonth.get(i).getBookTitle()+ " x " + quantitiesThisMonth.get(i));
             Label priceBookLabel = new Label(booksBoughtThisMonth.get(i).getSellingPrice() + " ALL");
             HBox hBox1 = new HBox();
             hBox1.getChildren().addAll(bookTitleLabel, priceBookLabel);
             hBox1.setSpacing(20);
             bookTitleLabel.setStyle("-fx-font-size: 10;"); // Set font size
             gridPane.add(hBox1, 1, ++j);
-            totalBoughtThisMonth += booksBoughtThisMonth.get(i).getSellingPrice();
+            totalBoughtThisMonth += booksBoughtThisMonth.get(i).getSellingPrice() * quantitiesThisMonth.get(i);
         }
         HBox hBoxTotal2 = new HBox();
         Label totalTxtLabel2 = new Label("Total");
@@ -128,17 +132,18 @@ public class SoldBooksView {
         gridPane.add(boughtThisYearLabel, 2, 0);
         gridPane.add(hBox3, 2, 1);
         ArrayList<Book> booksBoughtThisYear = bookController.getBooksSoldThisYear();
+        var quantitiesThisYear = incomesController.getBillsOfSoldBooksThisYear();
         j = 1;
         double totalBoughtThisYear = 0;
         for (int i = 0; i < booksBoughtThisYear.size(); i++) {
-            Label bookTitleLabel = new Label(booksBoughtThisYear.get(i).getBookTitle());
+            Label bookTitleLabel = new Label(booksBoughtThisYear.get(i).getBookTitle() + " x " + quantitiesThisYear.get(i));
             Label priceBookLabel = new Label(booksBoughtThisYear.get(i).getSellingPrice() + " ALL");
             HBox hBox1 = new HBox();
             hBox1.getChildren().addAll(bookTitleLabel, priceBookLabel);
             hBox1.setSpacing(30);
             bookTitleLabel.setStyle("-fx-font-size: 10;"); // Set font size
             gridPane.add(hBox1, 2, ++j);
-            totalBoughtThisYear += booksBoughtThisYear.get(i).getSellingPrice();
+            totalBoughtThisYear += booksBoughtThisYear.get(i).getSellingPrice()*quantitiesThisYear.get(i);
         }
         HBox hBoxTotal3 = new HBox();
         Label totalTxtLabel3 = new Label("Total");

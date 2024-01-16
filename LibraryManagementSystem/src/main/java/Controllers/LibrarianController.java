@@ -270,6 +270,19 @@ public class LibrarianController implements Modifiable {
         return false;
     }
 
+    @Override
+    public void changeAccessLevel(int newAccessLevel) {
+
+        var users = FileController.users;
+        for(User user : users)
+        {
+            if(user instanceof Librarian)
+            {
+                user.setAccessLevel(newAccessLevel);
+            }
+        }
+    }
+
     public double calculateMoneyMadeToday(Librarian librarian) {
         double result = 0;
         var bills = FileController.transactions;
