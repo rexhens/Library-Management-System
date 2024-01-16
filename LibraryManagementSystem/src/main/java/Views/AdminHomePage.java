@@ -74,6 +74,7 @@ public class AdminHomePage extends Application {
 
         changepass.setOnAction(e->{
             Changepassview changepassview =new Changepassview(currentUser);
+            stage.setScene(changepassview.showview(stage));
         });
         logOutbtn.setOnAction(e -> {
             Alert error = new Alert(Alert.AlertType.INFORMATION);
