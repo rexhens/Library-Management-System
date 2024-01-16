@@ -37,7 +37,7 @@ public class Changepassview {
 
         Label pass=new Label("Enter the new password here");
         TextField pass1=new TextField();
-        Button confirmbtn=new Button("Confirm")
+        Button confirmbtn=new Button("Confirm");
 
         return new Scene(gp, 700, 500);
     }
