@@ -1,5 +1,7 @@
 package Views;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import Controllers.BillController;
@@ -108,7 +110,11 @@ public class AddStockView {
                     vb.getChildren().clear();
                     Book foundBook = bc.findBook(searchF.getText());
                     if (foundBook != null) {
-                        ImageView cover = new ImageView(new Image(foundBook.getCover()));
+
+                        Path folderPath = Paths.get("LibraryManagementSystem", "src", "main", "java", "Controllers",
+                                "images");
+                        Path imagePath = folderPath.resolve(foundBook.getCover());
+                        ImageView cover = new ImageView(new Image(imagePath.toUri().toString()));
                         cover.setFitWidth(300);
                         cover.setFitHeight(290);
                         cover.setPreserveRatio(true);

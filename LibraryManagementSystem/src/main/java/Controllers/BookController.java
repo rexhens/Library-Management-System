@@ -33,6 +33,7 @@ public class BookController {
 
     public boolean priceValidation(String x) {
         try {
+            @SuppressWarnings("unused")
             int n = Integer.parseInt(x);
             return true;
         } catch (Exception e) {

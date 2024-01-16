@@ -1,7 +1,7 @@
 Bill no.1
-Date:Sat Jan 13 01:42:09 CET 2024
+Date:Tue Jan 16 00:16:46 CET 2024
 Employee ID:2
 
-978 1 2345 6789 0 ..... Enigma of Time ..... 1200 ALL x 100 copies
+978 1 2345 6789 0 ..... Intro to SWE ..... 4000 ALL x 100 copies
 
-Total Price 100000 ALL.
+Total Price 300000 ALL.

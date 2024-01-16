@@ -66,25 +66,25 @@ public class EditCategoryView {
             }
         });
 
-        Button deleteCategoryButton = new Button("Delete Category");
-        deleteCategoryButton.setOnAction(e->{
-            CategoryController categoryController = new CategoryController();
-            var deleted = categoryController.deleteCategory(category.getID());
-            if(deleted){
-                Alert error = new Alert(Alert.AlertType.INFORMATION);
-                error.setHeaderText("Category was successfully deleted");
-                error.showAndWait();
-                Views.CategoryInfoView categoryInfoView = new Views.CategoryInfoView(currentUser);
-                stage.setScene(categoryInfoView.showcategory(stage));
-            }
-            else {
-                Alert fail = new Alert(Alert.AlertType.ERROR);
-                fail.setHeaderText("Category wasn't deleted");
-                fail.showAndWait();
-                Views.CategoryInfoView categoryInfoView = new Views.CategoryInfoView(currentUser);
-                stage.setScene(categoryInfoView.showcategory(stage));
-            }
-        });
+        // Button deleteCategoryButton = new Button("Delete Category");
+        // deleteCategoryButton.setOnAction(e->{
+        //     CategoryController categoryController = new CategoryController();
+        //     var deleted = categoryController.deleteCategory(category.getID());
+        //     if(deleted){
+        //         Alert error = new Alert(Alert.AlertType.INFORMATION);
+        //         error.setHeaderText("Category was successfully deleted");
+        //         error.showAndWait();
+        //         Views.CategoryInfoView categoryInfoView = new Views.CategoryInfoView(currentUser);
+        //         stage.setScene(categoryInfoView.showcategory(stage));
+        //     }
+        //     else {
+        //         Alert fail = new Alert(Alert.AlertType.ERROR);
+        //         fail.setHeaderText("Category wasn't deleted");
+        //         fail.showAndWait();
+        //         Views.CategoryInfoView categoryInfoView = new Views.CategoryInfoView(currentUser);
+        //         stage.setScene(categoryInfoView.showcategory(stage));
+        //     }
+        // });
 
         Button backBtn = new Button("Back");
         backBtn.setOnAction(i -> {
@@ -93,7 +93,7 @@ public class EditCategoryView {
         });
         HBox b2 = new HBox();
         b2.setSpacing(10);
-        b2.getChildren().addAll(editButton,deleteCategoryButton, backBtn);
+        b2.getChildren().addAll(editButton, backBtn);
         gp.add(b2, 0, 3);
         bp.setCenter(gp);
         return new Scene(bp, 700, 500);

@@ -101,25 +101,25 @@ public class EditAuthorView {
                 stage.setScene(authorInfoView.showView(stage));
             }
         });
-        Button deleteAuthorButton = new Button("Delete Author");
-        deleteAuthorButton.setOnAction(e->{
-            AuthorController authorController = new AuthorController();
-            var deleted = authorController.deleteAuthor(author.getID());
-            if(deleted){
-                Alert error = new Alert(Alert.AlertType.INFORMATION);
-                error.setHeaderText("Author was successfully deleted");
-                error.showAndWait();
-                Views.AuthorInfoView authorInfoView = new Views.AuthorInfoView(currentUser);
-                stage.setScene(authorInfoView.showView(stage));
-            }
-            else {
-                Alert fail = new Alert(Alert.AlertType.ERROR);
-                fail.setHeaderText("Author wasn't deleted");
-                fail.showAndWait();
-                Views.AuthorInfoView authorInfoView = new Views.AuthorInfoView(currentUser);
-                stage.setScene(authorInfoView.showView(stage));
-            }
-        });
+        // Button deleteAuthorButton = new Button("Delete Author");
+        // deleteAuthorButton.setOnAction(e->{
+        //     AuthorController authorController = new AuthorController();
+        //     var deleted = authorController.deleteAuthor(author.getID());
+        //     if(deleted){
+        //         Alert error = new Alert(Alert.AlertType.INFORMATION);
+        //         error.setHeaderText("Author was successfully deleted");
+        //         error.showAndWait();
+        //         Views.AuthorInfoView authorInfoView = new Views.AuthorInfoView(currentUser);
+        //         stage.setScene(authorInfoView.showView(stage));
+        //     }
+        //     else {
+        //         Alert fail = new Alert(Alert.AlertType.ERROR);
+        //         fail.setHeaderText("Author wasn't deleted");
+        //         fail.showAndWait();
+        //         Views.AuthorInfoView authorInfoView = new Views.AuthorInfoView(currentUser);
+        //         stage.setScene(authorInfoView.showView(stage));
+        //     }
+        // });
         Button backBtn = new Button("Back");
         backBtn.setOnAction(e -> {
             Views.AuthorInfoView authorInfoView = new Views.AuthorInfoView(currentUser);
@@ -127,7 +127,7 @@ public class EditAuthorView {
         });
         HBox b2 = new HBox();
         b2.setSpacing(10);
-        b2.getChildren().addAll(editButton,deleteAuthorButton, backBtn);
+        b2.getChildren().addAll(editButton, backBtn);
         gp.add(b2, 1, 3);
         bp.setCenter(gp);
         return new Scene(bp, 700, 500);

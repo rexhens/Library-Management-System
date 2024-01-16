@@ -1,11 +1,13 @@
 package Views;
 
 import Controllers.LogInController;
+import Controllers.StockController;
 import Models.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -108,6 +110,18 @@ public class LogInView {
                     } else {
                         EmployeeHomePage employeeHomePage = new EmployeeHomePage(user.getUser());
                         stage.setScene(employeeHomePage.showView(stage));
+                        if((user.getUser()).getAccessLevel()==2||(user.getUser()).getAccessLevel()==3){
+                            StockController sc = new StockController();
+                            if(!sc.needRestock().isEmpty()){
+                                String str= "";
+                                for(String s : sc.needRestock()){
+                                    str+="\n"+s;
+                                }
+                                Alert info = new Alert(AlertType.INFORMATION);
+                                info.setHeaderText("The following books need to be restocked:"+str);
+                                info.showAndWait();
+                            }
+                        }
                     }
 
                 }

@@ -113,7 +113,11 @@ public class PrintBillView {
                 error.showAndWait();
             } else {
                 int q = bl.stringToInt(copiesF.getText());
-                if (q == -2) {
+                if(books.contains(bc.findBook(isbnF.getText()))){
+                    Alert info = new Alert(AlertType.INFORMATION);
+                    info.setHeaderText("Book already added in this bill!");
+                    info.showAndWait();
+                } else if (q == -2) {
                     Alert error = new Alert(AlertType.ERROR);
                     error.setHeaderText("Copies field has to be a number!");
                     error.showAndWait();

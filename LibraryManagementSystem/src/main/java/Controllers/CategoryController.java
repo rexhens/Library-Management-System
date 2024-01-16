@@ -1,6 +1,5 @@
 package Controllers;
 
-import Models.Author;
 import Models.Category;
 import Models.StandardViewResponse;
 
@@ -39,21 +38,21 @@ public class CategoryController {
         return true;
     }
 
-    public boolean deleteCategory(int id) {
-        var exists = findCategory(id);
-        if (exists == null) {
-            return false;
-        }
-        for (Category category : FileController.categories) {
-            if (category.getID() == id) {
-                FileController.categories.remove(category);
-                return true;
-            }
-        }
-        return false;
-    }
+    // public boolean deleteCategory(int id) {
+    //     var exists = findCategory(id);
+    //     if (exists == null) {
+    //         return false;
+    //     }
+    //     for (Category category : FileController.categories) {
+    //         if (category.getID() == id) {
+    //             FileController.categories.remove(category);
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
-    public StandardViewResponse editCategory( int ID, String categoryname){
+    public StandardViewResponse<Category> editCategory( int ID, String categoryname){
         Category category = findCategory(ID);
         try {
 

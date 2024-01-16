@@ -138,7 +138,6 @@ public class AddBookView {
                 setRelativeImagePath(System.currentTimeMillis() + "_" + selectedFile.getName());
                 setTargetPath(imageFolder.resolve(relativeImagePath));
 
-                // Use a file URL to construct the Image
                 String imageUrl = selectedFile.toURI().toString();
                 Image image = new Image(imageUrl);
 

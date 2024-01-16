@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.LibrarianController;
 import Models.Librarian;
+import Models.Roles;
 import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -43,9 +44,12 @@ public class ManageLibrarianView {
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(5);
         grid.setVgap(5);
-        grid.add(editManagerButton, 0, 0);
+        if(currentUser.getUserRole()==Roles.Admin){
+            grid.add(editManagerButton, 0, 0);
+            grid.add(deleteManagerButton, 2, 0);
+            
+        }
         grid.add(performanceButton, 1, 0);
-        grid.add(deleteManagerButton, 2, 0);
         grid.add(backButton, 3, 0);
         border.setCenter(grid);
         editManagerButton.setOnAction(e -> {
@@ -71,10 +75,18 @@ public class ManageLibrarianView {
             }
 
         });
-        backButton.setOnAction(e -> {
-            AdminHomePage adminHomePage = new AdminHomePage(currentUser);
-            stage.setScene(adminHomePage.manageLibrariansView(stage));
-        });
+        if(currentUser.getUserRole()==Roles.Admin){
+            backButton.setOnAction(e -> {
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
+                stage.setScene(adminHomePage.manageLibrariansView(stage));
+            });
+        } else {
+            backButton.setOnAction(e -> {
+                EmployeeHomePage hp = new EmployeeHomePage(currentUser);
+                stage.setScene(hp.showView(stage));
+            });
+        }
+        
         performanceButton.setOnAction(e -> {
             LibrarianPerformanceView librarianPerformanceView = new LibrarianPerformanceView(currentUser);
             stage.setScene(librarianPerformanceView.showLibrarianPerformanceView(stage, librarian));

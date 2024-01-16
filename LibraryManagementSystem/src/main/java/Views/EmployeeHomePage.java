@@ -1,5 +1,6 @@
 package Views;
 
+import Models.Librarian;
 import Models.Roles;
 import Models.User;
 import javafx.event.ActionEvent;
@@ -19,6 +20,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+
+import Controllers.FileController;
+import Controllers.LibrarianController;
 
 public class EmployeeHomePage {
     private User currentUser;
@@ -104,10 +108,12 @@ public class EmployeeHomePage {
             EmployeeBt.add(addAuthor);
             EmployeeBt.add(addCategory);
         }
-        if (currentUser.getUserRole() == Roles.Manager || currentUser.getUserRole() == Roles.Admin) {
-            // search librarian - only role manager
-            // check statistics for specific librarian (tot no bills/books sold/tot money
-            // made for a date or period) - only role manager
+        if (currentUser.getUserRole() == Roles.Manager) {
+            Button libStats = new Button("Librarians Statistics");
+            libStats.setOnAction(e->{
+                stage.setScene(manageLibrariansView(stage));
+            });
+            EmployeeBt.add(libStats);
         }
 
         Button back = new Button("Log out");
@@ -144,5 +150,62 @@ public class EmployeeHomePage {
         bp.setCenter(p);
         Scene sc = new Scene(bp, 700, 500);
         return sc;
+    }
+
+    public Scene manageLibrariansView(Stage stage) {
+        ArrayList<Librarian> librarians = new ArrayList<>();
+        ArrayList<Button> librarianNameBtn = new ArrayList<>();
+
+        for (User librarian : FileController.users) {
+            if (librarian instanceof Librarian) {
+                librarians.add((Librarian) librarian);
+                librarianNameBtn.add(new Button(librarian.getName()));
+            }
+        }
+
+        Button backBtn = new Button("Back");
+        librarianNameBtn.add(backBtn);
+
+        BorderPane border = new BorderPane();
+
+        Text text = new Text("Check Librarians Stats");
+        StackPane stack = new StackPane();
+        text.setFont(new Font(30));
+        stack.getChildren().add(text);
+        stack.setPadding(new Insets(20));
+        border.setTop(stack);
+
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setHgap(5);
+        gridPane.setVgap(5);
+
+        int row = 0;
+        HBox currentHBox = new HBox(10);
+
+        for (int i = 0; i < librarianNameBtn.size(); i++) {
+            int finalI = i; // Capture the correct value of i
+            currentHBox.getChildren().add(librarianNameBtn.get(i));
+
+            if ((i + 1) % 5 == 0 || i == librarianNameBtn.size() - 1) {
+                gridPane.add(currentHBox, 0, row++);
+                currentHBox = new HBox(10);
+            }
+
+            librarianNameBtn.get(i).setOnAction(e -> {
+                if (finalI < librarians.size()) {
+                    LibrarianController librarianController = new LibrarianController();
+                    Librarian librarian = librarianController.findLibrarian(finalI);
+                    ManageLibrarianView librarianDetails = new ManageLibrarianView(currentUser);
+                    stage.setScene(librarianDetails.showManageLibrarianView(librarian, stage));
+                } else if (finalI == librarianNameBtn.size() - 2) { // Back button
+                    EmployeeHomePage hp = new EmployeeHomePage(currentUser);
+                    stage.setScene(hp.showView(stage));
+                } 
+            });
+        }
+
+        border.setCenter(gridPane);
+        return new Scene(border, 700, 500);
     }
 }

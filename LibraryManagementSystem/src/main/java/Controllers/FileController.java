@@ -135,12 +135,6 @@ public class FileController {
 		}
 	}
 
-	// public void printCategories() {
-	// for (int i = 0; i < categories.size(); i++) {
-	// System.out.println(categories.get(i));
-	// }
-	// }
-
 	@SuppressWarnings("unchecked")
 	private void readBooks() {
 		try {
@@ -203,12 +197,6 @@ public class FileController {
 		}
 	}
 
-	// public void printBills() {
-	// for (int i = 0; i < transactions.size(); i++) {
-	// System.out.println(transactions.get(i));
-	// }
-	// }
-
 	@SuppressWarnings("unchecked")
 	private void readAuthors() {
 		try {
@@ -236,10 +224,4 @@ public class FileController {
 			System.out.println(e.getMessage());
 		}
 	}
-
-	// public void printAuthors() {
-	// for (int i = 0; i < authors.size(); i++) {
-	// System.out.println(authors.get(i));
-	// }
-	// }
 }

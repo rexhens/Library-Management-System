@@ -136,9 +136,6 @@ public class Book implements Serializable {
                 result.add(book);
             }
         }
-        // result.add(new Book("123456789", "Sample Book", new Author("John Doe",
-        // "john.doe@example.com",Gender.Male), new ArrayList<Category>(),
-        // "Sample Supplier", 20, 25, 30, 50, "path/to/cover.jpg"));
         return result;
     }
 
@@ -156,9 +153,6 @@ public class Book implements Serializable {
                 result.add(book);
             }
         }
-        // result.add(new Book("123456789", "Sample Book", new Author("John Doe",
-        // "john.doe@example.com",Gender.Male), new ArrayList<Category>(),
-        // "Sample Supplier", 20, 25, 30, 50, "path/to/cover.jpg"));
         return result;
     }
 

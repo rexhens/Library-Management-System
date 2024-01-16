@@ -2,7 +2,6 @@ package Controllers;
 
 import Models.*;
 
-import java.time.LocalDate;
 
 public class AuthorController {
 
@@ -29,7 +28,7 @@ public class AuthorController {
     }
     static boolean isSpecialChar(char c) {
         // Define your set of special characters
-        String specialChars = "!@#$%^&*()._";
+        String specialChars = "!@#$%^&*()_";
         return specialChars.contains(String.valueOf(c));
     }
     static boolean isUniqueAuthor(int ID, String name, String surname) {
@@ -41,25 +40,25 @@ public class AuthorController {
         return true;
     }
 
-    public boolean authorNameValidation() {
-        return false;
-    }
+    // public boolean authorNameValidation() {
+    //     return false;
+    // }
 
-    public boolean deleteAuthor(int id) {
-        var exists = findAuthor(id);
-        if (exists == null) {
-            return false;
-        }
-        for (Author author : FileController.authors) {
-            if (author.getID() == id) {
-                FileController.authors.remove(author);
-                return true;
-            }
-        }
-        return false;
-    }
+    // public boolean deleteAuthor(int id) {
+    //     var exists = findAuthor(id);
+    //     if (exists == null) {
+    //         return false;
+    //     }
+    //     for (Author author : FileController.authors) {
+    //         if (author.getID() == id) {
+    //             FileController.authors.remove(author);
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
 
-    public StandardViewResponse editAuthor(int ID, String name, String surname, Gender gender) {
+    public StandardViewResponse<Author> editAuthor(int ID, String name, String surname, Gender gender) {
         Author author = findAuthor(ID);
         try {
 
