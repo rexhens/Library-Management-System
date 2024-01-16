@@ -3,8 +3,11 @@ package Controllers;
 import Models.*;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
+import static Controllers.BookController.isSameDay;
 import static Controllers.LibrarianController.*;
 
 public class ManagerController implements Modifiable {
@@ -207,6 +210,68 @@ public class ManagerController implements Modifiable {
             }
         }
         return false;
+    }
+
+    public int totalNoBooksBoughtByManager(Manager manager) {
+        int result = 0;
+        var bills = FileController.transactions;
+        for (var bill : bills) {
+            var quantities = bill.getQuantity();
+            if (bill.getType() == BillsType.Bought && bill.getSoldBy() == manager.getId()) {
+                for (var quantity : quantities) {
+                    result+=quantity;
+                }
+            }
+        }
+        return result;
+    }
+
+    public int totalNoBillsByManager(Manager manager) {
+        int result = 0;
+        var bills = FileController.transactions;
+        for (var bill : bills) {
+            if (bill.getType() == BillsType.Bought  && bill.getSoldBy() == manager.getId()) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    public double calculateMoneySpendThisYear(Manager manager) {
+        Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(12).toInstant());
+        double result = 0;
+        var bills = FileController.transactions;
+        for (var bill : bills) {
+            if (bill.getCreatedDate().toInstant().isAfter(beforeMonth.toInstant()) && bill.getSoldBy() == manager.getId() && bill.getType() == BillsType.Bought) {
+                result += bill.getTotalPrice();
+            }
+        }
+        return result;
+    }
+
+    public double calculateMoneySpendThisMonth(Manager manager) {
+        Date beforeMonth = Date.from(ZonedDateTime.now().minusMonths(1).toInstant());
+        double result = 0;
+        var bills = FileController.transactions;
+        for (var bill : bills) {
+            if (bill.getCreatedDate().toInstant().isAfter(beforeMonth.toInstant()) && bill.getSoldBy() == manager.getId() && bill.getType() == BillsType.Bought) {
+                result += bill.getTotalPrice();
+            }
+        }
+        return result;
+    }
+
+    public double calculateMoneySpendToday(Manager manager) {
+        double result = 0;
+        var bills = FileController.transactions;
+        for (var bill : bills) {
+            if(bill.getType() == BillsType.Sold) {
+                if (isSameDay(bill.getCreatedDate(), new Date()) && bill.getSoldBy() == manager.getId()) {
+                    result += bill.getTotalPrice();
+                }
+            }
+        }
+        return result;
     }
 
 }

@@ -78,7 +78,8 @@ public class ManageManagerView {
             stage.setScene(adminHomePage.manageManagersView(stage));
         });
         performanceButton.setOnAction(e -> {
-
+            ManagerPerformanceView managerPerformanceView = new ManagerPerformanceView(currentUser);
+            stage.setScene(managerPerformanceView.showManagerPerformanceView(stage, manager));
         });
         managerAccessButton.setOnAction(e->{
             AccessUserView accessUserView = new AccessUserView();
