@@ -70,15 +70,30 @@ public class AuthorInfoView {
                 currentHBox = new HBox(10);
             }
             authorNameBt.get(i).setOnAction(e -> {
-                if (finalI < authors.size()) {
-                    AuthorController authorController = new AuthorController();
-                    Author author = authorController.findAuthor(finalI);
-                    EditAuthorView editAuthorView = new EditAuthorView(currentUser);
-                    stage.setScene(editAuthorView.editAuthor(stage, author));
-                } else if (finalI == authorNameBt.size() - 1) { // Back button
-                    EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
-                    stage.setScene(employeeHomePage.showView(stage));
+                if(currentUser.getAccessLevel() == 2 || currentUser.getAccessLevel() == 3
+                        || currentUser.getUserRole() == Roles.Admin) {
+                    if (finalI < authors.size()) {
+                        AuthorController authorController = new AuthorController();
+                        Author author = authorController.findAuthor(finalI);
+                        EditAuthorView editAuthorView = new EditAuthorView(currentUser);
+                        stage.setScene(editAuthorView.editAuthor(stage, author));
+                    } else if (finalI == authorNameBt.size() - 1) { // Back button
+                        EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
+                        stage.setScene(employeeHomePage.showView(stage));
+                    }
                 }
+                else{
+                    if (finalI < authors.size()) {
+                        AuthorController authorController = new AuthorController();
+                        Author author = authorController.findAuthor(finalI);
+                        ShowAuthorinfo showAuthorinfo = new ShowAuthorinfo(currentUser);
+                        stage.setScene(showAuthorinfo.showAuthor(stage, author));
+                    } else if (finalI == authorNameBt.size() - 1) { // Back button
+                        EmployeeHomePage employeeHomePage = new EmployeeHomePage(currentUser);
+                        stage.setScene(employeeHomePage.showView(stage));
+                    }
+                }
+
             });
         }
 
