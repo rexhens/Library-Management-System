@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Controllers.BillController;
 import Controllers.BookController;
+import Controllers.FileController;
 import Controllers.StockController;
 import Models.BillsType;
 import Models.Book;
@@ -29,9 +30,13 @@ import javafx.stage.Stage;
 
 public class PrintBillView {
     private User currentUser;
+    private static ArrayList<Book> books;
+    private static ArrayList<Integer> quantity;
 
     public PrintBillView(User currentUser) {
         this.currentUser = currentUser;
+        books = new ArrayList<>();
+        quantity = new ArrayList<>();
     }
 
     public Scene showView(Stage stage) {
@@ -55,8 +60,6 @@ public class PrintBillView {
         BookController bc = new BookController();
         BillController bl = new BillController();
         StockController stc = new StockController();
-        ArrayList<Book> books = new ArrayList<>();
-        ArrayList<Integer> quantity = new ArrayList<>();
 
         Label isbnL = new Label("Book ISBN13");
         Label copiesL = new Label("Number of Copies");
@@ -136,7 +139,7 @@ public class PrintBillView {
                             isbnF.getText() + ".................." + bc.findBook(isbnF.getText()).getBookTitle()
                                     + ".................." + copiesF.getText() + " x " + priceF.getText());
                     vb.getChildren().addAll(lbl1);
-                    totalPriceF.setText(Integer.toString(totalPriceCalculation(books, quantity)));
+                    totalPriceF.setText(Integer.toString(totalPriceCalculation()));
                     isbnF.clear();
                     copiesF.clear();
                     priceF.clear();
@@ -152,7 +155,7 @@ public class PrintBillView {
         Button print = new Button("Finish Transaction");
         print.setOnAction(e -> {
             if (!totalPriceF.getText().isEmpty()) {
-                bl.createBill(currentUser.getId(), books, quantity, totalPriceCalculation(books, quantity),
+                bl.createBill(currentUser.getId(), books, quantity, totalPriceCalculation(),
                         BillsType.Sold);
                 Alert info = new Alert(AlertType.INFORMATION);
                 info.setHeaderText("Bill Printed!");
@@ -161,8 +164,10 @@ public class PrintBillView {
                 vb.getChildren().clear();
                 vb.getChildren().addAll(gp);
                 totalPriceF.clear();
+                FileController.writeTransactions();
                 books.clear();
                 quantity.clear();
+                FileController.readTransactions();
             } else {
                 Alert error = new Alert(AlertType.ERROR);
                 error.setHeaderText("No books added in bill!");
@@ -186,7 +191,7 @@ public class PrintBillView {
         return sc;
     }
 
-    public int totalPriceCalculation(ArrayList<Book> books, ArrayList<Integer> quantity) {
+    public int totalPriceCalculation() {
         int tp = 0;
         for (int i = 0; i < books.size(); i++) {
             tp += books.get(i).getSellingPrice() * quantity.get(i);

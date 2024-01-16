@@ -45,7 +45,7 @@ public class EditAuthorView {
         gp.add(nameField, 1, 0);
 
         Label surnameLabel = new Label("Surname");
-        TextField surnameField = new TextField(author.getName());
+        TextField surnameField = new TextField(author.getSurname());
         gp.add(surnameLabel, 0, 1);
         gp.add(surnameField, 1, 1);
 

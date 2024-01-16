@@ -45,6 +45,7 @@ public class AdminHomePage extends Application {
         Button manageManagerBtn = new Button("Manage Manager");
         Button statisticBtn = new Button("Statistics");
         Button employeeHP = new Button("Employee Homepage");
+        Button changepass= new Button("Change password");
         Button logOutbtn = new Button("Log Out");
 
         GridPane grid = new GridPane();
@@ -55,7 +56,8 @@ public class AdminHomePage extends Application {
         grid.add(manageManagerBtn, 1, 0);
         grid.add(statisticBtn, 2, 0);
         grid.add(employeeHP, 3, 0);
-        grid.add(logOutbtn, 4, 0);
+        grid.add(changepass,4,0);
+        grid.add(logOutbtn, 5, 0);
         border.setCenter(grid);
 
         manageLibrarianBtn.setOnAction(e -> {
@@ -68,6 +70,10 @@ public class AdminHomePage extends Application {
         statisticBtn.setOnAction(e -> {
             StatisticMainView statisticMainView = new StatisticMainView(currentUser);
             stage.setScene(statisticMainView.showStatisticsView(stage));
+        });
+
+        changepass.setOnAction(e->{
+            Changepassview changepassview =new Changepassview(currentUser);
         });
         logOutbtn.setOnAction(e -> {
             Alert error = new Alert(Alert.AlertType.INFORMATION);

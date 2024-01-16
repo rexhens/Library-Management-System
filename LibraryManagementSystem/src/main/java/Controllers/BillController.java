@@ -29,7 +29,7 @@ public class BillController {
                 print = new File("Bills/boughtBooks/Bill" + b.getBillNumber() + ".txt");
             }
             try (
-                    PrintWriter o = new PrintWriter(print);) {
+                PrintWriter o = new PrintWriter(print);) {
                 o.print(b);
                 addBill(b);
                 System.out.println(FileController.transactions.get(b.getBillNumber()-1));
