@@ -1,15 +1,17 @@
 package Views;
 
+import Controllers.Changepasscontroller;
+import Models.Roles;
 import Models.User;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -36,9 +38,55 @@ public class Changepassview {
         gp.setAlignment(Pos.CENTER);
 
         Label pass=new Label("Enter the new password here");
-        TextField pass1=new TextField();
-        Button confirmbtn=new Button("Confirm");
+        PasswordField pass1= new PasswordField();
+        gp.add(pass, 0, 1);
+        gp.add(pass1, 1, 1);
 
-        return new Scene(gp, 700, 500);
+        Label systemLabel = new Label("System");
+        Label label1=new Label("");
+        label1.setTextFill(Color.RED);
+        gp.add(systemLabel, 0, 2);
+        gp.add(label1, 1, 2);
+
+        HBox h1=new HBox(10);
+        Button confirmbtn=new Button("Confirm");
+        h1.getChildren().add(confirmbtn);
+        Button backbtn=new Button("Back");
+        h1.getChildren().add(backbtn);
+        gp.add(h1,1,3);
+        confirmbtn.setOnAction(e->{
+            Changepasscontroller controller = new Changepasscontroller();
+            var edited = controller.changepass(pass1.getText(), currentUser.getId());
+            if (edited.getErrorMessage().isEmpty()) {
+                Alert error = new Alert(Alert.AlertType.INFORMATION);
+                error.setHeaderText("Password was successfully changed!");
+                error.showAndWait();
+            }
+            else {
+                systemLabel.setText(edited.getErrorMessage());
+            }
+
+
+            if(currentUser.getUserRole()==Roles.Admin){
+                    AdminHomePage adminHomePage = new AdminHomePage(currentUser);
+                    stage.setScene(adminHomePage.showAdminHomePage(stage));
+            }
+            else{
+                EmployeeHomePage employeeHomePage=new EmployeeHomePage(currentUser);
+                stage.setScene(employeeHomePage.showView(stage));
+            }
+        });
+        backbtn.setOnAction(e->{
+            if(currentUser.getUserRole()==Roles.Admin){
+                AdminHomePage adminHomePage = new AdminHomePage(currentUser);
+                stage.setScene(adminHomePage.showAdminHomePage(stage));
+            }
+            else {
+                EmployeeHomePage employeeHomePage=new EmployeeHomePage(currentUser);
+                stage.setScene(employeeHomePage.showView(stage));
+            }
+        });
+        bp.setCenter(gp);
+        return new Scene(bp, 700, 500);
     }
 }

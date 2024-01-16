@@ -119,7 +119,12 @@ public class EmployeeHomePage {
             });
             EmployeeBt.add(libStats);
         }
-
+        Button changepass= new Button("Change password");
+        EmployeeBt.add(changepass);
+        changepass.setOnAction(e->{
+            Changepassview changepassview =new Changepassview(currentUser);
+            stage.setScene(changepassview.showview(stage));
+        });
         Button back = new Button("Log out");
         EmployeeBt.add(back);
         if (currentUser.getUserRole() == Roles.Admin) {
