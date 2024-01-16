@@ -1,8 +1,6 @@
 package com.example.librarymanagementsystem;
 
-import Controllers.BillController;
 import Controllers.FileController;
-import Models.Book;
 import Views.LogInView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -27,9 +25,6 @@ public class Main extends Application {
             Platform.exit();
         });
 
-        // for(Book b:FileController.books){
-        //     b.setStock(0);
-        // }
         stage.setTitle("Library Management System");
         stage.setScene(scene);
         stage.show();
