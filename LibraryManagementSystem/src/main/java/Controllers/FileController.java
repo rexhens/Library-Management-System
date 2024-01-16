@@ -178,11 +178,19 @@ public class FileController {
 			Bill.setTotalBills(transactions.size());
 			fis.close();
 			ois.close();
+			// print();
 			System.out.println("Transactions read successfully.");
 		} catch (Exception e) {
 			System.out.println("Exception thrown: " + e.getMessage());
 		}
 	}
+
+	// public void print() {
+	// 	System.out.println();
+	// 	for (int i = 0; i < transactions.size(); i++) {
+	// 		System.out.println(transactions.get(i));
+	// 	}
+	// }
 
 	public static void writeTransactions() {
 		try {

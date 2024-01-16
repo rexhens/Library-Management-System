@@ -96,11 +96,20 @@ public class Bill implements Serializable {
     public String toString() {
         String str = "Bill no." + billNumber + "\nDate:" + createdDate + "\nEmployee ID:" + soldBy + "\n";
         int i = 0;
-        for (Book b : books) {
-            str += "\n" + b.getISBN() + " ..... " + b.getBookTitle() + " ..... " + b.getSellingPrice() + " ALL";
-            str += " x " + quantity.get(i) + " copies";
-            i++;
+        if(this.type == BillsType.Sold){
+            for (Book b : books) {
+                str += "\n" + b.getISBN() + " ..... " + b.getBookTitle() + " ..... " + b.getSellingPrice() + " ALL";
+                str += " x " + quantity.get(i) + " copies";
+                i++;
+            }
+        } else {
+            for (Book b : books) {
+                str += "\n" + b.getISBN() + " ..... " + b.getBookTitle() + " ..... " + b.getPurchasedPrice() + " ALL";
+                str += " x " + quantity.get(i) + " copies";
+                i++;
+            }
         }
+        
         str += "\n\nTotal Price " + totalPrice + " ALL.";
         return str;
     }
