@@ -91,6 +91,7 @@ public class ManageLibrarianView {
             LibrarianPerformanceView librarianPerformanceView = new LibrarianPerformanceView(currentUser);
             stage.setScene(librarianPerformanceView.showLibrarianPerformanceView(stage, librarian));
         });
+
         return new Scene(border, 700, 500);
     }
 }

@@ -274,8 +274,10 @@ public class LibrarianController implements Modifiable {
         double result = 0;
         var bills = FileController.transactions;
         for (var bill : bills) {
-            if (isSameDay(bill.getCreatedDate(), new Date()) && bill.getSoldBy() == librarian.getId()) {
-                result += bill.getTotalPrice();
+            if(bill.getType() == BillsType.Sold) {
+                if (isSameDay(bill.getCreatedDate(), new Date()) && bill.getSoldBy() == librarian.getId()) {
+                    result += bill.getTotalPrice();
+                }
             }
         }
         return result;
@@ -287,7 +289,7 @@ public class LibrarianController implements Modifiable {
         var billList = FileController.transactions;
         for (var bill : billList) {
             if (bill.getCreatedDate().toInstant().isAfter(beforeMonth.toInstant())
-                    && bill.getSoldBy() == librarian.getId()) {
+                    && bill.getSoldBy() == librarian.getId() && bill.getType() == BillsType.Sold) {
                 result += bill.getTotalPrice();
             }
         }
@@ -300,7 +302,7 @@ public class LibrarianController implements Modifiable {
         var billList = FileController.transactions;
         for (var bill : billList) {
             if (bill.getCreatedDate().toInstant().isAfter(beforeMonth.toInstant())
-                    && bill.getSoldBy() == librarian.getId()) {
+                    && bill.getSoldBy() == librarian.getId() && bill.getType() == BillsType.Sold) {
                 result += bill.getTotalPrice();
             }
         }
@@ -311,7 +313,7 @@ public class LibrarianController implements Modifiable {
         int result = 0;
         var bills = FileController.transactions;
         for (var bill : bills) {
-            if (isSameDay(bill.getCreatedDate(), new Date()) && bill.getSoldBy() == librarian.getId()) {
+            if (bill.getSoldBy() == librarian.getId() && bill.getType() == BillsType.Sold) {
                 result++;
             }
         }
@@ -322,10 +324,10 @@ public class LibrarianController implements Modifiable {
         int result = 0;
         var bills = FileController.transactions;
         for (var bill : bills) {
-            var books = bill.getBooks();
+            var quantities = bill.getQuantity();
             if (bill.getType() == BillsType.Sold && bill.getSoldBy() == librarian.getId()) {
-                for (var book : books) {
-                    result++;
+                for (var quantity : quantities) {
+                    result+=quantity;
                 }
             }
         }

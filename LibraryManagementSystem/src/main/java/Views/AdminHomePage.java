@@ -156,10 +156,13 @@ public class AdminHomePage extends Application {
             }
         }
 
+
+        Button managerAccessButton = new Button("Manager Access");
         Button backBtn = new Button("Back");
         Button addNewLibrarianBtn = new Button("Add new Manager");
         managersNameBtn.add(backBtn);
         managersNameBtn.add(addNewLibrarianBtn);
+        managersNameBtn.add(managerAccessButton);
 
         BorderPane border = new BorderPane();
 
@@ -204,6 +207,10 @@ public class AdminHomePage extends Application {
                 }
             });
         }
+        managerAccessButton.setOnAction(e->{
+            AccessUserView accessUserView = new AccessUserView();
+            stage.setScene(accessUserView.showAccessUserView(new Manager()));
+        });
 
         border.setCenter(gridPane);
         return new Scene(border, 700, 500);

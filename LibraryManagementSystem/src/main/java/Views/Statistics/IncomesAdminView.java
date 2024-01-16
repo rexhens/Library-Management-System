@@ -62,12 +62,12 @@ public class IncomesAdminView {
         Button validateDates = new Button("Enter");
         Button clearDates = new Button("Clear");
 
-        // String cssStyle =
-        // this.getClass().getResource("application.css").toExternalForm();
+     //   String cssStyle =
+     //   this.getClass().getResource("Styles/styles.css").toExternalForm();
         HBox hBox = new HBox();
         hBox.setSpacing(20);
         hBox.getChildren().addAll(inputIncomesLabel, dateStart, dateEnd, validateDates, clearDates);
-        // hBox.getStylesheets().add(cssStyle);
+     //    hBox.getStylesheets().add(cssStyle);
         validateDates.getStyleClass().add("styled-button");
         clearDates.getStyleClass().add("styled-button");
 

@@ -122,11 +122,14 @@ public class CostsController {
         var billList = FileController.transactions;
         for (var bill : billList) {
             var books = bill.getBooks();
+            var quantities = bill.getQuantity();
+            int i  = 0;
             if (bill.getType() == BillsType.Bought) {
                 for (var book : books) {
                     if (isSameDay(book.getPurchasedDate(), new Date())) {
-                        result++;
-                        System.out.println(book);
+                        result+=quantities.get(i);
+                        i++;
+                       // System.out.println(book);
                     }
                 }
             }
@@ -139,12 +142,15 @@ public class CostsController {
         Integer result = 0;
         var billList = FileController.transactions;
         for (var bill : billList) {
+            int i = 0;
             var books = bill.getBooks();
+            var quantities = bill.getQuantity();
             if (bill.getType() == BillsType.Bought) {
                 for (var book : books) {
                     if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
-                        result++;
-                        System.out.println(book);
+                        result+=quantities.get(i);
+                        i++;
+                       // System.out.println(book);
                     }
                 }
             }
@@ -157,12 +163,15 @@ public class CostsController {
         Integer result = 0;
         var billList = FileController.transactions;
         for (var bill : billList) {
+            int i = 0;
             var books = bill.getBooks();
+            var quantities = bill.getQuantity();
             if (bill.getType() == BillsType.Bought) {
                 for (var book : books) {
                     if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
-                        result++;
-                        System.out.println(book);
+                        result+=quantities.get(i);
+                        i++;
+                        //System.out.println(book);
                     }
                 }
             }
