@@ -40,7 +40,7 @@ public class LibrarianPerformanceView {
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setAlignment(Pos.CENTER);
 
-        Label nrBillsLabel = new Label("Total number of Bills");
+        Label nrBillsLabel = new Label("Total number of Sold Bills");
         TextField noBillsField = new TextField(Integer.toString(librarianController.totalNoBillsByLibrarian(librarian)));
         noBillsField.setEditable(false);
         gridPane.add(nrBillsLabel, 0, 0);

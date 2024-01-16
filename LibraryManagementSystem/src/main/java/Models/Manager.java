@@ -20,6 +20,10 @@ public class Manager extends User {
         super(name, surname, username, userRole, password, salary, phoneNum, date, gender, accesslevel);
     }
 
+    public Manager() {
+
+    }
+
     // public double moneyMadeInDay() {
 
     // if (this.datesSold==null) {

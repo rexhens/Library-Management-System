@@ -44,11 +44,15 @@ public class StatisticsController {
         }
         var bills = FileController.transactions;
         for (var bill : bills) {
-            if (bill.getType() == BillsType.Bought)
-                if (bill.getCreatedDate().before(endDateF) && bill.getCreatedDate().after(startDateF)
-                        && bill.getType() == BillsType.Sold) {
-                    result++;
+            if (bill.getType() == BillsType.Bought) {
+                var quantities = bill.getQuantity();
+                if (bill.getCreatedDate().before(endDateF) && bill.getCreatedDate().after(startDateF)) {
+                  for(var quantity : quantities)
+                  {
+                      result+=quantity;
+                  }
                 }
+            }
         }
         return new StandardViewResponse<>(result, null);
     }
@@ -60,8 +64,7 @@ public class StatisticsController {
         var bills = FileController.transactions;
         for (var bill : bills) {
             if (bill.getType() == BillsType.Sold)
-                if (bill.getCreatedDate().before(endDateF) && bill.getCreatedDate().after(startDateF)
-                        && bill.getType() == BillsType.Sold) {
+                if (bill.getCreatedDate().before(endDateF) && bill.getCreatedDate().after(startDateF)) {
                     result += bill.getTotalPrice();
                 }
         }
@@ -75,8 +78,7 @@ public class StatisticsController {
         var bills = FileController.transactions;
         for (var bill : bills) {
             if (bill.getType() == BillsType.Bought)
-                if (bill.getCreatedDate().before(endDateF) && bill.getCreatedDate().after(startDateF)
-                        && bill.getType() == BillsType.Sold) {
+                if (bill.getCreatedDate().before(endDateF) && bill.getCreatedDate().after(startDateF)) {
                     result += bill.getTotalPrice();
                 }
         }

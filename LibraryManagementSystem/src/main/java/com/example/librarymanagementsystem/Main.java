@@ -1,5 +1,6 @@
 package com.example.librarymanagementsystem;
 
+import Controllers.BillController;
 import Controllers.FileController;
 import Models.Book;
 import Views.LogInView;
@@ -23,10 +24,12 @@ public class Main extends Application {
             FileController.writeAuthors();
             FileController.writeBooks();
             FileController.writeCategories();
-            FileController.writeTransactions();
             Platform.exit();
         });
 
+        // for(Book b:FileController.books){
+        //     b.setStock(0);
+        // }
         stage.setTitle("Library Management System");
         stage.setScene(scene);
         stage.show();

@@ -37,6 +37,7 @@ public class ManageManagerView {
         Button editManagerButton = new Button("Edit Manager");
         Button performanceButton = new Button("Performance");
         Button deleteManagerButton = new Button("Delete Manager");
+        Button managerAccessButton = new Button("Manager Access");
         Button backButton = new Button("Back");
 
         GridPane grid = new GridPane();
@@ -47,6 +48,7 @@ public class ManageManagerView {
         grid.add(performanceButton, 1, 0);
         grid.add(deleteManagerButton, 2, 0);
         grid.add(backButton, 3, 0);
+        grid.add(managerAccessButton,4,0);
         border.setCenter(grid);
         editManagerButton.setOnAction(e -> {
             EditManagerView managerView = new EditManagerView(currentUser);
@@ -77,6 +79,10 @@ public class ManageManagerView {
         });
         performanceButton.setOnAction(e -> {
 
+        });
+        managerAccessButton.setOnAction(e->{
+            AccessUserView accessUserView = new AccessUserView();
+            stage.setScene(accessUserView.showAccessUserView(currentUser));
         });
         return new Scene(border, 700, 500);
     }

@@ -170,7 +170,7 @@ public class FileController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void readTransactions() {
+	public static void readTransactions() {
 		try {
 			FileInputStream fis = new FileInputStream(transactionsFile);
 			ObjectInputStream ois = new ObjectInputStream(fis);
@@ -178,7 +178,6 @@ public class FileController {
 			Bill.setTotalBills(transactions.size());
 			fis.close();
 			ois.close();
-			// print();
 			System.out.println("Transactions read successfully.");
 		} catch (Exception e) {
 			System.out.println("Exception thrown: " + e.getMessage());

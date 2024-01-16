@@ -31,11 +31,13 @@ public class IncomesController {
         double result = 0;
         var billList = FileController.transactions;
         for (var bill : billList) {
+            int i = 0;
             var books = bill.getBooks();
+            var quantities = bill.getQuantity();
             if (bill.getType() == BillsType.Sold) {
                 for (var book : books) {
                     if (book.getPurchasedDate().toInstant().isAfter(beforeMonth.toInstant())) {
-                        result += book.getOriginalPrice();
+                        result += quantities.get(i);
                         // System.out.println(book);
                     }
                 }
@@ -67,10 +69,13 @@ public class IncomesController {
         var billList = FileController.transactions;
         for (var bill : billList) {
             var books = bill.getBooks();
+            var quantities = bill.getQuantity();
+            int i  = 0;
             if (bill.getType() == BillsType.Sold) {
                 for (var book : books) {
                     if (isSameDay(book.getPurchasedDate(), new Date())) {
-                        result++;
+                        result+=quantities.get(i);
+                        i++;
                         // System.out.println(book);
                     }
                 }

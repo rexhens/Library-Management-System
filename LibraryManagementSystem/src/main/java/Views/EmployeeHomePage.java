@@ -84,6 +84,10 @@ public class EmployeeHomePage {
             });
             Button modifyBook = new Button("Modify Book data");
             Button totalBookSold = new Button("Sold Book Copies");
+            totalBookSold.setOnAction(e->{
+                BookStatsView bsv = new BookStatsView(currentUser, stage);
+                stage.setScene(bsv.showView());
+            });
             Button addStock = new Button("Add Stock");
             addStock.setOnAction(e -> {
                 AddStockView sv = new AddStockView(currentUser, stage);
