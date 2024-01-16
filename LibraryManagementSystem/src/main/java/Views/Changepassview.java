@@ -37,7 +37,7 @@ public class Changepassview {
         gp.setPadding(new Insets(10, 10, 10, 10));
         gp.setAlignment(Pos.CENTER);
 
-        Label pass=new Label("Enter the new password here");
+        Label pass=new Label("Enter new password");
         PasswordField pass1= new PasswordField();
         gp.add(pass, 0, 1);
         gp.add(pass1, 1, 1);
@@ -61,19 +61,17 @@ public class Changepassview {
                 Alert error = new Alert(Alert.AlertType.INFORMATION);
                 error.setHeaderText("Password was successfully changed!");
                 error.showAndWait();
-            }
-            else {
-                systemLabel.setText(edited.getErrorMessage());
-            }
-
-
-            if(currentUser.getUserRole()==Roles.Admin){
+                if(currentUser.getUserRole()==Roles.Admin){
                     AdminHomePage adminHomePage = new AdminHomePage(currentUser);
                     stage.setScene(adminHomePage.showAdminHomePage(stage));
+                }
+                else{
+                    EmployeeHomePage employeeHomePage=new EmployeeHomePage(currentUser);
+                    stage.setScene(employeeHomePage.showView(stage));
+                }
             }
-            else{
-                EmployeeHomePage employeeHomePage=new EmployeeHomePage(currentUser);
-                stage.setScene(employeeHomePage.showView(stage));
+            else {
+                label1.setText(edited.getErrorMessage());
             }
         });
         backbtn.setOnAction(e->{
