@@ -1,20 +1,31 @@
-username:admin 
-password:admin
+Thread -> A lightwieght process, Can share the resources
+Process -> Has all the resources of its own
+Both can be used in parallel programming(multiple threads or multiple processes(has heavy weight units, needs more space on the processor))
 
-username:klaudia
-password:Klaudia.1
+Working with threads in Java there are 2 options:
+1- extending class Thread (abstract class and has 1 abstract method that must be overriden [run]) -> Object inisiating from this class will be thread objects
+public class MyClass extends Thread{
+public void run(){}
+}
 
-username:elena
-password:1234qwerQ@
+2- Implementing the runnable interface(also here we have to override the method run)
+public class MyClass implements Runnable{
+public void run(){}
+}
 
-username:rexhens
-password:Rexhens@1
+1st case === 
+MyClass t1 = new MyClass();
+t1.run() // DOes not create a new thread
+t1.start() // Create a new thread
 
-username:jord
-password:Rexhens@1
 
-username:rexhens123
-password:Rexhens@1
+2nd case ===
+MyClass2 obj2 new MyClass(); //Creates a Task
+Thread t2 = new Thread(obj2); //Creates a Thread
+t2.start() 
 
-username:sadjfsdjk
-password:Rexhens@1
+start -> Bej pregatitjet e nevojshme dhe thirr run, Starts a new flow of execution
+run -> Ben direkt egzekutimin
+
+concurent?
+impossibile to predict which processor will the process and impossibile to predict the output

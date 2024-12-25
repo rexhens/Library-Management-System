@@ -1,0 +1,8 @@
+Bill no.9
+Date:Fri Jan 19 09:03:35 CET 2024
+Employee ID:2
+
+978 1 2345 6789 0 ..... Intro to SWE ..... 4000 ALL x 2 copies
+978 1 2345 6789 2 ..... Intro to Law ..... 1300 ALL x 2 copies
+
+Total Price 10600 ALL.
